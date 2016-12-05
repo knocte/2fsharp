@@ -63,9 +63,9 @@ let mutable exitCode = 0
 if (incomingChar = Environment.NewLine) then
     exitCode <- 1
 else if not (incomingChar = String.Empty) then
-    exitCode <- 2;
+    exitCode <- 2
 else if (incomingChar <> "\t" && incomingChar.Length > 1) then
-    exitCode <- 3;
+    exitCode <- 3
 ```
 
 Things to note:
@@ -110,10 +110,8 @@ try {
 }
 ```
 
-In F# we the `catch` keywords becomes `with`.
-However, there are no `try-with-finally` blocks,
-we have `try-with` blocks and `try-finally` blocks.
-Therefore the equivalent in F# would need nesting:
+In F# the `catch` keyword becomes `with`. However, there are no `try-with-finally` blocks!
+We have only `try-with` blocks and `try-finally` blocks. Therefore the equivalent in F# would need nesting:
 
 ```
 try
@@ -143,7 +141,7 @@ let sequenceOfIntegers: seq<int> = list
 ```
 
 Things to note:
-- IEnumerable<T> becomes seq<T>
+- IEnumerable<T> becomes `seq<T>`
 - Commas become semicolons when enumerating elements of array.
 
 
@@ -152,7 +150,8 @@ Things to note:
 In C# you write null checks everywhere:
 
 ```
-void Check(SomeType someParam1, SomeType someParam2){
+void Check(SomeType someParam1, SomeType someParam2)
+{
     if (someParam1 != null)
         stringBuilder.Append(someParam.ToString());
 
@@ -184,7 +183,7 @@ let Check(someParam1: Option<SomeType>,
 ```
 
 Things to note:
-* A match-with block is almost like a switch block, but more succing because it includes the casting (to someValue).
+* A `match-with` block is almost like a switch block, but more succing because it includes the casting (to someValue).
 * There are three ways of ignoring things:
 ** For example, we don't care about the return value of Append(), in C# we just ignore it but in
 F# you need to be explicit about ignoring it, using the `ignore()` magic function.
@@ -194,6 +193,7 @@ about its contents (like an `is` operator in C#, instead of `as`).
 * The pipe operator (like in bash) is '|>'. Then 'ignore(x)' is the same as 'x |> ignore'.
 * Do nothing is "()".
 
+------------------------------------------------------
 
 CONGRATS!! You already know enough to maybe understand 80% of F# code.
 Or maybe 80% of simple F# code, which is the code that is being used
