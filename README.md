@@ -224,7 +224,7 @@ F# you need to be explicit about ignoring it, using the `ignore()` magic functio
 - The underscore in a match expression: it's like a `default` in a C# `switch`.
 - The underscore in `Some(_)`, when we want to make sure the value is not None, but we don't care
 about its contents (like an `is` operator in C#, instead of `as`).
-* The pipe operator (like in bash) is `|>`. Then `ignore(x)` is the same as `x |> ignore`.
+* The pipe operator (like in bash) is `|>` (and it works like in bash). Then `ignore(x)` is the same as `x |> ignore`.
 
 ------------------------------------------------------
 
