@@ -100,16 +100,25 @@ Environment.Exit(exitCode)
 ### Example 3: Basic collections
 
 ```
-var list = new int[] { 1, 2, 3 }
-IEnumerable<int> sequenceOfIntegers = list;
+var intArray = new int[] { 1, 2, 3 };
+var intList = new List<int>({ 4, 5, 6 });
+IEnumerable<int> sequenceOfIntegers = intList;
+var dictionary = new Dictionary<int,string>() {
+    { "One", 1 },
+    { "Two", 2 }
+}
 ```
 becomes
 ```
-let list = [ 1 ; 2 ; 3 ]
-let sequenceOfIntegers: seq<int> = list
+var intArray = [| 1; 2; 3 |]
+let intList = [ 4 ; 5 ; 6 ]
+let sequenceOfIntegers: seq<int> = intList
+let dic: IDictionary<string,int> = dict [ ("One", 1); ("Two", 2) ]
 ```
-* Commas become semicolons when declaring elements of an array.
+* Commas become semicolons when declaring elements of an array/list/dictionary.
 * `IEnumerable<T>` becomes `seq<T>`
+* You use `dict` to initialize an IDictionary<K,V> collection, however in F# you
+would rather use a Map<K,V> because the latter is not mutable.
 
 
 ### Example 4: Basic blocks
