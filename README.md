@@ -27,7 +27,7 @@ Things to note:
 * All things are public by default unless you explicitly specify `private` modifier.
 * Specifying types is always optional, except in very special cases.
 * You don't need the `return` keyword. The last element of the function is the value to be returned.
-* No need for braces, it works via 4-space indentation like Python.
+* No need for braces, it works via 4-space (or 2) indentation like Python.
 * No need for semi-colons to denote the end of a line.
 
 If you want to specify the types:
