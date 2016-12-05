@@ -147,7 +147,7 @@ IEnumerable<int> sequenceOfIntegers = list;
 In F#
 
 ```
-let list = [ 1 ; 2 ; 3]
+let list = [ 1 ; 2 ; 3 ]
 let sequenceOfIntegers: seq<int> = list
 ```
 
