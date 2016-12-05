@@ -131,7 +131,7 @@ using (var reader = new StreamReader(someFile)) {
     DoStuff(reader);
 }
 ```
-becomes
+which becomes
 ```
 use reader = StreamReader(someFile)
 DoStuff(reader)
