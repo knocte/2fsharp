@@ -217,14 +217,14 @@ let Check(someParam1: Option<SomeType>,
 
 Things to note:
 * A `match-with` block is almost like a switch block, but more succing because it includes the casting (to someValue).
+* Do nothing is `()`.
 * There are three ways of ignoring things:
-** For example, we don't care about the return value of Append(), in C# we just ignore it but in
+- For example, we don't care about the return value of Append(), in C# we just ignore it but in
 F# you need to be explicit about ignoring it, using the `ignore()` magic function.
-** The underscore in a match expression: it's like a `default` in a C# `switch`.
-** The underscore in `Some(_)`, when we want to make sure the value is not None, but we don't care
+- The underscore in a match expression: it's like a `default` in a C# `switch`.
+- The underscore in `Some(_)`, when we want to make sure the value is not None, but we don't care
 about its contents (like an `is` operator in C#, instead of `as`).
 * The pipe operator (like in bash) is `|>`. Then `ignore(x)` is the same as `x |> ignore`.
-* Do nothing is `()`.
 
 ------------------------------------------------------
 
