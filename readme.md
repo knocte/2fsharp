@@ -19,7 +19,7 @@ public int GiveMeTheLength(string input)
 In F#
 
 ```
-let Length(input) =
+let GiveMeTheLength(input) =
     let result = input.Length
     result
 ```
