@@ -121,7 +121,7 @@ finally
 ```
 The `catch` keyword becomes `with`. However, there are no `try-with-finally`
 blocks! We have only `try-with` blocks and `try-finally` blocks. Therefore
-the equivalent in F# would need nesting:
+the equivalent in F# would need nesting (like it's done in the example above).
 
 You may think this is an F# downside but try-catch-finally blocks are extremely
 rare, especially given the `using` construct (for `IDisposable`) in C#:
