@@ -38,7 +38,7 @@ let Length(input: string): int =
 ```
 using System;
 
-class Main {
+class MainClass {
     void Main() {
         int exitCode = 0;
         if (incomingChar == Environment.NewLine)
