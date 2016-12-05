@@ -216,7 +216,7 @@ let Check(someParam1: Option<SomeType>,
 ```
 
 Things to note:
-* A `match-with` block is almost like a switch block, but more succing because it includes the casting (to someValue).
+* A `match-with` block is almost like a switch block, but more succint because it includes the casting (to someValue).
 * Do nothing is `()`.
 * There are three ways of ignoring things:
 - For example, we don't care about the return value of Append(), in C# we just ignore it but in
