@@ -1,8 +1,7 @@
 # Guide for C# devs to learn F# real FAST
 
 This guide is mostly samples based. It will take you 10minutes of your time
-and you by understanding it you will already get a hang of 80% of the
-language.
+and by understanding it you will already get a hang of 80% of the language.
 
 ### Example 1: Basic function declarations and implementation
 
