@@ -175,8 +175,8 @@ let sequenceOfIntegers: seq<int> = list
 ```
 
 Things to note:
-- `IEnumerable<T>` becomes `seq<T>`
 - Commas become semicolons when declaring elements of an array.
+- `IEnumerable<T>` becomes `seq<T>`
 
 
 ### Example 5: Avoiding nulls and ignoring things
