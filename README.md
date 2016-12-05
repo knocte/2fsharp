@@ -193,10 +193,8 @@ void Check(SomeType someParam1, SomeType someParam2)
 }
 ```
 
-In F#, `void` becomes `unit`, and you do
-the null check with an `Option<T>` type (similar
-to `Nullable<T>`) and a match expression (pattern
-matching):
+In F#, `void` becomes `unit`, and you do the null check in a safer way with an
+`Option<T>` type (similar to `Nullable<T>`) and a match expression (pattern matching):
 
 ```
 let Check(someParam1: Option<SomeType>,
