@@ -4,7 +4,7 @@ This guide is mostly samples based. It will take you 10minutes of your time
 and you by understanding it you will already get a hang of 80% of the
 language.
 
-## Example 1: Basic function declarations and implementation
+### Example 1: Basic function declarations and implementation
 
 In C#
 
@@ -39,7 +39,7 @@ let Length(input: string): int =
     result
 ```
 
-## Example 2: Basic keywords and operators
+### Example 2: Basic keywords and operators
 
 In C#
 
@@ -59,7 +59,6 @@ class Main {
     }
 }
 ```
-
 
 In F#
 
@@ -136,7 +135,7 @@ finally
     MakeSureToCleanup()
 ```
 
-## Example 4: Basic collections
+### Example 4: Basic collections
 
 In C#
 
@@ -157,7 +156,7 @@ Things to note:
 - Commas become semicolons when enumerating elements of array.
 
 
-## Example 4: Avoiding nulls and ignoring things
+### Example 4: Avoiding nulls and ignoring things
 
 In C# you write null checks everywhere:
 
