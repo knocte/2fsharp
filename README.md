@@ -97,7 +97,22 @@ Environment.Exit(exitCode)
 (This is similar to the use of the `?` operator in C#, but more succint and easy to read.)
 
 
-### Example 3: Basic blocks
+### Example 3: Basic collections
+
+```
+var list = new int[] { 1, 2, 3 }
+IEnumerable<int> sequenceOfIntegers = list;
+```
+becomes
+```
+let list = [ 1 ; 2 ; 3 ]
+let sequenceOfIntegers: seq<int> = list
+```
+* Commas become semicolons when declaring elements of an array.
+* `IEnumerable<T>` becomes `seq<T>`
+
+
+### Example 4: Basic blocks
 
 ```
 try {
@@ -139,21 +154,6 @@ DoStuff(reader)
 * No need for nesting a sub-block when using `use`, the resource will be
 disposed when it goes out of scope (the function ends).
 * No need for the `new` keyword.
-
-
-### Example 4: Basic collections
-
-```
-var list = new int[] { 1, 2, 3 }
-IEnumerable<int> sequenceOfIntegers = list;
-```
-becomes
-```
-let list = [ 1 ; 2 ; 3 ]
-let sequenceOfIntegers: seq<int> = list
-```
-* Commas become semicolons when declaring elements of an array.
-* `IEnumerable<T>` becomes `seq<T>`
 
 
 ### Example 5: Avoiding nulls and ignoring things
