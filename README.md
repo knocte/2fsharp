@@ -87,7 +87,7 @@ doubling it like in C#: `==`).
 * Operator `!` becomes `not`.
 * Operators `&&` and `||` are same in F#.
 * No need to enclose entry point of program in Main() function, just write your statements
-in a .fsx script or write the statements in the last .fs fed to the F# compiler.
+in a .fsx script or write the statements in the last `.fs` file fed to the F# compiler.
 
 In general, such a simple piece of code like the one in the example can be coded easily
 without a mutable variable, just by doing readonly assignments, this way:
