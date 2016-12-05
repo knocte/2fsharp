@@ -69,16 +69,16 @@ else if (incomingChar <> "\t" && incomingChar.Length > 1) then
 ```
 
 Things to note:
-* The 'using' keyword becomes 'open'.
-* The 'if () x; else y;' pattern becomes 'if () then x else y', with extra keyword "then".
-* Initial assignment (to a readonly constant) operator is "=". If you need to re-assign a
-new value to the same element, then you explicitly mark it as mutable and use the '<-'
+* The `using` keyword becomes `open`.
+* The `if () x; else y;` pattern becomes `if () then x else y`, with extra keyword `then`.
+* Initial assignment (to a readonly constant) operator is `=`. If you need to re-assign a
+new value to the same element, then you explicitly mark it as mutable and use the `<-`
 operator.
-* Thanks to the above, the '=' operator can be a comparison operator too (no need for
-doubling it like in C#: '==').
-* Operator '!=' becomes '<>'.
-* Operator '!' becomes 'not'.
-* Operators '&&' and '||' are same in F#.
+* Thanks to the above, the `=` operator can be a comparison operator too (no need for
+doubling it like in C#: `==`).
+* Operator `!=` becomes `<>`.
+* Operator `!` becomes `not`.
+* Operators `&&` and `||` are same in F#.
 
 In general, such a simple piece of code like the one in the example can be coded easily
 without a mutable variable, just by doing readonly assignments, this way:
@@ -93,7 +93,7 @@ let exitCode =
         2
 ```
 
-(This is similar to the use of the '?' operator in C#, but more succint and easy to read.)
+(This is similar to the use of the `?` operator in C#, but more succint and easy to read.)
 
 
 ## Example 3: Basic blocks
@@ -141,7 +141,7 @@ let sequenceOfIntegers: seq<int> = list
 ```
 
 Things to note:
-- IEnumerable<T> becomes `seq<T>`
+- `IEnumerable<T>` becomes `seq<T>`
 - Commas become semicolons when enumerating elements of array.
 
 
@@ -161,8 +161,8 @@ void Check(SomeType someParam1, SomeType someParam2)
 ```
 
 In F#, `void` becomes `unit`, and you do
-the null check with an Option<T> type (similar
-to Nullable<T>) and a match expression (pattern
+the null check with an `Option<T>` type (similar
+to `Nullable<T>`) and a match expression (pattern
 matching):
 
 ```
@@ -190,8 +190,8 @@ F# you need to be explicit about ignoring it, using the `ignore()` magic functio
 ** The underscore in a match expression: it's like a `default` in a C# `switch`.
 ** The underscore in `Some(_)`, when we want to make sure the value is not None, but we don't care
 about its contents (like an `is` operator in C#, instead of `as`).
-* The pipe operator (like in bash) is '|>'. Then 'ignore(x)' is the same as 'x |> ignore'.
-* Do nothing is "()".
+* The pipe operator (like in bash) is `|>`. Then `ignore(x)` is the same as `x |> ignore`.
+* Do nothing is `()`.
 
 ------------------------------------------------------
 
