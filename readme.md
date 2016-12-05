@@ -44,6 +44,8 @@ let Length(input: string): int =
 In C#
 
 ```
+using System;
+
 int exitCode = 0;
 if (incomingChar == Environment.NewLine)
     exitCode = 1;
