@@ -1,4 +1,4 @@
-#Guide for C# devs to learn F# real FAST
+# Guide for C# devs to learn F# real FAST
 
 This guide is mostly samples based. It will take you 30minutes of your time
 and you by understanding it you will already get a hang of 80% of the
