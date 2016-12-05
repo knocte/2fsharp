@@ -107,7 +107,7 @@ Environment.Exit(exitCode)
 (This is similar to the use of the `?` operator in C#, but more succint and easy to read.)
 
 
-## Example 3: Basic blocks
+### Example 3: Basic blocks
 
 In C#
 
@@ -178,7 +178,7 @@ Things to note:
 - Commas become semicolons when declaring elements of an array.
 
 
-### Example 4: Avoiding nulls and ignoring things
+### Example 5: Avoiding nulls and ignoring things
 
 In C# you write null checks everywhere:
 
