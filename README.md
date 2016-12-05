@@ -99,6 +99,8 @@ let exitCode =
         1
     else if (incomingChar = String.Empty) then
         2
+    else if (incomingChar <> "\t" && incomingChar.Length > 1) then
+        3
 
 Environment.Exit(exitCode)
 ```
