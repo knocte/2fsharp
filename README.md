@@ -5,8 +5,6 @@ and by understanding it you will already get a hang of 80% of the language.
 
 ### Example 1: Basic function declarations and implementation
 
-In C#
-
 ```
 public int GiveMeTheLength(string input)
 {
@@ -14,16 +12,13 @@ public int GiveMeTheLength(string input)
     return result;
 }
 ```
-
-In F#
-
+becomes
 ```
 let GiveMeTheLength(input) =
     let result = input.Length
     result
 ```
 
-Things to note:
 * All things are public by default unless you explicitly specify `private` modifier.
 * Specifying types is always optional, except in very special cases.
 * You don't need the `return` keyword. The last element of the function is the value to be returned.
@@ -39,8 +34,6 @@ let Length(input: string): int =
 ```
 
 ### Example 2: Basic keywords and operators
-
-In C#
 
 ```
 using System;
@@ -58,9 +51,7 @@ class Main {
     }
 }
 ```
-
-In F#
-
+becomes
 ```
 open System
 
@@ -73,8 +64,6 @@ else if (incomingChar <> "\t" && incomingChar.Length > 1) then
     exitCode <- 3
 Environment.Exit(exitCode)
 ```
-
-Things to note:
 * The `using` keyword becomes `open`.
 * The `if () x; else y;` pattern becomes `if () then x else y`, with extra keyword `then`.
 * Initial assignment (to a readonly constant) operator is `=`. If you need to re-assign a
@@ -110,8 +99,6 @@ Environment.Exit(exitCode)
 
 ### Example 3: Basic blocks
 
-In C#
-
 ```
 try {
     TrySomething();
@@ -121,10 +108,7 @@ try {
     MakeSureToCleanup();
 }
 ```
-
-In F# the `catch` keyword becomes `with`. However, there are no `try-with-finally` blocks!
-We have only `try-with` blocks and `try-finally` blocks. Therefore the equivalent in F# would need nesting:
-
+becomes
 ```
 try
     try
@@ -135,6 +119,9 @@ try
 finally
     MakeSureToCleanup()
 ```
+The `catch` keyword becomes `with`. However, there are no `try-with-finally`
+blocks! We have only `try-with` blocks and `try-finally` blocks. Therefore
+the equivalent in F# would need nesting:
 
 You may think this is an F# downside but try-catch-finally blocks are extremely
 rare, especially given the `using` construct (for `IDisposable`) in C#:
@@ -144,15 +131,11 @@ using (var reader = new StreamReader(someFile)) {
     DoStuff(reader);
 }
 ```
-
-In F#:
-
+becomes
 ```
 use reader = StreamReader(someFile)
 DoStuff(reader)
 ```
-
-Things to note:
 * No need for nesting a sub-block when using `use`, the resource will be
 disposed when it goes out of scope (the function ends).
 * No need for the `new` keyword.
@@ -160,28 +143,20 @@ disposed when it goes out of scope (the function ends).
 
 ### Example 4: Basic collections
 
-In C#
-
 ```
 var list = new int[] { 1, 2, 3 }
 IEnumerable<int> sequenceOfIntegers = list;
 ```
-
-In F#
-
+becomes
 ```
 let list = [ 1 ; 2 ; 3 ]
 let sequenceOfIntegers: seq<int> = list
 ```
-
-Things to note:
-- Commas become semicolons when declaring elements of an array.
-- `IEnumerable<T>` becomes `seq<T>`
+* Commas become semicolons when declaring elements of an array.
+* `IEnumerable<T>` becomes `seq<T>`
 
 
 ### Example 5: Avoiding nulls and ignoring things
-
-In C# you write null checks everywhere:
 
 ```
 void Check(SomeType someParam1, SomeType someParam2)
@@ -193,10 +168,7 @@ void Check(SomeType someParam1, SomeType someParam2)
         stringBuilder.Append(String.Empty);
 }
 ```
-
-In F#, `void` becomes `unit`, and you do the null check in a safer way with an
-`Option<T>` type (similar to `Nullable<T>`) and a match expression (pattern matching):
-
+becomes
 ```
 let Check(someParam1: Option<SomeType>,
           someParam2: Option<SomeType>): unit =
@@ -213,8 +185,11 @@ let Check(someParam1: Option<SomeType>,
     | _ -> ()
 
 ```
+In C# you write null checks everywhere (no safety at compile time). In F#,
+you do the null check in a safer way with an `Option<T>` type (similar to
+`Nullable<T>` but better) and a match expression (pattern matching).
 
-Things to note:
+* `void` equivalent is `unit`.
 * A `match-with` block is almost like a switch block, but more succint because it includes the casting (to someValue).
 * Do nothing is `()`.
 * There are three ways of ignoring things:
