@@ -51,7 +51,7 @@ class Main {
         int exitCode = 0;
         if (incomingChar == Environment.NewLine)
             exitCode = 1;
-        else if (!(incomingChar = String.Empty))
+        else if (!(incomingChar == String.Empty))
             exitCode = 2;
         else if (incomingChar != "\t" && incomingChar.Length > 1)
             exitCode = 3;
