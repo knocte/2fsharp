@@ -186,7 +186,7 @@ In C# you write null checks everywhere:
 void Check(SomeType someParam1, SomeType someParam2)
 {
     if (someParam1 != null)
-        stringBuilder.Append(someParam.ToString());
+        stringBuilder.Append(someParam1.ToString());
 
     if (someParam2 != null)
         stringBuilder.Append(String.Empty);
