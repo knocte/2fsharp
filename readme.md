@@ -46,13 +46,18 @@ In C#
 ```
 using System;
 
-int exitCode = 0;
-if (incomingChar == Environment.NewLine)
-    exitCode = 1;
-else if (!(incomingChar = String.Empty))
-    exitCode = 2;
-else if (incomingChar != "\t" && incomingChar.Length > 1)
-    exitCode = 3;
+class Main {
+    void Main() {
+        int exitCode = 0;
+        if (incomingChar == Environment.NewLine)
+            exitCode = 1;
+        else if (!(incomingChar = String.Empty))
+            exitCode = 2;
+        else if (incomingChar != "\t" && incomingChar.Length > 1)
+            exitCode = 3;
+        Environment.Exit(exitCode);
+    }
+}
 ```
 
 
@@ -68,6 +73,7 @@ else if not (incomingChar = String.Empty) then
     exitCode <- 2
 else if (incomingChar <> "\t" && incomingChar.Length > 1) then
     exitCode <- 3
+Environment.Exit(exitCode)
 ```
 
 Things to note:
@@ -81,6 +87,8 @@ doubling it like in C#: `==`).
 * Operator `!=` becomes `<>`.
 * Operator `!` becomes `not`.
 * Operators `&&` and `||` are same in F#.
+* No need to enclose entry point of program in Main() function, just write your statements
+in a .fsx script or write the statements in the last .fs fed to the F# compiler.
 
 In general, such a simple piece of code like the one in the example can be coded easily
 without a mutable variable, just by doing readonly assignments, this way:
@@ -93,6 +101,8 @@ let exitCode =
         1
     else if (incomingChar = String.Empty) then
         2
+
+Environment.Exit(exitCode)
 ```
 
 (This is similar to the use of the `?` operator in C#, but more succint and easy to read.)
