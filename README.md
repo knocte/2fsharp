@@ -135,6 +135,28 @@ finally
     MakeSureToCleanup()
 ```
 
+You may think this is an F# downside but try-catch-finally blocks are extremely
+rare, especially given the `using` construct (for `IDisposable`) in C#:
+
+```
+using (var reader = new StreamReader(someFile)) {
+    DoStuff(reader);
+}
+```
+
+In F#:
+
+```
+use reader = StreamReader(someFile)
+DoStuff(reader)
+```
+
+Things to note:
+* No need for nesting a sub-block when using `use`, the resource will be
+disposed when it goes out of scope (the function ends).
+* No need for the `new` keyword.
+
+
 ### Example 4: Basic collections
 
 In C#
