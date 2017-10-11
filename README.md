@@ -55,7 +55,7 @@ becomes
 ```
 open System
 
-let mutable exitCode = 0
+let mutable exitCode: int = 0
 if (incomingChar = Environment.NewLine) then
     exitCode <- 1
 else if not (incomingChar = String.Empty) then
