@@ -110,11 +110,12 @@ var dictionary = new Dictionary<int,string>() {
 ```
 becomes
 ```
-var intArray = [| 1; 2; 3 |]
+let intArray = [| 1; 2; 3 |]
 let intList = [ 4 ; 5 ; 6 ]
 let sequenceOfIntegers: seq<int> = intList
 let dic: IDictionary<string,int> = dict [ ("One", 1); ("Two", 2) ]
 ```
+* Keyword `var` becomes `let`.
 * Commas become semicolons when declaring elements of an array/list/dictionary.
 * `IEnumerable<T>` becomes `seq<T>`
 * You use `dict` to initialize an `IDictionary<K,V>` collection, however in F#
