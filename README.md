@@ -157,12 +157,11 @@ using (var reader = new StreamReader(someFile)) {
 ```
 which becomes
 ```
-use reader = StreamReader(someFile)
+use reader = new StreamReader(someFile)
 DoStuff(reader)
 ```
-* No need for nesting a sub-block when using `use`, the resource will be
-disposed when it goes out of scope (the function ends).
-* No need for the `new` keyword.
+* No need for nesting a sub-block when using `use`
+* Therefore, the resource will be disposed when it goes out of scope (the function ends).
 
 
 ### Example 5: Avoiding nulls and ignoring things
@@ -208,6 +207,51 @@ F# you need to be explicit about ignoring it, using the `ignore()` magic functio
  - The underscore in `Some(_)`, when we want to make sure the value is not None, but we don't care
 about its contents (like an `is` operator in C#, instead of `as`).
 * The pipe operator (like in bash) is `|>` (and it works like in bash). Then `ignore(x)` is the same as `x |> ignore`.
+
+
+
+### Example 6: Basic types
+
+This immutable C# class below is much easier to write in F#:
+
+```
+public class Foo
+{
+    public Foo (int bar, string baz)
+    {
+        this.bar = bar;
+        this.baz = baz;
+    }
+
+    readonly int bar;
+    public int Bar { get { return bar; } }
+
+    readonly string baz;
+    public string Baz { get { return baz; } }
+}
+
+class Static
+{
+    Foo CreateFoo() {
+        return new Foo(42, "forty-two");
+    }
+}
+```
+
+because it's just one line:
+
+```
+type Foo = { Bar: int; Baz: string }
+
+module Static =
+    let CreateFoo () =
+        { Bar = 42; Baz = "forty-two" }
+```
+
+So then:
+* Classes without behaviour (like the above Foo) are called "Records", they seem similar to structs but they are still reference types and allocated on the heap. They are immutable (once you create them, you cannot change their values underneath).
+* Static classes are "modules", like the "Static" type above.
+* In F#, there's no need to use the keyword "new" when creating instances of new classes or structs, except if the class being created implements IDisposable.
 
 ------------------------------------------------------
 
