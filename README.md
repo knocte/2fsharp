@@ -65,7 +65,7 @@ else if (incomingChar <> "\t" && incomingChar.Length > 1) then
 Environment.Exit(exitCode)
 ```
 * The `using` keyword becomes `open`.
-* The `if (x) return a; else return b();` pattern becomes `if x then a else b`, with extra keyword `then`, without the need of parenthesis.
+* The `if (x) return a; else return b;` pattern becomes `if x then a else b`, with extra keyword `then`, without the need of parenthesis.
 * Initial assignment (to a readonly constant) operator is `=`. If you need to re-assign a
 new value to the same element, then you explicitly mark it as mutable and use the `<-`
 operator.
