@@ -139,7 +139,7 @@ try
     try
         TrySomething()
     with
-    | SomeEx(ex) -> DoSomethingElse()
+    | :? SomeEx as ex -> DoSomethingElse()
 
 finally
     MakeSureToCleanup()
