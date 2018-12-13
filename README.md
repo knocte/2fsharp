@@ -20,6 +20,7 @@ let GiveMeTheLength(input) =
 ```
 
 * All things are public by default unless you explicitly specify `private` modifier.
+* Keyword `var` becomes `let` (which is also used to define functions/methods, not only to declare variables).
 * Specifying types is always optional, except in very special cases.
 * You don't need the `return` keyword. The last element of the function is the value to be returned.
 * No need for braces, it works via 4-space (or 2) indentation like Python.
@@ -115,7 +116,6 @@ let intList = [ 4 ; 5 ; 6 ]
 let sequenceOfIntegers: seq<int> = intList
 let dic: IDictionary<string,int> = dict [ ("One", 1); ("Two", 2) ]
 ```
-* Keyword `var` becomes `let`.
 * Commas become semicolons when declaring elements of an array/list/dictionary.
 * `IEnumerable<T>` becomes `seq<T>`
 * You use `dict` to initialize an `IDictionary<K,V>` collection, however in F#
