@@ -224,10 +224,14 @@ public class Foo
     }
 
     readonly int bar;
-    public int Bar { get { return bar; } }
+    public int Bar {
+        get { return bar; }
+    }
 
     readonly string baz;
-    public string Baz { get { return baz; } }
+    public string Baz {
+        get { return baz; }
+    }
 }
 
 class Static
