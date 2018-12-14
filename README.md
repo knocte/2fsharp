@@ -133,8 +133,8 @@ you would rather use a `Map<K,V>` because the latter is immutable.
 ```
 try {
     TrySomething();
-} catch (SomeEx) {
-    DoSomethingElse();
+} catch (SomeException ex) {
+    DoSomethingElse(ex);
 } finally {
     MakeSureToCleanup();
 }
@@ -145,7 +145,8 @@ try
     try
         TrySomething()
     with
-    | :? SomeEx as ex -> DoSomethingElse()
+    | :? SomeException as ex ->
+        DoSomethingElse(ex)
 
 finally
     MakeSureToCleanup()
