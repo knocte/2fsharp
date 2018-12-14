@@ -103,7 +103,7 @@ let exitCode =
 Environment.Exit(exitCode)
 ```
 
-(This is similar to the use of the `?` operator in C#, but more succint and easy to read.)
+(This is similar to the use of the `?` operator in C#, but more succinct and easy to read.)
 
 
 ### Example 3: Basic collections
