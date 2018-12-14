@@ -59,14 +59,14 @@ open System
 let mutable exitCode: int = 0
 if (incomingChar = Environment.NewLine) then
     exitCode <- 1
-else if not (incomingChar = String.Empty) then
+elif not (incomingChar = String.Empty) then
     exitCode <- 2
-else if (incomingChar <> "\t" && incomingChar.Length > 1) then
+elif (incomingChar <> "\t" && incomingChar.Length > 1) then
     exitCode <- 3
 Environment.Exit(exitCode)
 ```
 * The `using` keyword becomes `open`.
-* The `if (x) return a; else return b;` pattern becomes `if x then a else b`, with extra keyword `then`, without the need of parenthesis.
+* The `if (x) return a; else if (y) return b; else return c;` pattern becomes `if x then a elif y then b else c`, without the need of parenthesis but with new keywords `then` and `elif`.
 * Initial assignment (to a readonly constant) operator is `=`. If you need to re-assign a
 new value to the same element, then you explicitly mark it as mutable and use the `<-`
 operator.
