@@ -48,6 +48,8 @@ class MainClass {
             exitCode = 2;
         else if (incomingChar != "\t" && incomingChar.Length > 1)
             exitCode = 3;
+        else
+            exitCode = 4;
         Environment.Exit(exitCode);
     }
 }
@@ -63,6 +65,8 @@ elif not (incomingChar = String.Empty) then
     exitCode <- 2
 elif (incomingChar <> "\t" && incomingChar.Length > 1) then
     exitCode <- 3
+else
+    exitCode <- 4
 Environment.Exit(exitCode)
 ```
 * The `using` keyword becomes `open`.
@@ -91,6 +95,8 @@ let exitCode =
         2
     elif (incomingChar <> "\t" && incomingChar.Length > 1) then
         3
+    else
+        4
 
 Environment.Exit(exitCode)
 ```
