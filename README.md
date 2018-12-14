@@ -21,12 +21,12 @@ let GiveMeTheLength(input) =
 
 * All things are public by default unless you explicitly specify `private` modifier.
 * Keyword `var` becomes `let` (which is also used to define functions/methods, not only to declare variables).
-* Specifying types is always optional, except in very special cases.
 * You don't need the `return` keyword. The last element of the function is the value to be returned.
 * No need for braces, it works via 4-space (or 2) indentation like Python.
 * No need for semi-colons to denote the end of a line.
+* Specifying types is always optional, except in very special cases when the compiler cannot infer them.
 
-If you want to specify the types:
+If you want to specify the types in the sample above, it would become:
 
 ```
 let Length(input: string): int =
