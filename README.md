@@ -57,7 +57,7 @@ becomes
 open System
 
 let mutable exitCode: int = 0
-if (incomingChar = Environment.NewLine) then
+if incomingChar = Environment.NewLine then
     exitCode <- 1
 elif not (incomingChar = String.Empty) then
     exitCode <- 2
@@ -85,11 +85,11 @@ without a mutable variable, just by doing readonly assignments, this way:
 open System
 
 let exitCode =
-    if (incomingChar = Environment.NewLine) then
+    if incomingChar = Environment.NewLine then
         1
-    else if (incomingChar = String.Empty) then
+    elif not (incomingChar = String.Empty) then
         2
-    else if (incomingChar <> "\t" && incomingChar.Length > 1) then
+    elif (incomingChar <> "\t" && incomingChar.Length > 1) then
         3
 
 Environment.Exit(exitCode)
