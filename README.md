@@ -39,8 +39,10 @@ let Length(input: string): int =
 ```
 using System;
 
-class MainClass {
-    void Main() {
+class MainClass
+{
+    void Main()
+    {
         int exitCode = 0;
         if (incomingChar == Environment.NewLine)
             exitCode = 1;
@@ -159,7 +161,8 @@ You may think this is an F# downside but try-catch-finally blocks are extremely
 rare, especially given the `using` construct (for `IDisposable`) in C#:
 
 ```
-using (var reader = new StreamReader(someFile)) {
+using (var reader = new StreamReader(someFile))
+{
     DoStuff(reader);
 }
 ```
@@ -231,19 +234,22 @@ public class Foo
     }
 
     readonly int bar;
-    public int Bar {
+    public int Bar
+    {
         get { return bar; }
     }
 
     readonly string baz;
-    public string Baz {
+    public string Baz
+    {
         get { return baz; }
     }
 }
 
 class Static
 {
-    Foo CreateFoo() {
+    Foo CreateFoo()
+    {
         return new Foo(42, "forty-two");
     }
 }
