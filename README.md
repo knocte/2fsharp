@@ -246,7 +246,7 @@ public class Foo
     }
 }
 
-static class Static
+static class FooFactory
 {
     static internal Foo CreateFoo()
     {
@@ -260,7 +260,7 @@ because it's just one line:
 ```
 type Foo = { Bar: int; Baz: string }
 
-module Static =
+module FooFactory =
     let internal CreateFoo () =
         { Bar = 42; Baz = "forty-two" }
 ```
