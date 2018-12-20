@@ -369,6 +369,191 @@ module Foo =
         Baz()
 ```
 
+
+### Example 8: delegates, anonymous methods, functions, oh my!
+
+In the earlier versions of C#, the way to pass functions (and procedures, which are the functions that return `void`) was via delegate types and anonymous functions. See an example with 4 combinations:
+
+```
+static class SomeOldCsharpClass
+{
+    delegate void ProcedureWithNoReturnValueAndNoArguments();
+
+    static void DelegateReception1(ProcedureWithNoReturnValueAndNoArguments dlg)
+    {
+        dlg.Invoke();
+    }
+
+    static void SendingAnonymousMethodAsDelegate1()
+    {
+        DelegateReception1(delegate ()
+        {
+            Console.WriteLine("hello 1");
+        });
+    }
+
+    delegate void ProcedureWithNoReturnValueAndOneArg(string foo);
+
+    static void DelegateReception2(ProcedureWithNoReturnValueAndOneArg dlg)
+    {
+        string bar = "baz";
+        dlg.Invoke(bar);
+    }
+
+    static void SendingAnonymousMethodAsDelegate2()
+    {
+        DelegateReception2(delegate (string foo)
+        {
+            Console.WriteLine("hello 2 " + foo);
+        });
+    }
+
+    delegate int FunctionWithOneReturnValueAndNoArguments();
+
+    static void DelegateReception3(FunctionWithOneReturnValueAndNoArguments dlg)
+    {
+        int result = dlg.Invoke();
+    }
+
+    static void SendingAnonymousMethodAsDelegate3()
+    {
+        DelegateReception3(delegate ()
+        {
+            Console.WriteLine("hello 3");
+            return 3;
+        });
+    }
+
+    delegate long FunctionWithOneReturnValueAndOneArg(double foo);
+
+    static void DelegateReception4(FunctionWithOneReturnValueAndOneArg dlg)
+    {
+        double bar = 3.0;
+        long result = dlg.Invoke(bar);
+    }
+
+    static void SendingAnonymousMethodAsDelegate4()
+    {
+        DelegateReception4(delegate (double foo)
+        {
+            Console.WriteLine("hello 4 " + foo);
+            return 3;
+        });
+    }
+}
+```
+
+That was all fine and well, but then new versions of C# came along, which made it less verbose and a bit more elegant:
+
+```
+static class SomeNewCsharpClass
+{
+
+    static void DelegateReception1(Action dlg)
+    {
+        dlg.Invoke();
+    }
+
+    static void SendingAnonymousMethodAsDelegate1()
+    {
+        DelegateReception1(() =>
+        {
+            Console.WriteLine("hello 1");
+        });
+    }
+
+    static void DelegateReception2(Action<string> dlg)
+    {
+        string bar = "baz";
+        dlg.Invoke(bar);
+    }
+
+    static void SendingAnonymousMethodAsDelegate2()
+    {
+        DelegateReception2((string foo) =>
+        {
+            Console.WriteLine("hello 2 " + foo);
+        });
+    }
+
+    static void DelegateReception3(Func<int> dlg)
+    {
+        int result = dlg.Invoke();
+    }
+
+    static void SendingAnonymousMethodAsDelegate3()
+    {
+        DelegateReception3(() =>
+        {
+            Console.WriteLine("hello 3");
+            return 3;
+        });
+    }
+
+    static void DelegateReception4(Func<double,int> dlg)
+    {
+        double bar = 4.0;
+        long result = dlg.Invoke(bar);
+    }
+
+    static void SendingAnonymousMethodAsDelegate4()
+    {
+        DelegateReception4((double foo) =>
+        {
+            Console.WriteLine("hello 4 " + foo);
+            return 4;
+        });
+    }
+}
+```
+
+As you can see, delegate types via the `delegate` keyword became `Action`, `Action<TArg1>`, `Function<TResult>`, `Function<TArg1,TResult>` and so on. Anonymous methods via the same `delegate` keyword became lambdas via the `=>` symbol.
+
+But good news! Functions in F# are a native citizen, so this all looks even simpler in this language:
+
+```
+module SomeFsharpModule =
+    let DelegateReception1(dlg: unit->unit) =
+        dlg()
+
+    let SendingAnonymousMethodAsDelegate1() =
+        DelegateReception1(fun _ ->
+            Console.WriteLine("hello 1")
+        )
+
+    let DelegateReception2(dlg: string->unit) =
+        let bar = "baz"
+        dlg(bar)
+
+    let SendingAnonymousMethodAsDelegate2() =
+        DelegateReception2(fun bar ->
+            Console.WriteLine("hello 2 " + bar)
+        )
+
+    let DelegateReception3(dlg: unit->int) =
+        let result = dlg()
+        ()
+
+    let SendingAnonymousMethodAsDelegate3() =
+        DelegateReception3(fun _ ->
+            Console.WriteLine("hello 3")
+            3
+        )
+
+    let DelegateReception4(dlg: double->int) =
+        let bar = 3.0
+        let result = dlg(bar)
+        ()
+
+    let SendingAnonymousMethodAsDelegate4() =
+        DelegateReception3(fun bar ->
+            Console.WriteLine("hello 4 " + bar.ToString())
+            4
+        )
+```
+
+As you can see, the equivalent of BCL's `Function` and `Action` become native F# syntax for denoting arguments and return values via the `->` symbol, e.g. `argType->resultType`. Remember, `void` is `unit` in F#, a dummy real type with only one possible value `()` that makes it moot to distinguish between functions and actions. Last but not least, C#'s `(...) => { ... }` becomes `fun ... -> ...`.
+
 ------------------------------------------------------
 
 CONGRATS!! You already know enough to maybe understand 80% of F# code.
