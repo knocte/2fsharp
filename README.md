@@ -306,7 +306,7 @@ class Foo1
 
 class Foo2
 {
-    void Bar()
+    static void Bar()
     {
         Foo1.Bar();
     }
