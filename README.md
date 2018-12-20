@@ -28,7 +28,7 @@ let GiveMeTheLength(input) =
 
 If you want to specify the types in the sample above, it would become:
 
-```
+```fsharp
 let Length(input: string): int =
     let result: int = input.Length
     result
@@ -36,7 +36,7 @@ let Length(input: string): int =
 
 ### Example 2: Basic keywords and operators
 
-```
+```csharp
 using System;
 
 class MainClass
@@ -57,7 +57,7 @@ class MainClass
 }
 ```
 becomes
-```
+```fsharp
 open System
 
 let mutable exitCode: int = 0
@@ -87,7 +87,7 @@ in a .fsx script or write the statements in the last `.fs` file fed to the F# co
 In general, such a simple piece of code like the one in the example can be coded easily
 without a mutable variable, just by doing readonly assignments, this way:
 
-```
+```fsharp
 open System
 
 let exitCode =
@@ -108,7 +108,7 @@ Environment.Exit(exitCode)
 
 ### Example 3: Basic collections
 
-```
+```csharp
 var intArray = new int[] { 1, 2, 3 };
 var intList = new List<int>({ 4, 5, 6 });
 IEnumerable<int> sequenceOfIntegers = intList;
@@ -118,7 +118,7 @@ var dictionary = new Dictionary<int,string>() {
 }
 ```
 becomes
-```
+```fsharp
 let intArray = [| 1; 2; 3 |]
 let intList = [ 4 ; 5 ; 6 ]
 let sequenceOfIntegers: seq<int> = intList
@@ -132,7 +132,7 @@ you would rather use a `Map<K,V>` because the latter is immutable.
 
 ### Example 4: Basic blocks
 
-```
+```csharp
 try {
     TrySomething();
 } catch (SomeException ex) {
@@ -142,7 +142,7 @@ try {
 }
 ```
 becomes
-```
+```fsharp
 try
     try
         TrySomething()
@@ -160,14 +160,14 @@ the equivalent in F# would need nesting (like it's done in the example above).
 You may think this is an F# downside but try-catch-finally blocks are extremely
 rare, especially given the `using` construct (for `IDisposable`) in C#:
 
-```
+```csharp
 using (var reader = new StreamReader(someFile))
 {
     DoStuff(reader);
 }
 ```
 which becomes
-```
+```fsharp
 use reader = new StreamReader(someFile)
 DoStuff(reader)
 ```
@@ -177,7 +177,7 @@ DoStuff(reader)
 
 ### Example 5: Avoiding nulls and ignoring things
 
-```
+```csharp
 void Check(SomeType someParam1, SomeType someParam2)
 {
     if (someParam1 != null)
@@ -188,7 +188,7 @@ void Check(SomeType someParam1, SomeType someParam2)
 }
 ```
 becomes
-```
+```fsharp
 let Check(someParam1: Option<SomeType>,
           someParam2: Option<SomeType>): unit =
 
@@ -224,7 +224,7 @@ about its contents (like an `is` operator in C#, instead of `as`).
 
 This immutable C# class below is much easier to write in F#:
 
-```
+```csharp
 public class Foo
 {
     public Foo (int bar, string baz)
@@ -257,7 +257,7 @@ static class FooFactory
 
 because it's just one line:
 
-```
+```fsharp
 type Foo = { Bar: int; Baz: string }
 
 module FooFactory =
@@ -274,7 +274,7 @@ So then:
 
 As a C# developer, you know that this code compiles fine:
 
-```
+```csharp
 static class Foo
 {
     static void Bar()
@@ -291,7 +291,7 @@ static class Foo
 Why wouldn't it? You may think. Sure.
 And this also compiles:
 
-```
+```csharp
 static class Foo1
 {
     public static void Bar()
@@ -321,7 +321,7 @@ Maybe you understand already where I'm coming from. The last C# snippet compiles
 
 Then, what you need to learn from this is that F# is a language that, once again, prevents you to shoot yourself in the foot in this way, because circular references in the same assembly are **not** valid. How does it achieve this? By forcing you to declare type A before type B, in case the latter calls the former. Therefore, this equivalent code snippet in F# will fail to compile:
 
-```
+```fsharp
 module Foo1 =
     let Bar() =
         ()
@@ -345,7 +345,7 @@ It's not fixable unless we simply stop using circular dependencies (despite an e
 
 Therefore, this smaller snippet equivalent to our very first C# sample, doesn't compile either:
 
-```
+```fsharp
 module Foo =
     let Bar() =
         Baz()
@@ -360,7 +360,7 @@ It gives the error:
 
 But as we just learned, this is easier to fix; just declare Baz first:
 
-```
+```fsharp
 module Foo =
     let Baz() =
         ()
@@ -374,7 +374,7 @@ module Foo =
 
 In the earlier versions of C#, the way to pass functions (and procedures, which are the functions that return `void`) was via delegate types and anonymous functions. See an example with 4 combinations:
 
-```
+```csharp
 static class SomeOldCsharpClass
 {
     delegate void ProcedureWithNoReturnValueAndNoArguments();
@@ -445,7 +445,7 @@ static class SomeOldCsharpClass
 
 That was all fine and well, but then new versions of C# came along, which made it less verbose and a bit more elegant:
 
-```
+```csharp
 static class SomeNewCsharpClass
 {
 
@@ -511,7 +511,7 @@ As you can see, delegate types via the `delegate` keyword became `Action`, `Acti
 
 But good news! Functions in F# are a native citizen, so this all looks even simpler in this language:
 
-```
+```fsharp
 module SomeFsharpModule =
     let DelegateReception1(dlg: unit->unit) =
         dlg()
