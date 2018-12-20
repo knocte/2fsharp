@@ -428,7 +428,7 @@ static class SomeOldCsharpClass
 
     static void DelegateReception4(FunctionWithOneReturnValueAndOneArg dlg)
     {
-        double bar = 3.0;
+        double bar = 4.0;
         long result = dlg.Invoke(bar);
     }
 
@@ -437,7 +437,7 @@ static class SomeOldCsharpClass
         DelegateReception4(delegate (double foo)
         {
             Console.WriteLine("hello 4 " + foo);
-            return 3;
+            return 4;
         });
     }
 }
@@ -541,7 +541,7 @@ module SomeFsharpModule =
         )
 
     let DelegateReception4(dlg: double->int) =
-        let bar = 3.0
+        let bar = 4.0
         let result = dlg(bar)
         ()
 
