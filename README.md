@@ -189,8 +189,7 @@ void Check(SomeType someParam1, SomeType someParam2)
 ```
 becomes
 ```fsharp
-let Check(someParam1: Option<SomeType>,
-          someParam2: Option<SomeType>): unit =
+let Check(someParam1: Option<SomeType>, someParam2: Option<SomeType>): unit =
 
     match someParam1 with
     | Some(someValue) -> // like 'as' in C#, you cast and want the value
