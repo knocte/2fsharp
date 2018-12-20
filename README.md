@@ -246,9 +246,9 @@ public class Foo
     }
 }
 
-class Static
+static class Static
 {
-    Foo CreateFoo()
+    static internal Foo CreateFoo()
     {
         return new Foo(42, "forty-two");
     }
@@ -261,7 +261,7 @@ because it's just one line:
 type Foo = { Bar: int; Baz: string }
 
 module Static =
-    let CreateFoo () =
+    let internal CreateFoo () =
         { Bar = 42; Baz = "forty-two" }
 ```
 
@@ -275,7 +275,7 @@ So then:
 As a C# developer, you know that this code compiles fine:
 
 ```
-class Foo
+static class Foo
 {
     static void Bar()
     {
@@ -292,7 +292,7 @@ Why wouldn't it? You may think. Sure.
 And this also compiles:
 
 ```
-class Foo1
+static class Foo1
 {
     public static void Bar()
     {
@@ -304,7 +304,7 @@ class Foo1
     }
 }
 
-class Foo2
+static class Foo2
 {
     static void Bar()
     {
