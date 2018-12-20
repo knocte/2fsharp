@@ -5,7 +5,7 @@ and by understanding it you will already get a hang of 80% of the language.
 
 ### Example 1: Basic function declarations and implementation
 
-```
+```csharp
 public int GiveMeTheLength(string input)
 {
     var result = input.Length;
@@ -13,7 +13,7 @@ public int GiveMeTheLength(string input)
 }
 ```
 becomes
-```
+```fsharp
 let GiveMeTheLength(input) =
     let result = input.Length
     result
