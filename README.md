@@ -489,7 +489,7 @@ static class SomeNewCsharpClass
         });
     }
 
-    static void DelegateReception4(Func<double,int> dlg)
+    static void DelegateReception4(Func<double,long> dlg)
     {
         double bar = 4.0;
         long result = dlg.Invoke(bar);
