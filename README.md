@@ -136,7 +136,11 @@ you would rather use a `Map<K,V>` because the latter is immutable.
 try {
     TrySomething();
 } catch (SomeException ex) {
-    DoSomethingElse(ex);
+    if (SomeCondition()) {
+        DoSomethingElse(ex);
+        throw new OtherException();
+    } else
+        throw;
 } finally {
     MakeSureToCleanup();
 }
@@ -148,13 +152,18 @@ try
         TrySomething()
     with
     | :? SomeException as ex ->
-        DoSomethingElse(ex)
+        if SomeCondition() then
+            DoSomethingElse(ex)
+            raise OtherException
+        else
+            reraise()
 
 finally
     MakeSureToCleanup()
 ```
-The `catch` keyword becomes `with`. However, there are no `try-with-finally`
-blocks! We have only `try-with` blocks and `try-finally` blocks. Therefore
+* The `catch` keyword becomes `with`.
+* The `throw X;` clause becomes `raise X`, and an empty `throw;` becomes the function call `reraise()`.
+* However, there are no `try-with-finally` blocks! We have only `try-with` blocks and `try-finally` blocks. Therefore
 the equivalent in F# would need nesting (like it's done in the example above).
 
 You may think this is an F# downside but try-catch-finally blocks are extremely
