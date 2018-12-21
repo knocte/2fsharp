@@ -275,7 +275,7 @@ module FooFactory =
 
 So then:
 * Classes without behaviour (like the above Foo) are called "Records", they seem similar to structs but they are still reference types and allocated on the heap. They are immutable (once you create them, you cannot change their values underneath).
-* Static classes are "modules", like the "Static" type above.
+* Static classes are "modules", like the "FooFactory" type above.
 * In F#, there's no need to use the keyword "new" when creating instances of new classes or structs, except if the class being created implements IDisposable.
 
 ### Example 7: Order is important, and circular dependencies are the root of all evil
