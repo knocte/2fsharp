@@ -560,7 +560,7 @@ module SomeFsharpModule =
         )
 ```
 
-As you can see, the equivalent of BCL's `Function` and `Action` become native F# syntax for denoting arguments and return values via the `->` symbol, e.g. `argType->resultType`. Remember, `void` is `unit` in F#, a dummy real type with only one possible value `()` that makes it moot to distinguish between functions and actions. Last but not least, C#'s `(...) => { ... }` becomes `fun ... -> ...`.
+As you can see, the equivalent of BCL's `Function` and `Action` become native F# syntax for denoting arguments and return values via the `->` symbol, e.g. `TArg1->TResult`. Remember, `void` is `unit` in F#, a dummy real type with only one possible value `()` that makes it moot to distinguish between functions and actions. Last but not least, C#'s `(...) => { ... }` becomes `fun ... -> ...`.
 
 ------------------------------------------------------
 
