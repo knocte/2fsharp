@@ -548,7 +548,7 @@ module SomeFsharpModule =
             3
         )
 
-    let DelegateReception4(dlg: double->int) =
+    let DelegateReception4(dlg: double->int64) =
         let bar = 4.0
         let result = dlg(bar)
         ()
@@ -556,7 +556,7 @@ module SomeFsharpModule =
     let SendingAnonymousMethodAsDelegate4() =
         DelegateReception3(fun bar ->
             Console.WriteLine("hello 4 " + bar.ToString())
-            4
+            int64 4
         )
 ```
 
