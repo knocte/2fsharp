@@ -287,11 +287,13 @@ static class Foo
 {
     static void Bar()
     {
-        Baz();
+        if (Baz())
+            Bar();
     }
 
-    static void Baz()
+    static bool Baz()
     {
+        return false;
     }
 }
 ```
@@ -356,25 +358,28 @@ Therefore, this smaller snippet equivalent to our very first C# sample, doesn't 
 ```fsharp
 module Foo =
     let Bar() =
-        Baz()
+        if Baz() then
+            Bar()
 
-    let Baz() =
-        ()
+    let Baz(): bool =
+        false
 ```
 
 It gives the error:
 
 * Error FS0039: The value or constructor 'Baz' is not defined. (Referring to Foo.Bar implementation.)
+* Error FS0039: The value or constructor 'Bar' is not defined. (Referring to Foo.Bar implementation.)
 
-But as we just learned, this is easier to fix; just declare Baz first:
+But as we just learned, this is easier to fix; just declare Baz first. And for a function to be able to call itself (which, in a way, it's also a cyclic dependency), we use the `rec` keyword (which means "recursive"):
 
 ```fsharp
 module Foo =
-    let Baz() =
-        ()
+    let Baz(): bool =
+        false
 
-    let Bar() =
-        Baz()
+    let rec Bar() =
+        if Baz() then
+            Bar()
 ```
 
 
