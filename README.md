@@ -567,8 +567,81 @@ module SomeFsharpModule =
 
 As you can see, the equivalent of BCL's `Function` and `Action` become native F# syntax for denoting arguments and return values via the `->` symbol, e.g. `TArg1->TResult`. Remember, `void` is `unit` in F#, a dummy real type with only one possible value `()` that makes it moot to distinguish between functions and actions. Last but not least, C#'s `(...) => { ... }` becomes `fun ... -> ...`.
 
-------------------------------------------------------
 
+### Example 9: tuples, partial application and currification
+
+Chances are, if you've never done any functional programming, you may be scared about some concepts from it such as "partial application" and "currification", but truth is, they are not such complex concepts, and to explain them properly we need to explain tuples first, and why it's not recommended to abuse them in F# (in fact, you cannot use partial application with tuples! more on this later).
+
+Let's talk first about a C# snippet which has an `out` parameter:
+
+```csharp
+int anInteger;
+if (int.TryParse(someString, out anInteger)) {
+    DoSomethingWithAnInteger(anInteger);
+} else {
+    DoSomethingElse();
+}
+```
+
+If you try to translate the above into F# from which what you've learned so far, you will first wonder: how can I declare a variable without assigning a value to it? Truth to be told, there's really no way to do this in F#. But then after knowing this, you would have the temptation to simply assign any dummy value to an `anInteger` variable, because after all, it would be overwritten by the `TryParse()` call, right? This would not be very elegant, especially because for this to work, we would need to mark the variable as `mutable` (so as to be able to override it with a second value later), which is not idiomatic F#. The real best way to do this in F# is just using what is called an "Active Pattern", which will convert the function call above into a function call that virtually returns two values at the same time:
+
+```fsharp
+match int.TryParse(someString) with
+| (true, anInteger) -> DoSomethingWithAnInteger(anInteger)
+| (false, _) -> DoSomethingElse()
+```
+
+This active pattern above has provided syntax sugar to the F# compiler which converted the `bool TryParse(string,out int)` signature in something like `(bool,int) TryParse(string)`, where `(bool,int)` is a tuple! So, in F#, tuples of any length of elements can be created very easily this way, in any other scenario, without the need to use the `System.Tuple<X,Y,...>` type. In a way, it reminds me of the way this was also improved in the last versions of C# (where you could use tuples in function signatures too without the use of `Tuple` either).
+
+Let's double check on what we mean. This would be with old C#:
+
+```csharp
+void ReceiveTuple(Tuple<string,int> aTuple)
+{
+    var counter = aTuple.Item2++;
+    Console.WriteLine(counter);
+    var newTuple = new Tuple<string,int>(aTuple.Item1, counter)
+    ReceiveTuple(newTuple);
+}
+```
+
+Then with new C# (under the hood, it compiles to `ValueTuple<X,Y,...>` elements):
+
+```
+void ReceiveTuple((string s, int i) aTuple)
+{
+    var counter = aTuple.i++;
+    Console.WriteLine(counter);
+    var newTuple = (aTuple.s, counter);
+    ReceiveTuple(newTuple);
+}
+```
+
+With F#:
+
+```
+let rec ReceiveTuple(s: string, i: int) =
+    let counter = i + 1
+    Console.WriteLine(counter.ToString())
+    let newTuple = (s, counter)
+    ReceiveTuple (newTuple)
+```
+
+Notice how tuples blend into what seemed to be normal parameters in F#? In fact, along all this guide up until now, all the methods we have written in F# that received more than one parameter, were actually using tuples, even if you might have not noticed. But then, you might think, can you write the above method without tuples in F# then? Yes you can, just omitting the comma, this way:
+
+```
+let rec ReceiveNonTuple (s: string) (i: int) =
+    let counter = i + 1
+    Console.WriteLine(counter.ToString())
+    ReceiveNonTuple s counter
+```
+
+What's the difference between the functions `ReceiveTuple` and `ReceiveNonTuple`? Both receive the same number of arguments, and with the same types. However, the first one has its parameters as an F# tuple, and the second one has parameters declared in an idiomatic-F# way. Why is this more idiomatic in F#? Because `ReceiveTuple` cannot be used in partial application scenarios, while `ReceiveNonTuple` can be.
+
+To be continued...
+
+------------------------------------------------------
+`
 CONGRATS!! You already know enough to maybe understand 80% of F# code.
 Or maybe 80% of simple F# code, which is the code that is being used,
 for instance, in most F# scripts: easy code.
