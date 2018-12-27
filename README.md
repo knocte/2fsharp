@@ -583,7 +583,7 @@ if (int.TryParse(someString, out anInteger)) {
 }
 ```
 
-If you try to translate the above into F# from which what you've learned so far, you will first wonder: how can I declare a variable without assigning a value to it? Truth to be told, there's really no way to do this in F#. But then after knowing this, you would have the temptation to simply assign any dummy value to an `anInteger` variable, because after all, it would be overwritten by the `TryParse()` call, right? This would not be very elegant, especially because for this to work, we would need to mark the variable as `mutable` (so as to be able to override it with a second value later), which is not idiomatic F#. The real best way to do this in F# is just using what is called an "Active Pattern", which will convert the function call above into a function call that virtually returns two values at the same time:
+If you try to translate the above into F# from which what you've learned so far, you will first wonder: how can I declare a variable without assigning a value to it? Truth to be told, there's really no way to do this in F#. But then after knowing this, you would have the temptation to simply assign any dummy value to an `anInteger` variable, because after all, it would be overwritten by the `TryParse()` call, right? This would not be very elegant, especially because for this to work, we would need to mark the variable as `mutable` (so as to be able to override it with a second value later), which is not idiomatic F#. The real best way to do this in F# is just using what is called an "Active Pattern", which will convert the function call above into a function call that virtually returns two values simultaneously:
 
 ```fsharp
 match int.TryParse(someString) with
@@ -607,7 +607,7 @@ void ReceiveTuple(Tuple<string,int> aTuple)
 
 Then with new C# (under the hood, it compiles to `ValueTuple<X,Y,...>` elements):
 
-```
+```csharp
 void ReceiveTuple((string s, int i) aTuple)
 {
     var counter = aTuple.i++;
@@ -619,7 +619,7 @@ void ReceiveTuple((string s, int i) aTuple)
 
 With F#:
 
-```
+```fsharp
 let rec ReceiveTuple(s: string, i: int) =
     let counter = i + 1
     Console.WriteLine(counter.ToString())
@@ -629,7 +629,7 @@ let rec ReceiveTuple(s: string, i: int) =
 
 Notice how tuples blend into what seemed to be normal parameters in F#? In fact, along all this guide up until now, all the methods we have written in F# that received more than one parameter, were actually using tuples, even if you might have not noticed. But then, you might think, can you write the above method without tuples in F# then? Yes you can, just omitting the comma, this way:
 
-```
+```fsharp
 let rec ReceiveNonTuple (s: string) (i: int) =
     let counter = i + 1
     Console.WriteLine(counter.ToString())
@@ -641,7 +641,7 @@ What's the difference between the functions `ReceiveTuple` and `ReceiveNonTuple`
 To be continued...
 
 ------------------------------------------------------
-`
+
 CONGRATS!! You already know enough to maybe understand 80% of F# code.
 Or maybe 80% of simple F# code, which is the code that is being used,
 for instance, in most F# scripts: easy code.
