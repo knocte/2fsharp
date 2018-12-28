@@ -456,46 +456,45 @@ static class SomeOldCsharpClass
 }
 ```
 
-That was all fine and well, but then new versions of C# came along, which made it less verbose and a bit more elegant:
+That was all fine and well, but then new versions of C# came along, which made it less verbose and a bit more elegant (even thanks to local functions, as you will notice):
 
 ```csharp
 static class SomeNewCsharpClass
 {
-
-    static void DelegateReception1(Action dlg)
-    {
-        dlg.Invoke();
-    }
-
     static void SendingAnonymousMethodAsDelegate1()
     {
+        void DelegateReception1(Action dlg)
+        {
+            dlg.Invoke();
+        }
+
         DelegateReception1(() =>
         {
             Console.WriteLine("hello 1");
         });
     }
 
-    static void DelegateReception2(Action<string> dlg)
-    {
-        string bar = "baz";
-        dlg.Invoke(bar);
-    }
-
     static void SendingAnonymousMethodAsDelegate2()
     {
+        void DelegateReception2(Action<string> dlg)
+        {
+            string bar = "baz";
+            dlg.Invoke(bar);
+        }
+
         DelegateReception2((string foo) =>
         {
             Console.WriteLine("hello 2 " + foo);
         });
     }
 
-    static void DelegateReception3(Func<int> dlg)
-    {
-        int result = dlg.Invoke();
-    }
-
     static void SendingAnonymousMethodAsDelegate3()
     {
+        void DelegateReception3(Func<int> dlg)
+        {
+            int result = dlg.Invoke();
+        }
+
         DelegateReception3(() =>
         {
             Console.WriteLine("hello 3");
@@ -503,14 +502,14 @@ static class SomeNewCsharpClass
         });
     }
 
-    static void DelegateReception4(Func<double,long> dlg)
-    {
-        double bar = 4.0;
-        long result = dlg.Invoke(bar);
-    }
-
     static void SendingAnonymousMethodAsDelegate4()
     {
+        void DelegateReception4(Func<double, long> dlg)
+        {
+            double bar = 4.0;
+            long result = dlg.Invoke(bar);
+        }
+
         DelegateReception4((double foo) =>
         {
             Console.WriteLine("hello 4 " + foo);
@@ -520,46 +519,47 @@ static class SomeNewCsharpClass
 }
 ```
 
-As you can see, delegate types via the `delegate` keyword became `Action`, `Action<TArg1>`, `Function<TResult>`, `Function<TArg1,TResult>` and so on. Anonymous methods via the same `delegate` keyword became lambdas via the `=>` symbol.
+The most interesting change is that delegate types using the `delegate` keyword became `Action`, `Action<TArg1>`, `Function<TResult>`, `Function<TArg1,TResult>` and so on. Anonymous methods via the same `delegate` keyword became lambdas via the `=>` symbol.
 
-But good news! Functions in F# are a native citizen, so this all looks even simpler in this language:
+But good news! Functions in F# are a native citizen, so this all looks even simpler in this language (and local functions also work):
 
 ```fsharp
 module SomeFsharpModule =
-    let DelegateReception1(dlg: unit->unit) =
-        dlg()
 
     let SendingAnonymousMethodAsDelegate1() =
+        let DelegateReception1(dlg: unit->unit) =
+            dlg()
+
         DelegateReception1(fun _ ->
             Console.WriteLine("hello 1")
         )
 
-    let DelegateReception2(dlg: string->unit) =
-        let bar = "baz"
-        dlg(bar)
-
     let SendingAnonymousMethodAsDelegate2() =
+        let DelegateReception2(dlg: string->unit) =
+            let bar = "baz"
+            dlg(bar)
+
         DelegateReception2(fun bar ->
             Console.WriteLine("hello 2 " + bar)
         )
 
-    let DelegateReception3(dlg: unit->int) =
-        let result = dlg()
-        ()
-
     let SendingAnonymousMethodAsDelegate3() =
+        let DelegateReception3(dlg: unit->int) =
+            let result = dlg()
+            ()
+
         DelegateReception3(fun _ ->
             Console.WriteLine("hello 3")
             3
         )
 
-    let DelegateReception4(dlg: double->int64) =
-        let bar = 4.0
-        let result = dlg(bar)
-        ()
-
     let SendingAnonymousMethodAsDelegate4() =
-        DelegateReception3(fun bar ->
+        let DelegateReception4(dlg: double->int64) =
+            let bar = 4.0
+            let result = dlg(bar)
+            ()
+
+        DelegateReception4(fun bar ->
             Console.WriteLine("hello 4 " + bar.ToString())
             int64 4
         )
