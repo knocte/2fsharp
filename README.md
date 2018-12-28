@@ -596,47 +596,57 @@ This active pattern above has provided syntax sugar to the F# compiler which con
 Let's double check on what we mean. This would be with old C#:
 
 ```csharp
-void ReceiveTuple(Tuple<string,int> aTuple)
+bool ReceiveTuple(Tuple<string,int> aTuple)
 {
     var counter = aTuple.Item2++;
-    Console.WriteLine(counter);
+    Console.WriteLine(aTuple.Item1);
     var newTuple = new Tuple<string,int>(aTuple.Item1, counter)
     ReceiveTuple(newTuple);
+    return true;
 }
 ```
+
+If we wanted to store a pointer to this function in a variable, that pointer would need to be Func<Tuple<string,int>,bool>.
 
 Then with new C# (under the hood, it compiles to `ValueTuple<X,Y,...>` elements):
 
 ```csharp
-void ReceiveTuple((string s, int i) aTuple)
+bool ReceiveTuple((string str, int i) aTuple)
 {
     var counter = aTuple.i++;
-    Console.WriteLine(counter);
-    var newTuple = (aTuple.s, counter);
+    Console.WriteLine(aTuple.str);
+    var newTuple = (aTuple.str, counter);
     ReceiveTuple(newTuple);
+    return true;
 }
 ```
+
+Now to store a pointer to this function, the pointer would need to be Func<ValueTuple<string,int>,bool>.
 
 With F#:
 
 ```fsharp
-let rec ReceiveTuple(s: string, i: int) =
+let rec ReceiveTuple(str: string, i: int) =
     let counter = i + 1
-    Console.WriteLine(counter.ToString())
-    let newTuple = (s, counter)
+    Console.WriteLine(str)
+    let newTuple = (str, counter)
     ReceiveTuple (newTuple)
+    true
 ```
 
-Notice how tuples blend into what seemed to be normal parameters in F#? In fact, along all this guide up until now, all the methods we have written in F# that received more than one parameter, were actually using tuples, even if you might have not noticed. But then, you might think, can you write the above method without tuples in F# then? Yes you can, just omitting the comma, this way:
+In this case, the F# type to store a pointer to this function would be `string*int->bool`; so this is a new symbol that we're learning now: unlike with other programming languages in which the asterisk character involves pointers, in this case it is just a separator of types in a tuple.
+
+But have you noticed how tuples blend into what seemed to be normal parameters in F#? In fact, along all this guide up until now, all the methods we have written in F# that received more than one parameter, were actually using tuples, even if you might have not noticed. But then, you might think, can you write the above method without tuples in F# then? Yes you can, just omitting the comma, this way:
 
 ```fsharp
-let rec ReceiveNonTuple (s: string) (i: int) =
+let rec ReceiveNonTuple (str: string) (i: int) =
     let counter = i + 1
-    Console.WriteLine(counter.ToString())
-    ReceiveNonTuple s counter
+    Console.WriteLine(str)
+    ReceiveNonTuple str counter
+    true
 ```
 
-What's the difference between the functions `ReceiveTuple` and `ReceiveNonTuple`? Both receive the same number of arguments, and with the same types. However, the first one has its parameters as an F# tuple, and the second one has parameters declared in an idiomatic-F# way. Why is this more idiomatic in F#? Because `ReceiveTuple` cannot be used in partial application scenarios, while `ReceiveNonTuple` can be.
+What's the difference between the functions `ReceiveTuple` and `ReceiveNonTuple`? Both receive the same number of arguments, and with the same types. However, the first one has its parameters as an F# tuple, and the second one has parameters declared in an idiomatic-F# way". Why is this more idiomatic in F#? Because `ReceiveTuple` cannot be used in partial application scenarios, while `ReceiveNonTuple` can be because it's using a currified style. In this case, the type of the function, instead of being `string*int->bool`, it is `(string->int)->bool`.
 
 To be continued...
 
