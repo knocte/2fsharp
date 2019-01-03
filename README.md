@@ -682,7 +682,7 @@ let Double (x: int): int =
 
 This is a too simple example to maybe make you convinced of how powerful and useful partial application is. But it’s the foundations of, for example, Dependency Injection in functional programming. You will probably only grasp the flexibility it allows, with time, but at least we can already show you its simplicity in F#, at least compared to C#, because this is how you would implement partial application with the latter:
 
-```
+```csharp
 static Func<int, Func<int, int>> Multiply()
 {
     return (x) => {
