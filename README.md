@@ -696,6 +696,12 @@ static Function<int,int> Double()
 {
     return Multiply().Invoke(2);
 }
+
+static int Main()
+{
+    var someInt = 3;
+    return Double().Invoke(someInt);
+}
 ```
 
 Can you wrap your head around that? To me, a bit harder to do than reading the F# code.
