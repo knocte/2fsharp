@@ -648,7 +648,57 @@ let rec ReceiveNonTuple (str: string) (i: int) =
 
 What's the difference between the functions `ReceiveTuple` and `ReceiveNonTuple`? Both receive the same number of arguments, and with the same types. However, the first one has its parameters as an F# tuple, and the second one has parameters declared in an idiomatic-F# way". Why is this more idiomatic in F#? Because `ReceiveTuple` cannot be used in partial application scenarios, while `ReceiveNonTuple` can be because it's using a currified style. In this case, the type of the function, instead of being `string*int->bool`, it is `(string->int)->bool`.
 
-To be continued...
+So why `(string->int)->bool` is better than `string*int->bool`? The latter allows for interoperability with C# (as it’s the way that parameters are passed at the CIL level), but the former allows partial application in a very straightforward and non-convoluted way (we will see, later, that partial application is also possible with C#, but in such a complex way that its benefits don’t outweigh the drawbacks of its poor readability/maintainability). So without further ado, let’s look at a very simple example of partial application: let’s suppose we want to create a Multiplication function that receives two integers and returns one integer:
+
+```fsharp
+let Multiply (x: int) (y: int): int =
+    x * y
+```
+
+Now, if we wanted to write a function to double the value of a number without having to repeat any implementation detail from the Multiply function, we could simply write it this way:
+
+```fsharp
+let Double (x: int): int =
+    Multiply 2
+```
+
+What happens when we only pass one argument to the function “Multiply”? Let’s look at its original signature: `(int->int)->int`. Currification laws tell us that using parenthesis in type expressions is actually not needed (or that placing them elsewhere results in an equivalent expression), which means that we can write it this way as well (`int->int->int`) or this way (`int->(int->int)`). Therefore, passing only one parameter to a function that originally received two parameters, actually results in returning another function. We can probably understand it better this way:
+
+```fsharp
+let Double (x: int): int =
+    let doubleFunc = Multiply 2
+    let result = doubleFunc x
+    result
+```
+
+Or even this way (with types redundantly specified):
+
+```fsharp
+let Double (x: int): int =
+    let doubleFunc: int->int = Multiply 2
+    let result: int = doubleFunc x
+    result
+```
+
+This is a too simple example to maybe make you convinced of how powerful and useful partial application is. But it’s the foundations of, for example, Dependency Injection in functional programming. You will probably only grasp the flexibility it allows, with time, but at least we can already show you its simplicity in F#, at least compared to C#, because this is how you would implement partial application with the latter:
+
+```
+static Func<int, Func<int, int>> Multiply()
+{
+    return (x) => {
+        (y) => {
+            x * y;
+        }
+    }
+}
+
+static Function<int,int> Double()
+{
+    return Multiply().Invoke(2);
+}
+```
+
+Can you wrap your head around that? To me, a bit harder to do than reading the F# code.
 
 ------------------------------------------------------
 
