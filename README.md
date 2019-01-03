@@ -688,8 +688,8 @@ static Func<int, Func<int, int>> Multiply()
     return (x) => {
         (y) => {
             x * y;
-        }
-    }
+        };
+    };
 }
 
 static Function<int,int> Double()
