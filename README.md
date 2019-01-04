@@ -747,10 +747,9 @@ let intList =
         [ 4
           5
           6 ]
-let sequenceOfIntegers: seq<int> = intList
-let dic: IDictionary<string,int> =
-        dict [ ("One", 1)
-               ("Two", 2) ]
+let sequenceOfIntegers = intList
+let dic = dict [ ("One", 1)
+                 ("Two", 2) ]
 ```
 
 ```fsharp
