@@ -726,7 +726,7 @@ let aStringToShowToTheUser = sprintf("Hello %s, I see you are %d years old" name
 Why is this better? Because:
 * if you supply less arguments (or more) than the ones needed to interpolate in the string, you will get a compiler error instead of an exception at runtime (fail faster!).
 * you need to specify the type of the element inside the string, via the letter after the `%`, and if it doesn't match the type of the elemnt supplied for the same position, then you get a compiler error (instead of a useless string representation of the element)
-* you need less parenthesis (for more info, see next section)
+* you need less parenthesis (for more info about this, see next section)
 
 
 
