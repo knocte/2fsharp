@@ -707,7 +707,30 @@ static int Main()
 Can you wrap your head around that? To me, a bit harder to do than reading the F# code.
 
 
-### Example 10: write less characters! especially good for readability of F# scripts
+### Example 10: string interpolation
+
+In the early days of C# you might write things like:
+
+```csharp
+var aStringToShowToTheUser = String.Format("Hello {0}, I see you are {1} years old", name, age);
+```
+
+This has two problems: in large codebases where there are many variables and maybe many elements to include in a string, it could easily happen that we include a number for a variable not supplied (e.g. `{2}`) or that we provide an element which didn't have implicit conversion to string (or whose conversion was the standard and useless `ToString()` base method of `System.Object`, which I think simply prints the type of the object).
+
+In F# we have an alternative that is much better:
+
+```fsharp
+let aStringToShowToTheUser = sprintf("Hello %s, I see you are %d years old" name age)
+```
+
+Why is this better? Because:
+* if you supply less arguments (or more) than the ones needed to interpolate in the string, you will get a compiler error instead of an exception at runtime (fail faster!).
+* you need to specify the type of the element inside the string, via the letter after the `%`, and if it doesn't match the type of the elemnt supplied for the same position, then you get a compiler error (instead of a useless string representation of the element)
+* you need less parenthesis (for more info, see next section)
+
+
+
+### Example 11: write less characters! especially good for readability of F# scripts
 
 Now that you understood the difference between tuples and currified parameters in F#, and how the latter is always preferrable, you may understand that writing so many parenthesis was actually only needed to map things in tuples and is, in fact, a powerful inertia from C# devs that are starting to work with F#.
 
@@ -874,6 +897,10 @@ let Double x =
     let doubleFunc = Multiply 2
     let result = doubleFunc x
     result
+```
+
+```fsharp
+let aStringToShowToTheUser = sprintf "Hello %s, I see you are %d years old" name age
 ```
 
 
