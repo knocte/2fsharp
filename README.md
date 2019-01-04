@@ -911,3 +911,5 @@ CONGRATS!! You already know enough to maybe understand 80% of F# code.
 Or maybe 80% of simple F# code, which is the code that is being used, for instance, in most F# scripts: easy code.
 
 I could explain you how to build the equivalent of a classes (with behaviour, constructors, properties) or structs (value types and stack allocated) in F#, but... for example most scripts don't even need types, they just need functions, values and calls!
+
+Anyway, I recommend as an important next step to watch this talk: https://www.youtube.com/watch?v=HQ887aOZITY
