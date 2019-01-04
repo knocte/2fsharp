@@ -717,6 +717,8 @@ But as you start learning F# more and more, leaving the C# days behind, and writ
 * No need to use semicolons if you just use EOL separators.
 * No need to use braces so much as you need them in C# (you only need them in F# when you deal with records).
 * No need to use colon character ':' so many times if you let the F# compiler infer types more.
+* Using the pipe operator '|>' more to avoid writing many parenthesis on the right side of a very long line.
+* No need for parenthesis in `if` expressions in F# (as opposed to C#, which always needs them).
 
 With all these in mind, we're now going to re-write again all F# samples of this guide but without all these redundant characters:
 
@@ -748,7 +750,7 @@ let intList =
 let sequenceOfIntegers: seq<int> = intList
 let dic: IDictionary<string,int> =
         dict [ ("One", 1)
-                  ("Two", 2) ]
+               ("Two", 2) ]
 ```
 
 ```fsharp
@@ -778,12 +780,12 @@ let Check someParam1 someParam2 =
     match someParam1 with
     | Some someValue -> // like 'as' in C#, you cast and want the value
         let str = someValue.ToString()
-        stringBuilder.Append(str) |> ignore
+        stringBuilder.Append str |> ignore
     | None -> ()
 
     match someParam2 with
     | Some(_) -> // like 'is' in C#, you don't care about the value
-        stringBuilder.Append(String.Empty) |> ignore
+        stringBuilder.Append String.Empty |> ignore
     | _ -> ()
 
 ```
