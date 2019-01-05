@@ -519,7 +519,7 @@ static class SomeNewCsharpClass
 }
 ```
 
-The most interesting change is that delegate types using the `delegate` keyword became `Action`, `Action<TArg1>`, `Function<TResult>`, `Function<TArg1,TResult>` and so on. Anonymous methods via the same `delegate` keyword became lambdas via the `=>` symbol.
+The most interesting change is that delegate types using the `delegate` keyword became `System.Action`, `System.Action<TArg1>`, `System.Function<TResult>`, `System.Function<TArg1,TResult>` and so on. Anonymous methods via the same `delegate` keyword became lambdas via the `=>` symbol.
 
 But good news! Functions in F# are a native citizen, so this all looks even simpler in this language (and local functions also work):
 
@@ -565,7 +565,7 @@ module SomeFsharpModule =
         )
 ```
 
-As you can see, the equivalent of BCL's `Function` and `Action` become native F# syntax for denoting arguments and return values via the `->` symbol, e.g. `TArg1->TResult`. Remember, `void` is `unit` in F#, a dummy real type with only one possible value `()` that makes it moot to distinguish between functions and actions. Last but not least, C#'s `(...) => { ... }` becomes `fun ... -> ...`.
+As you can see, the equivalent of BCL's `System.Function` and `System.Action` become native F# syntax for denoting arguments and return values via the `->` symbol, e.g. `TArg1->TResult`. Remember, `void` is `unit` in F#, a dummy real type with only one possible value `()` that makes it moot to distinguish between functions and actions. Last but not least, C#'s `(...) => { ... }` becomes `fun ... -> ...`.
 
 
 ### Example 9: tuples, partial application and currification
@@ -606,7 +606,7 @@ bool ReceiveTuple(Tuple<string,int> aTuple)
 }
 ```
 
-If we wanted to store a pointer to this function in a variable, that pointer would need to be Func<Tuple<string,int>,bool>.
+If we wanted to store a pointer to this function in a variable, that pointer would need to be `Func<Tuple<string,int>,bool>`.
 
 Then with new C# (under the hood, it compiles to `ValueTuple<X,Y,...>` elements):
 
@@ -621,7 +621,7 @@ bool ReceiveTuple((string str, int i) aTuple)
 }
 ```
 
-Now to store a pointer to this function, the pointer would need to be Func<ValueTuple<string,int>,bool>.
+Now to store a pointer to this function, the pointer would need to be `Func<ValueTuple<string,int>,bool>`.
 
 With F#:
 
