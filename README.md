@@ -570,7 +570,7 @@ As you can see, the equivalent of BCL's `System.Function` and `System.Action` be
 
 ### Example 9: tuples, partial application and currification
 
-Chances are, if you've never done any functional programming, you may be scared about some concepts from it such as "partial application" and "currification", but truth is, they are not such complex concepts, and to explain them properly we need to explain tuples first, and why it's not recommended to abuse them in F# (in fact, you cannot use partial application with tuples! more on this later).
+Chances are, if you've never done any functional programming, you may be scared about some concepts from it such as "partial application" and "currification", but truth is, they are not so complex concepts, and to explain them properly we need to explain tuples first, and why it's not recommended to abuse them in F# (in fact, you cannot use partial application with tuples! more on this later).
 
 Let's talk first about a C# snippet which has an `out` parameter:
 
@@ -806,7 +806,7 @@ let Check someParam1 someParam2 =
     | None -> ()
 
     match someParam2 with
-    | Some(_) -> // like 'is' in C#, you don't care about the value
+    | Some _ -> // like 'is' in C#, you don't care about the value
         stringBuilder.Append String.Empty |> ignore
     | _ -> ()
 
