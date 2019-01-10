@@ -825,7 +825,7 @@ module FooFactory =
 
 ```fsharp
 module Foo =
-    let Baz(): bool =
+    let Baz() =
         false
 
     let rec Bar() =
