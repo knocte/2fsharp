@@ -128,6 +128,7 @@ let dic: IDictionary<string,int> = dict [ ("One", 1); ("Two", 2) ]
 * `IEnumerable<T>` becomes `seq<'T>` (short for "sequence").
 * You use `dict` to initialize an `IDictionary<K,V>` collection, however in F#
 you would rather use a `Map<'K,'V>` because the latter is immutable.
+
 (NOTE: generic types need the quote character (') as a prefix, as you might have noted above.)
 
 
