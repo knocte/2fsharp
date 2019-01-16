@@ -741,8 +741,8 @@ But as you start learning F# more and more, leaving the C# days behind, and writ
 * Not so many parenthesis because you don't use tuples anymore.
 * No need to use semicolons if you just use EOL separators.
 * No need to use braces so much as you need them in C# (you only need them in F# when you deal with records).
-* No need to use colon character ':' so many times if you let the F# compiler infer types more.
-* Using the pipe operator '|>' more to avoid writing many parenthesis on the right side of a very long line.
+* No need to use colon character `:` so many times if you let the F# compiler infer types more.
+* Using the pipe operator `|>` more to avoid writing many parenthesis on the right side of a very long line.
 * No need for parenthesis in `if` expressions in F# (as opposed to C#, which always needs them).
 
 With all these in mind, we're now going to re-write again all F# samples of this guide but without all these redundant characters:
