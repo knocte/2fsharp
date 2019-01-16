@@ -125,9 +125,10 @@ let sequenceOfIntegers: seq<int> = intList
 let dic: IDictionary<string,int> = dict [ ("One", 1); ("Two", 2) ]
 ```
 * Commas become semicolons when declaring elements of an array/list/dictionary.
-* `IEnumerable<T>` becomes `seq<T>` (short for "sequence").
+* `IEnumerable<T>` becomes `seq<'T>` (short for "sequence").
 * You use `dict` to initialize an `IDictionary<K,V>` collection, however in F#
-you would rather use a `Map<K,V>` because the latter is immutable.
+you would rather use a `Map<'K,'V>` because the latter is immutable.
+(NOTE: generic types need the quote character (') as a prefix, as you might have noted above.)
 
 
 ### Example 4: Basic blocks
