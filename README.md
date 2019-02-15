@@ -608,7 +608,7 @@ bool ReceiveTuple(Tuple<string,int> aTuple)
 }
 ```
 
-If we wanted to store a pointer to this function in a variable, that pointer would need to be `Func<Tuple<string,int>,bool>`.
+If we wanted to have a variable that points to this function, its type would need to be `Func<Tuple<string,int>,bool>`.
 
 Then with new C# (under the hood, it compiles to `ValueTuple<X,Y,...>` elements):
 
@@ -623,7 +623,7 @@ bool ReceiveTuple((string str, int i) aTuple)
 }
 ```
 
-Now to store a pointer to this function, the pointer would need to be `Func<ValueTuple<string,int>,bool>`.
+Now to have a variable that points to this new function, its type would become `Func<ValueTuple<string,int>,bool>`.
 
 With F#:
 
@@ -636,7 +636,7 @@ let rec ReceiveTuple(str: string, i: int) =
     true
 ```
 
-In this case, the F# type to store a pointer to this function would be `string*int->bool`; so this is a new symbol that we're learning now: unlike with other programming languages in which the asterisk character involves pointers, in this case it is just a separator of types in a tuple.
+In this case, the F# type that would let you reference this function would be `string*int->bool`; so this is a new symbol that we're learning now: unlike with other programming languages in which the asterisk character involves pointers, in this case it is just a separator of types in a tuple.
 
 But have you noticed how tuples blend into what seemed to be normal parameters in F#? In fact, along all this guide up until now, all the methods we have written in F# that received more than one parameter, were actually using tuples, even if you might have not noticed. But then, you might think, can you write the above method without tuples in F# then? Yes you can, just omitting the comma, this way:
 
