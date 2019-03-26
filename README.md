@@ -902,7 +902,7 @@ let Double x =
 ```
 
 ```fsharp
-let aStringToShowToTheUser = sprintf "Hello %s, I see you are %d years old" name age
+let aStringToShowToTheUser = sprintf "Hello %s, I see you are %i years old" name age
 ```
 
 
