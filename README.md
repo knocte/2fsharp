@@ -730,7 +730,8 @@ Why is this better? Because:
 * You need to specify the type of the element inside the string, via the letter after the `%`, and if it doesn't match the type of the elemnt supplied for the same position, then you get a compiler error (instead of a useless string representation of the element).
 * You need less parenthesis (for more info about this, see next section).
 
-### Example 12: asynchronous code
+
+### Example 11: asynchronous code
 
 A simple C# snippet with synchronous code:
 
@@ -816,7 +817,7 @@ The key differences:
 * In C#, you can convert computation-heavy synchronous methods into asynchronous by wrapping them in a `Task.Run()` call, in F# you simply wrap them with an `async{}` block (a computation expression).
 
 
-### Example 11: write less characters! especially good for readability of F# scripts
+### Example 12: write less characters! especially good for readability of F# scripts
 
 Now that you understood the difference between tuples and currified parameters in F#, and how the latter is always preferrable, you may understand that writing so many parenthesis was actually only needed to map things in tuples and is, in fact, a powerful inertia from C# devs that are starting to work with F#.
 
