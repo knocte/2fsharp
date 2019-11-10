@@ -871,6 +871,7 @@ type Toast (i: Ingredients) = class end
 
 let ToastBread i: Async<unit> =
     async {
+        Toast i |> ignore
         return ()
     }
 
