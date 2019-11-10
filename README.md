@@ -730,6 +730,90 @@ Why is this better? Because:
 * You need to specify the type of the element inside the string, via the letter after the `%`, and if it doesn't match the type of the elemnt supplied for the same position, then you get a compiler error (instead of a useless string representation of the element).
 * You need less parenthesis (for more info about this, see next section).
 
+### Example 12: asynchronous code
+
+A simple C# snippet with synchronous code:
+
+```csharp
+    static class MainClass
+    {
+        public class Toast {
+            public bool IsYummy()
+            {
+                return true;
+            }
+        }
+
+        static async Task<Toast> ToastBreadAsync()
+        {
+            var task = Task.Run(() =>
+                new Toast()
+            );
+            return await task;
+        }
+
+        static void ApplyButter(Toast toast) { /* TODO */ }
+
+        static void ApplyJam(Toast toast) { /* TODO */ }
+
+        static async Task<Toast> MakeToastWithButterAndJamAsync()
+        {
+            var toast = await ToastBreadAsync();
+            ApplyButter(toast);
+            ApplyJam(toast);
+            return toast;
+        }
+
+        public static async Task Main(string[] args)
+        {
+            Console.WriteLine("Hello World!");
+            var toast = await MakeToastWithButterAndJamAsync();
+            Console.WriteLine("Bye World!" + toast.IsYummy());
+        }
+    }
+}
+```
+
+Becomes in F#:
+
+```fsharp
+type Toast () =
+    member this.IsYummy() =
+        true
+
+let ToastBread (): Async<Toast> =
+    async {
+        return Toast()
+    }
+
+let ApplyButter toast =
+    () //TODO
+
+let ApplyJam toast =
+    () //TODO
+
+let MakeToastWithButterAndJam() =
+    async {
+        let! toast = ToastBread()
+        ApplyButter toast
+        ApplyJam toast
+        return toast
+    }
+
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine "Hello World!"
+    let toast = MakeToastWithButterAndJam()
+                |> Async.RunSynchronously
+    Console.WriteLine ("Bye world!" + (toast.IsYummy().ToString()))
+    0 // return an integer exit code
+```
+
+The key differences:
+* In C#, when you call an asynchronous method, you're given a `Task<T>` object which represents the job being worked on, and it has already been started. In F#, though, the job is represented by an `Async<'T>` object which hasn't been started yet (you can later decide how to start it; e.g. in this example it's just started with the `Async.RunSynchronously` call).
+* The equivalent of `await` in C#, is simply the addition of the `!` character to the let statement in F#.
+* In C#, you can convert computation-heavy synchronous methods into asynchronous by wrapping them in a `Task.Run()` call, in F# you simply wrap them with an `async{}` block (a computation expression).
 
 
 ### Example 11: write less characters! especially good for readability of F# scripts
