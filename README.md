@@ -816,6 +816,95 @@ The key differences:
 * The equivalent of `await` in C#, is simply the addition of the `!` character to the let statement in F#.
 * In C#, you can convert computation-heavy synchronous methods into asynchronous by wrapping them in a `Task.Run()` call, in F# you simply wrap them with an `async{}` block (a computation expression).
 
+If we change the C# code above slightly to introduce non-generic Task objects and parallelization (supposing we have two toasters):
+
+```csharp
+public class Ingredients
+{
+}
+
+public class Toast {
+    public Toast(Ingredients i)
+    {
+    }
+}
+
+static async Task<Toast> ToastBreadAsync(Ingredients i)
+{
+    var task = Task.Run(() =>
+        new Toast(i)
+    );
+    return await task;
+}
+
+static async Task<Toast[]> Make2ToastsAsync(Ingredients i)
+{
+    var toast1 = ToastBreadAsync(i);
+    var toast2 = ToastBreadAsync(i);
+    return await Task.WhenAll(toast1, toast2);
+}
+
+static async Task MakeToastsAsync()
+{
+    var i = await GatherIngredients();
+    await Make2ToastsAsync(i);
+}
+
+public static async Task<Ingredients> GatherIngredients()
+{
+    return await Task.FromResult(new Ingredients());
+}
+
+public static async Task Main(string[] args)
+{
+    Console.WriteLine("Hello World!");
+    await MakeToastsAsync();
+    Console.WriteLine("Bye World!");
+}
+```
+
+Then in F# it becomes:
+
+```
+
+type Ingredients () = class end
+type Toast (i: Ingredients) = class end
+
+let ToastBread i: Async<unit> =
+    async {
+        return ()
+    }
+
+let GatherIngredients () =
+    async { return Ingredients() }
+
+let Make2Toasts i =
+    async {
+        let twoJobs: List<Async<unit>> = [ToastBread i; ToastBread i]
+        let! _ = Async.Parallel twoJobs
+        return ()
+    }
+
+let MakeToasts() =
+    async {
+        let! i = GatherIngredients()
+        do! Make2Toasts i
+    }
+
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine "Hello World!"
+    MakeToasts()
+        |> Async.RunSynchronously
+    Console.WriteLine "Bye world!"
+    0 // return an integer exit code
+```
+
+As you can see, then:
+* The equivalent of dealing with non-generic Tasks in C#, in F# would mean using `unit` as the generic argument to `Async`: `Async<unit>`. To await this kind of jobs, instead of using `let! x = ...` you would just need `do! ...`.
+* The equivalent for `Task.WhenAll` is `Async.Parallel`.
+
 
 ### Example 12: write less characters! especially good for readability of F# scripts
 
