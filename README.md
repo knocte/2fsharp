@@ -865,8 +865,7 @@ public static async Task Main(string[] args)
 
 Then in F# it becomes:
 
-```
-
+```fsharp
 type Ingredients () = class end
 type Toast (i: Ingredients) = class end
 
