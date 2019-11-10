@@ -733,7 +733,7 @@ Why is this better? Because:
 
 ### Example 11: asynchronous code
 
-A simple C# snippet with synchronous code:
+A simple C# snippet with asynchronous code:
 
 ```csharp
     static class MainClass
