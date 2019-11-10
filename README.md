@@ -869,10 +869,9 @@ Then in F# it becomes:
 type Ingredients () = class end
 type Toast (i: Ingredients) = class end
 
-let ToastBread i: Async<unit> =
+let ToastBread i: Async<Toast> =
     async {
-        Toast i |> ignore
-        return ()
+        return Toast i
     }
 
 let GatherIngredients () =
@@ -880,7 +879,7 @@ let GatherIngredients () =
 
 let Make2Toasts i =
     async {
-        let twoJobs: List<Async<unit>> = [ToastBread i; ToastBread i]
+        let twoJobs: List<Async<Toast>> = [ToastBread i; ToastBread i]
         let! _ = Async.Parallel twoJobs
         return ()
     }
