@@ -29,7 +29,7 @@ let GiveMeTheLength(input) =
 If you want to specify the types in the sample above, it would become:
 
 ```fsharp
-let Length(input: string): int =
+let GiveMeTheLength(input: string): int =
     let result: int = input.Length
     result
 ```
