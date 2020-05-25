@@ -119,8 +119,8 @@ var dictionary = new Dictionary<int,string>() {
 ```
 becomes
 ```fsharp
-let intArray = [| 1; 2; 3 |]
-let intList = [ 4 ; 5 ; 6 ]
+let intArray: array<int> = [| 1; 2; 3 |]
+let intList: List<int> = [ 4 ; 5 ; 6 ]
 let sequenceOfIntegers: seq<int> = intList
 let dictionary: IDictionary<string,int> = dict [ ("One", 1); ("Two", 2) ]
 ```
