@@ -77,7 +77,7 @@ else
 Environment.Exit(exitCode)
 ```
 * The `using` keyword becomes `open`.
-* The `if (x) return a; else if (y) return b; else return c;` pattern becomes `if x then a elif y then b else c`, without the need of parenthesis but with new keywords `then` and `elif`.
+* The `if (x) foo(); else if (y) bar(); else baz();` pattern becomes `if x then foo() elif y then bar() else baz()`, without the need of parenthesis in the conditions, but with new keywords `then` and `elif`.
 * Initial assignment (to a readonly constant) operator is `=`. If you need to re-assign a
 new value to the same element, then you explicitly mark it as mutable and use the `<-`
 operator.
