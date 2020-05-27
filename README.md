@@ -8,14 +8,18 @@ and by understanding it you will already get a hang of 80% of the most used elem
 ```csharp
 public int GiveMeTheLength(string input)
 {
+    // this is a 1-line comment
     var result = input.Length;
+    /* this is a multi-line comment */
     return result;
 }
 ```
 becomes
 ```fsharp
 let GiveMeTheLength(input) =
+    // this is a 1-line comment
     let result = input.Length
+    (* this is a multi-line comment *)
     result
 ```
 
@@ -25,6 +29,7 @@ let GiveMeTheLength(input) =
 * No need for braces, it works via 4-space (or 2) indentation like Python.
 * No need for semi-colons to denote the end of a line.
 * Specifying types is always optional, except in very special cases when the compiler cannot infer them.
+* Comments are same as in C#, except for the multi-line one, that uses parenthesis instead of slashes.
 
 If you want to specify the types in the sample above, it would become:
 
