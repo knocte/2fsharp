@@ -3,6 +3,7 @@
 This guide is mostly samples based. It will take you 15-30minutes of your time
 and by understanding it you will already get a hang of 80% of the most used elements of the language.
 
+
 ### Example 1: Basic function declarations and implementation
 
 ```csharp
@@ -38,6 +39,7 @@ let GiveMeTheLength(input: string): int =
     let result: int = input.Length
     result
 ```
+
 
 ### Example 2: Basic keywords and operators
 
@@ -228,10 +230,8 @@ you do the null check in a safer way with an `Option<T>` type (similar to
 * There are three ways of ignoring things:
   * For example, we don't care about the return value of Append(), in C# we just ignore it but in F# you need to be explicit about ignoring it, using the `ignore()` magic function.
   * The underscore in a match expression: it's like a `default` in a C# `switch`.
-  * The underscore in `Some(_)`, when we want to make sure the value is not None, but we don't care
-about its contents (like an `is` operator in C#, instead of `as`).
-* The pipe operator (like in bash) is `|>` (and it works like in bash). Then `ignore(x)` is the same as `x |> ignore`.
-
+  * The underscore in `Some(_)`, when we want to make sure the value is not None, but we don't care about its contents (like an `is` operator in C#, instead of `as`).
+* The pipe operator (`|` in bash) is `|>` (and it works like in bash). Then `ignore(x)` is the same as `x |> ignore`.
 
 
 ### Example 6: Basic types
@@ -283,6 +283,7 @@ So then:
 * Classes without behaviour (like the above Foo) are called "Records", they seem similar to structs but they are still reference types and allocated on the heap. They are immutable (once you create them, you cannot change their values underneath).
 * Static classes are "modules", like the "FooFactory" type above.
 * In F#, there's no need to use the keyword "new" when creating instances of new classes or structs, except if the class being created implements IDisposable.
+
 
 ### Example 7: Order is important, and circular dependencies are the root of all evil
 
