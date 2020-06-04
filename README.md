@@ -223,11 +223,10 @@ In C# you write null checks everywhere (no safety at compile time). In F#,
 you do the null check in a safer way with an `Option<T>` type (similar to
 `Nullable<T>` but better) and a match expression (pattern matching).
 
-* When you don't want to return anything, in C# you use `void` which is metadata for specifying absence of a type, but in F#  you need to return a special type called `unit`, which only has one possible value: `()`. That's why generally `()` means doing nothing (as per the above code).
+* When you don't want to return anything, in C# you use `void` which is metadata for specifying absence of a type, but in F# you need to return a special type called `unit`, which only has one possible value: `()`. That's why generally `()` means doing nothing (as per the above code).
 * A `match-with` block is almost like a switch block, but more succint because it includes the casting (to someValue).
 * There are three ways of ignoring things:
-  * For example, we don't care about the return value of Append(), in C# we just ignore it but in
-F# you need to be explicit about ignoring it, using the `ignore()` magic function.
+  * For example, we don't care about the return value of Append(), in C# we just ignore it but in F# you need to be explicit about ignoring it, using the `ignore()` magic function.
   * The underscore in a match expression: it's like a `default` in a C# `switch`.
   * The underscore in `Some(_)`, when we want to make sure the value is not None, but we don't care
 about its contents (like an `is` operator in C#, instead of `as`).
