@@ -64,7 +64,7 @@ Environment.Exit(exitCode)
 * The `import` keyword becomes `open`.
 * The `:` at the end of an `if` statement becomes `then`
 * Initial assignment operator is `=`. If you need to re-assign a new value to the same element, then you explicitly mark it as mutable and use the `<-` operator.
-* Thanks to the above, the `=` operator can be a comparison operator too (no need for doubling it like in C#: `==`).
+* Thanks to the above, the `=` operator can be a comparison operator too (no need for doubling it like in python: `==`).
 * Operator `!=` becomes `<>`.
 * Operator `not` is also `not` in F#.
 * Operators `and` and `or` become `&&` and `||` in F#.
@@ -209,7 +209,7 @@ expression (pattern matching).
 
 ### Example 6: Basic types
 
-This immutable C# class below is much easier to write in F#:
+This immutable python class below is much easier to write in F#:
 
 ```python
 def create_foo():
@@ -770,13 +770,13 @@ DoStuff reader
 let Check someParam1 someParam2 =
 
     match someParam1 with
-    | Some someValue -> // like 'as' in C#, you cast and want the value
+    | Some someValue ->
         let str = someValue.ToString()
         stringBuilder.Append str |> ignore
     | None -> ()
 
     match someParam2 with
-    | Some _ -> // like 'is' in C#, you don't care about the value
+    | Some _ ->
         stringBuilder.Append String.Empty |> ignore
     | _ -> ()
 
