@@ -63,11 +63,8 @@ Environment.Exit(exitCode)
 ```
 * The `import` keyword becomes `open`.
 * The `:` at the end of an `if` statement becomes `then`
-* Initial assignment operator is `=`. If you need to re-assign a
-new value to the same element, then you explicitly mark it as mutable and use the `<-`
-operator.
-* Thanks to the above, the `=` operator can be a comparison operator too (no need for
-doubling it like in C#: `==`).
+* Initial assignment operator is `=`. If you need to re-assign a new value to the same element, then you explicitly mark it as mutable and use the `<-` operator.
+* Thanks to the above, the `=` operator can be a comparison operator too (no need for doubling it like in C#: `==`).
 * Operator `!=` becomes `<>`.
 * Operator `not` is also `not` in F#.
 * Operators `and` and `or` become `&&` and `||` in F#.

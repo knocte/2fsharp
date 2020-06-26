@@ -1,7 +1,6 @@
 # Guide for C# devs to learn F# real FAST
 
-This guide is mostly samples based. It will take you 15-30minutes of your time
-and by understanding it you will already get a hang of 80% of the most used elements of the language.
+This guide is mostly samples based. It will take you 15-30minutes of your time and by understanding it you will already get a hang of 80% of the most used elements of the language.
 
 
 ### Example 1: Basic function declarations and implementation
@@ -80,11 +79,8 @@ Environment.Exit(exitCode)
 ```
 * The `using` keyword becomes `open`.
 * The `if (x) foo(); else if (y) bar(); else baz();` pattern becomes `if x then foo() elif y then bar() else baz()`, without the need of parenthesis in the conditions, but with new keywords `then` and `elif`.
-* Initial assignment (to a readonly constant) operator is `=`. If you need to re-assign a
-new value to the same element, then you explicitly mark it as mutable and use the `<-`
-operator.
-* Thanks to the above, the `=` operator can be a comparison operator too (no need for
-doubling it like in C#: `==`).
+* Initial assignment (to a readonly constant) operator is `=`. If you need to re-assign a new value to the same element, then you explicitly mark it as mutable and use the `<-` operator.
+* Thanks to the above, the `=` operator can be a comparison operator too (no need for doubling it like in C#: `==`).
 * Operator `!=` becomes `<>`.
 * Operator `!` becomes `not`.
 * Operators `&&` and `||` are same in F#.
