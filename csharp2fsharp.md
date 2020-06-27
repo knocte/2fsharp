@@ -120,7 +120,7 @@ var dictionary = new Dictionary<int,string>() {
     { "Two", 2 }
 }
 ```
-becomes
+becomes the following (take in account you don't need the type annotations in F#, we just add them for reference):
 ```fsharp
 let intArray: array<int> = [| 1; 2; 3 |]
 let intList: List<int> = [ 4 ; 5 ; 6 ]
