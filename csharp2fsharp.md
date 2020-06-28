@@ -347,7 +347,7 @@ Why? The error will be:
 
 * Error FS0039: The value, namespace, type or module 'Foo2' is not defined. (Referring to Foo1.Baz implementation.)
 
-It's not fixable unless we simply stop using circular dependencies (despite an existing escape hatch via the `and` keyword which I will not explain in this guide, because it's too advanced); because the way that the F# compiler has to avoid circular dependencies within the same assembly is requiring everything that we depend to, to be declared earlier. This means that if some function A calls function B, then B needs to be declared before A (if they are in the same file, then B needs to be at the top and A at the bottom; if they are in different files, then `B.fs` needs to be listed earlier than `A.fs` in the `.fsproj` file).
+It's not fixable unless we simply stop using circular dependencies (despite an existing escape hatch via the `and` keyword (or the `rec` keyword when applied to modules or namespaces) which I will not explain in this guide, because it's too advanced); because the way that the F# compiler has to avoid circular dependencies within the same assembly is requiring everything that we depend to, to be declared earlier. This means that if some function A calls function B, then B needs to be declared before A (if they are in the same file, then B needs to be at the top and A at the bottom; if they are in different files, then `B.fs` needs to be listed earlier than `A.fs` in the `.fsproj` file).
 
 Therefore, this smaller snippet equivalent to our very first C# sample in this section, doesn't compile either:
 
