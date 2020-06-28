@@ -16,7 +16,6 @@ let GiveMeTheLength(input) =
     result
 ```
 
-* All things are public by default unless you explicitly specify `private` modifier.
 * Keyword `def` becomes `let` (which is also used to declare variables, not only to define functions/methods).
 * You don't need the `return` keyword. The last element of the function is the value to be returned.
 * Indentations works via 4-space (or 2) like Python.
@@ -29,6 +28,9 @@ let GiveMeTheLength(input: string): int =
     let result: int = input.Length
     result
 ```
+
+Note that, like in python, all things are public by default. (To make things private in F#, you can use the `private` modifier.)
+
 
 ### Example 2: Basic keywords and operators
 
