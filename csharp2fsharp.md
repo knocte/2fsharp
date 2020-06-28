@@ -84,11 +84,9 @@ Environment.Exit(exitCode)
 * Operator `!=` becomes `<>`.
 * Operator `!` becomes `not`.
 * Operators `&&` and `||` are same in F#.
-* No need to enclose entry point of program in Main() function, just write your statements
-in a .fsx script or write the statements in the last `.fs` file fed to the F# compiler.
+* No need to enclose entry point of program in Main() function, just write your statements in a .fsx script or write the statements in the last `.fs` file fed to the F# compiler.
 
-In general, such a simple piece of code like the one in the example can be coded easily
-without a mutable variable, just by doing readonly assignments, this way:
+In general, such a simple piece of code like the one in the example can be coded easily without a mutable variable, just by doing readonly assignments, this way:
 
 ```fsharp
 open System
@@ -129,8 +127,7 @@ let dictionary: IDictionary<string,int> = dict [ ("One", 1); ("Two", 2) ]
 ```
 * Commas become semicolons when declaring elements of an array/list/dictionary.
 * `IEnumerable<T>` becomes `seq<'T>` (short for "sequence").
-* You use `dict` to initialize an `IDictionary<K,V>` collection, however in F#
-you would rather use a `Map<'K,'V>` because the latter is immutable.
+* You use `dict` to initialize an `IDictionary<K,V>` collection, however in F# you would rather use a `Map<'K,'V>` because the latter is immutable.
 
 (NOTE: generic types need the quote character (') as a prefix, as you might have noted above.)
 
@@ -168,11 +165,9 @@ finally
 ```
 * The `catch` keyword becomes `with`.
 * The `throw X;` clause becomes `raise X`, and an empty `throw;` becomes the function call `reraise()`.
-* However, there are no `try-with-finally` blocks! We have only `try-with` blocks and `try-finally` blocks. Therefore
-the equivalent in F# would need nesting (like it's done in the example above).
+* However, there are no `try-with-finally` blocks! We have only `try-with` blocks and `try-finally` blocks. Therefore the equivalent in F# would need nesting (like it's done in the example above).
 
-You may think this is an F# downside but try-catch-finally blocks are extremely
-rare, especially given the `using` construct (for `IDisposable`) in C#:
+You may think this is an F# downside but try-catch-finally blocks are extremely rare, especially given the `using` construct (for `IDisposable`) in C#:
 
 ```csharp
 using (var reader = new StreamReader(someFile))
@@ -217,9 +212,7 @@ let Check(someParam1: Option<SomeType>, someParam2: Option<SomeType>): unit =
     | _ -> ()
 
 ```
-In C# you write null checks everywhere (no safety at compile time). In F#,
-you do the null check in a safer way with an `Option<T>` type (similar to
-`Nullable<T>` but better) and a match expression (pattern matching).
+In C# you write null checks everywhere (no safety at compile time). In F#, you do the null check in a safer way with an `Option<T>` type (similar to `Nullable<T>` but better) and a match expression (pattern matching).
 
 * When you don't want to return anything, in C# you use `void` which is metadata for specifying absence of a type, but in F# you need to return a special type called `unit`, which only has one possible value: `()`. That's why generally `()` means doing nothing (as per the above code).
 * A `match-with` block is almost like a switch block, but more succint because it includes the casting (to someValue).

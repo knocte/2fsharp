@@ -110,13 +110,9 @@ let intList: List<int> = [ 4 ; 5 ; 6 ]
 let dictionary: IDictionary<string,int> = dict [ ("One", 1); ("Two", 2) ]
 ```
 * Commas become semicolons when declaring elements of an array/list/dictionary.
-* You use `dict` to initialize an `IDictionary<string,int>` collection, however in F#
-you would rather use a `Map<string,int>` because the latter is immutable.
+* You use `dict` to initialize an `IDictionary<string,int>` collection, however in F# you would rather use a `Map<string,int>` because the latter is immutable.
 
-NOTE: if you were to create a collection type whose elements had a type that is not
-defined yet (it could change at runtime), then you have to use the quote character
-to denote those generic types. Example: instead of `Map<string,int>`, `Map<'K,'V>`,
-meaning `'K` is the key's type and `'V` is the value's type.
+NOTE: if you were to create a collection type whose elements had a type that is not defined yet (it could change at runtime), then you have to use the quote character to denote those generic types. Example: instead of `Map<string,int>`, `Map<'K,'V>`, meaning `'K` is the key's type and `'V` is the value's type.
 
 
 ### Example 4: Basic blocks
@@ -151,11 +147,9 @@ finally
 ```
 * The `except` keyword becomes `with`.
 * The `raise X` is same in F#, but an empty `raise` becomes the function call `reraise()`.
-* However, there are no `try-with-finally` blocks! We have only `try-with` blocks and `try-finally` blocks. Therefore
-the equivalent in F# would need nesting (like it's done in the example above).
+* However, there are no `try-with-finally` blocks! We have only `try-with` blocks and `try-finally` blocks. Therefore the equivalent in F# would need nesting (like it's done in the example above).
 
-You may think this is an F# downside but try-catch-finally blocks are extremely
-rare, especially given the `with` construct (for `Disposable` objects) in Python:
+You may think this is an F# downside but try-catch-finally blocks are extremely rare, especially given the `with` construct (for `Disposable` objects) in Python:
 
 ```python
 with Reader() as reader:
@@ -196,9 +190,7 @@ let Check(someParam1: Option<SomeType>, someParam2: Option<SomeType>): unit =
     | _ -> ()
 
 ```
-In python you write None checks everywhere (no safety at compile time). In F#,
-you do the null check in a safer way with an `Option<T>` type and a match
-expression (pattern matching).
+In python you write None checks everywhere (no safety at compile time). In F#, you do the null check in a safer way with an `Option<T>` type and a match expression (pattern matching).
 
 * When you don't want to return anything, in python you just don't use the `return` statement, but in F# you need to return a special type called `unit`, which only has one possible value: `()`. That's why generally `()` means doing nothing (as per the above code).
 * A `match-with` block is almost like a switch block, but more succint because it includes the casting (to someValue).
