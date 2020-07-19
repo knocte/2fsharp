@@ -1081,4 +1081,4 @@ Or maybe 80% of simple F# code, which is the code that is being used, for instan
 
 I could explain you how to build the equivalent of classes (with behaviour, constructors, properties) or structs (value types and stack allocated) in F#, but... 1) it's not idiomatic F#; 2) if you're looking for an alternative safer scripting language, most scripts don't even need types, they just need functions, values and calls!
 
-Anyway, I recommend as an important next step to watch this talk: https://www.youtube.com/watch?v=HQ887aOZITY
+Anyway, I recommend as an important next step to watch this talk: https://www.youtube.com/watch?v=HQ887aOZITY , and/or have a look at this article: https://www.compositional-it.com/news-blog/5-features-that-c-has-that-f-doesnt-have/
