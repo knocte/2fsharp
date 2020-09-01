@@ -772,33 +772,33 @@ A simple C# snippet with asynchronous code:
 Becomes in F#:
 
 ```fsharp
-type Toast () =
+type Toast() =
     member this.IsYummy() =
         true
 
-let ToastBread (): Async<Toast> =
+let ToastBread(): Async<Toast> =
     async {
         return Toast()
     }
 
-let ApplyButter toast =
+let ApplyButter(toast) =
     () //TODO
 
-let ApplyJam toast =
+let ApplyJam(toast) =
     () //TODO
 
 let MakeToastWithButterAndJam() =
     async {
         let! toast = ToastBread()
-        ApplyButter toast
-        ApplyJam toast
+        ApplyButter(toast)
+        ApplyJam(toast)
         return toast
     }
 
 
 [<EntryPoint>]
-let main argv =
-    Console.WriteLine "Hello World!"
+let main(argv) =
+    Console.WriteLine("Hello World!")
     let toast = MakeToastWithButterAndJam()
                 |> Async.RunSynchronously
     Console.WriteLine ("Bye world!" + (toast.IsYummy().ToString()))
@@ -863,34 +863,34 @@ Then in F# it becomes:
 type Ingredients () = class end
 type Toast (i: Ingredients) = class end
 
-let ToastBread i: Async<Toast> =
+let ToastBread(i): Async<Toast> =
     async {
-        return Toast i
+        return Toast(i)
     }
 
 let GatherIngredients () =
     async { return Ingredients() }
 
-let Make2Toasts i =
+let Make2Toasts(i) =
     async {
-        let twoJobs: List<Async<Toast>> = [ToastBread i; ToastBread i]
-        let! _ = Async.Parallel twoJobs
+        let twoJobs: List<Async<Toast>> = [ToastBread(i); ToastBread(i)]
+        let! _ = Async.Parallel(twoJobs)
         return ()
     }
 
 let MakeToasts() =
     async {
         let! i = GatherIngredients()
-        do! Make2Toasts i
+        do! Make2Toasts(i)
     }
 
 
 [<EntryPoint>]
-let main argv =
-    Console.WriteLine "Hello World!"
+let main(argv) =
+    Console.WriteLine("Hello World!")
     MakeToasts()
         |> Async.RunSynchronously
-    Console.WriteLine "Bye world!"
+    Console.WriteLine("Bye world!")
     0 // return an integer exit code
 ```
 
@@ -1070,6 +1070,41 @@ let Double x =
 
 ```fsharp
 let aStringToShowToTheUser = sprintf "Hello %s, I see you are %i years old" name age
+```
+
+```fsharp
+type Ingredients () = class end
+type Toast (i: Ingredients) = class end
+
+let ToastBread i: Async<Toast> =
+    async {
+        return Toast i
+    }
+
+let GatherIngredients () =
+    async { return Ingredients() }
+
+let Make2Toasts i =
+    async {
+        let twoJobs: List<Async<Toast>> = [ToastBread i; ToastBread i]
+        let! _ = Async.Parallel twoJobs
+        return ()
+    }
+
+let MakeToasts() =
+    async {
+        let! i = GatherIngredients()
+        do! Make2Toasts i
+    }
+
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine "Hello World!"
+    MakeToasts()
+        |> Async.RunSynchronously
+    Console.WriteLine "Bye world!"
+    0 // return an integer exit code
 ```
 
 
