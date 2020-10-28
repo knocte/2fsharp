@@ -702,6 +702,8 @@ static int Main()
 
 Can you wrap your head around that? To me, a bit harder to do than reading the F# code.
 
+A final note about partial application and its usefulness: the longer you use F# the more you will realize that partial application is actually a simplified way of doing Dependency Injection / Inversion of Control (DI / IoC), more info about this in the article "Partial Application is Dependency Injection" (https://blog.ploeh.dk/2017/01/30/partial-application-is-dependency-injection/).
+
 
 ### Example 10: string interpolation
 
