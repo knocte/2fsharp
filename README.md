@@ -1,8 +1,6 @@
 # Guides for devs to learn F# real FAST
 
-These guides are mostly samples based. After you choose the one that fits
-you best, it may take you just 15 minutes of your time to go through it,
-and by understanding it you will already get a hang of 80% of the language.
+Choose the language you're currently most proficient in:
 
 1. [C#](csharp2fsharp.md)
 2. [Python](python2fsharp.md)
