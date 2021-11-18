@@ -325,7 +325,7 @@ static class Foo2
 
 Maybe you understand already where I'm coming from. The last C# snippet compiles fine, because C# allows circular dependencies. However, this last statement is only half-true, because circular dependencies are valid to the C# language, but not valid in terms of .NET assemblies (you cannot reference an assembly A from B, if A already depends on B). The principles of modularity would forbid you to write code like this, just because in the future you would not be able to separate it into two assemblies (you could not place Foo1 in one assembly and Foo2 in a different assembly, because circular dependencies are not valid in .NET).
 
-Then, what you need to learn from this is that F# is a language that, once again, prevents you to shoot yourself in the foot in this way, because circular references in the same assembly are **not** valid. How does it achieve this? By forcing you to declare type A before type B, in case the latter calls the former. Therefore, this equivalent code snippet in F# will fail to compile:
+Then, what you need to learn from this is that F# is a language that, once again, prevents you to shoot yourself in the foot in this way, because circular references in the same assembly are **not** valid either. How does it achieve this? By forcing you to declare type A before type B, in case the latter calls the former. Therefore, this equivalent code snippet in F# will fail to compile:
 
 ```fsharp
 module Foo1 =
@@ -347,7 +347,7 @@ Why? The error will be:
 
 * Error FS0039: The value, namespace, type or module 'Foo2' is not defined. (Referring to Foo1.Baz implementation.)
 
-It's not fixable unless we simply stop using circular dependencies (despite an existing escape hatch via the `and` keyword, or the `rec` keyword when applied to modules or namespaces) which I will not explain in this guide, because it's too advanced); because the way that the F# compiler has to avoid circular dependencies within the same assembly is requiring everything that we depend to, to be declared earlier. This means that if some function A calls function B, then B needs to be declared before A (if they are in the same file, then B needs to be at the top and A at the bottom; if they are in different files, then `B.fs` needs to be listed earlier than `A.fs` in the `.fsproj` file).
+It's not fixable unless we simply stop using circular dependencies (despite an existing escape hatch via the `and` keyword, or the `rec` keyword when applied to modules or namespaces; which I will not explain in this guide, because it's too advanced); because the way that the F# compiler has to avoid circular dependencies within the same assembly is requiring everything that we depend to, to be declared earlier. This means that if some function A calls function B, then B needs to be declared before A (if they are in the same file, then B needs to be at the top and A at the bottom; if they are in different files, then `B.fs` needs to be listed earlier than `A.fs` in the `.fsproj` file).
 
 Therefore, this smaller snippet equivalent to our very first C# sample in this section, doesn't compile either:
 
