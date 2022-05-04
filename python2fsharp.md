@@ -535,7 +535,7 @@ This has two problems: in large codebases where there are many variables and may
 In F# we have an alternative that is much better:
 
 ```fsharp
-let aStringToShowToTheUser = sprintf("Hello %s, I see you are %i years old" name age)
+let aStringToShowToTheUser = sprintf "Hello %s, I see you are %i years old" name age
 ```
 
 Why is this better? Because:
