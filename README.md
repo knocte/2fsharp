@@ -1,5 +1,7 @@
 # Guides for devs to learn F# real FAST
 
+[英文](README.md) [中文](README_CN.md)
+
 Choose the language you're currently most proficient in:
 
 1. [C#](csharp2fsharp.md)
