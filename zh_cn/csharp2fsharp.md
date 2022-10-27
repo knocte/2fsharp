@@ -113,21 +113,21 @@ Environment.Exit(exitCode)
 var intArray = new int[] { 1, 2, 3 };
 var intList = new List<int>({ 4, 5, 6 });
 IEnumerable<int> sequenceOfIntegers = intList;
-var dictionary = new Dictionary<int,string>() {
+var dictionary = new Dictionary<string,int>() {
     { "One", 1 },
     { "Two", 2 }
 }
 ```
-becomes the following (take in account you don't need the type annotations in F#, we just add them for reference):
+变成如下代码(实际上你不需要在F#中作类型声明，我们只是添加它们作为参考):
 ```fsharp
 let intArray: array<int> = [| 1; 2; 3 |]
 let intList: List<int> = [ 4 ; 5 ; 6 ]
 let sequenceOfIntegers: seq<int> = intList
 let dictionary: IDictionary<string,int> = dict [ ("One", 1); ("Two", 2) ]
 ```
-* Commas become semicolons when declaring elements of an array/list/dictionary.
-* `IEnumerable<T>` becomes `seq<'T>` (short for "sequence").
-* You use `dict` to initialize an `IDictionary<K,V>` collection, however in F# you would rather use a `Map<'K,'V>` because the latter is immutable.
+* 在声明数组/列表/字典的元素时，逗号变成分号。
+* `IEnumerable<T>` 变成 `seq<'T>` ("sequence"的缩写).
+* 使用 `dict` 初始化 `IDictionary<K,V>` 集合, 然而在 F# 中你宁愿使用 `Map<'K,'V>` 因为后者是不可变的。
 
 (NOTE: generic types need the quote character (') as a prefix, as you might have noted above.)
 
