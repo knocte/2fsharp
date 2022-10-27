@@ -1,9 +1,9 @@
-# Guide for C# devs to learn F# real FAST
+# C#开发者F#速学指南
 
-This guide is mostly samples based. It will take you 15-30minutes of your time and by understanding it you will already get a hang of 80% of the most used elements of the language.
+本指南主要基于示例。它将花费你15-30分钟的时间，通过理解它，你将掌握这门语言中80%最常用的元素。
 
 
-### Example 1: Basic function declarations and implementation
+### 示例 1: 基本函数声明和实现
 
 ```csharp
 public int GiveMeTheLength(string input)
@@ -14,7 +14,7 @@ public int GiveMeTheLength(string input)
     return result;
 }
 ```
-becomes
+变成
 ```fsharp
 let GiveMeTheLength(input) =
     // this is a 1-line comment
@@ -23,15 +23,15 @@ let GiveMeTheLength(input) =
     result
 ```
 
-* All things are public by default unless you explicitly specify `private` modifier.
-* Keyword `var` becomes `let` (which is also used to define functions/methods, not only to declare variables).
-* You don't need the `return` keyword. The last element of the function is the value to be returned.
-* No need for braces, it works via 4-space (or 2) indentation like Python.
-* No need for semi-colons to denote the end of a line.
-* Specifying types is always optional, except in very special cases when the compiler cannot infer them.
-* Comments are same as in C#, except for the multi-line one, that uses parenthesis instead of slashes.
+* 默认情况下，所有东西都是公共的，除非你显式地指定`private`修饰符。
+* 关键字`var`变成` let`(它也被用来定义函数/方法，而不仅仅是声明变量)。
+* 你不需要` return`关键字。函数的最后一个元素是要返回的值。
+* 不需要大括号，它像Python一样通过4个空格(或2)缩进工作。
+* 不需要用分号来表示一行的结束。
+* 指定类型总是可选的，除非在编译器无法推断它们的非常特殊的情况下。
+* 注释与C#中的注释相同，不同的是多行注释使用括号而不是斜杠。
 
-If you want to specify the types in the sample above, it would become:
+如果你想在上面的例子中指定类型，它会变成:
 
 ```fsharp
 let GiveMeTheLength(input: string): int =
@@ -40,7 +40,7 @@ let GiveMeTheLength(input: string): int =
 ```
 
 
-### Example 2: Basic keywords and operators
+### 示例 2: 基本关键字和运算符
 
 ```csharp
 using System;
@@ -62,7 +62,7 @@ class MainClass
     }
 }
 ```
-becomes
+变成
 ```fsharp
 open System
 
@@ -77,16 +77,16 @@ else
     exitCode <- 4
 Environment.Exit(exitCode)
 ```
-* The `using` keyword becomes `open`.
-* The `if (x) foo(); else if (y) bar(); else baz();` pattern becomes `if x then foo() elif y then bar() else baz()`, without the need of parenthesis in the conditions, but with new keywords `then` and `elif`.
-* Initial assignment (to a readonly constant) operator is `=`. If you need to re-assign a new value to the same element, then you explicitly mark it as mutable and use the `<-` operator.
-* Thanks to the above, the `=` operator can be a comparison operator too (no need for doubling it like in C#: `==`).
-* Operator `!=` becomes `<>`.
-* Operator `!` becomes `not`.
-* Operators `&&` and `||` are same in F#.
-* No need to enclose entry point of program in Main() function, just write your statements in a .fsx script or write the statements in the last `.fs` file fed to the F# compiler.
+*  `using` 关键字变成 `open`.
+* `if (x) foo();  else if (y) bar();  else baz();`模式变成`if x then foo() elif y then bar() else baz()`，不需要在条件中插入括号，但增加了新的关键字`then`和`elif`。
+* 初始赋值(给只读常量)操作符是`=`。如果需要将新值重新赋给相同的元素，则显式地将其标记为mutable并使用`<-`操作符。
+* 由于上述原因，`=`操作符也可以作为比较操作符(不需要像C#那样将其加倍`==`)
+* 操作符`!=` 变成`<>`。
+* 操作符`!` 变成 `not`。
+* 操作符`&&` 和`||` 在F#是一样的.
+* 不需要在Main()函数中包含程序入口点， 只需在.fsx脚本或最后一个.fs文件中编写语句发送给F#编译器即可。
 
-In general, such a simple piece of code like the one in the example can be coded easily without a mutable variable, just by doing readonly assignments, this way:
+一般来说，像示例中这样简单的代码可以很容易地编码，而不需要可变变量，只需要执行只读赋值，如下所示:
 
 ```fsharp
 open System
@@ -104,10 +104,10 @@ let exitCode =
 Environment.Exit(exitCode)
 ```
 
-(This is similar to the use of the `?` operator in C#, but more succinct and easy to read.)
+(这类似于C#中的 `?` 操作符，但更简洁和易读。)
 
 
-### Example 3: Basic collections
+### 示例 3: 基本集合
 
 ```csharp
 var intArray = new int[] { 1, 2, 3 };
