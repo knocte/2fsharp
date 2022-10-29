@@ -372,12 +372,11 @@ module Foo =
         false
 ```
 
-It gives the error:
+它会报错:
 
-* Error FS0039: The value or constructor 'Baz' is not defined. (Referring to Foo.Bar implementation.)
-* Error FS0039: The value or constructor 'Bar' is not defined. (Referring to Foo.Bar implementation.)
+* 错误FS0039: 值或构造函数` Baz `没有定义。(指Foo.Bar实现。)
 
-But as we just learned, this is easier to fix; just declare Baz first. And for a function to be able to call itself (which, in a way, it's also a cyclic dependency), we use the `rec` keyword (which means "recursive"):
+但正如我们刚刚学到的，这个更容易解决;先定义`Baz`。对于一个能够调用自己的函数(在某种程度上，它也是一个循环依赖)，我们使用`rec`关键字(它的意思是“递归”):
 
 ```fsharp
 module Foo =
