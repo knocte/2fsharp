@@ -1,4 +1,4 @@
-# C#开发者F#速学指南
+## C#开发者F#速学指南
 
 本指南主要基于示例。它将花费你15-30分钟的时间，通过理解它，你将掌握这门语言中80%最常用的元素。
 
@@ -127,13 +127,11 @@ let dictionary: IDictionary<string,int> = dict [ ("One", 1); ("Two", 2) ]
 ```
 * 在声明数组/列表/字典的元素时，逗号变成分号。
 * `IEnumerable<T>` 变成 `seq<'T>` ("sequence"的缩写).
-* 使用 `dict` 初始化 `IDictionary<K,V>` 集合, 然而在 F# 中你宁愿使用 `Map<'K,'V>` 因为后者是不可变的。
+* 使用 `dict` 初始化 `IDictionary<K,V>` 集合, 然而在 F# 中你宁可使用 `Map<'K,'V>` 因为后者是不可变的。
 
-(NOTE: generic types need the quote character (') as a prefix, as you might have noted above.)
-
+(注意:泛型需要引号字符(')作为前缀，如上所述。)
 
 ### 示例 4: 基本块
-
 ```csharp
 try {
     TrySomething(someParam);
@@ -183,9 +181,9 @@ DoStuff(reader)
 * 使用 `use`时不需要嵌套子块
 * 因此，资源将在超出作用域(函数结束)时被释放。
 
+注：最新C#版本也不再需要嵌套字块
 
 ### 示例5: 避免空值以及忽略返回值
-
 ```csharp
 void Check(SomeType someParam1, SomeType someParam2)
 {
@@ -221,7 +219,15 @@ let Check(someParam1: Option<SomeType>, someParam2: Option<SomeType>): unit =
   * match表达式中的下划线:它就像C#`switch`中的 `default`。
   * `Some(_)`中的下划线，当我们想要确保值不是NULL，但我们又不关心它的内容(就像C#中的`is` 操作符，而不是 `as`)。
 * 管道操作符是`|>`(它的工作方式与bash中的`|`类似)。`ignore(x)`与 `x |> ignore`相似。
-
+```F#
+//match-with结构
+match variable  with
+| Some(Value1) ->
+	DoSomething
+| Some(Value2) ->
+	DoSomething
+| None -> ()
+```
 
 ### 示例6: 基本类型
 
@@ -259,7 +265,6 @@ static class FooFactory
 ```
 
 因为它只有一行:
-
 ```fsharp
 type Foo = { Bar: int; Baz: string }
 
@@ -276,8 +281,7 @@ module FooFactory =
 
 ### 示例7: 顺序很重要，循环依赖是万恶之源
 
-作为C#开发人员，你知道这段代码可以正常编译:
-
+作为一个C#开发人员，你知道这段代码可以通过编译:
 ```csharp
 static class Foo
 {
@@ -295,6 +299,7 @@ static class Foo
 ```
 
 为什么不呢？你可能会认为没什么问题。确定。
+
 下面这段代码也可以通过编译:
 
 ```csharp
@@ -325,8 +330,6 @@ static class Foo2
 
 也许你已经明白我的出发点了。最后一个C#代码片段编译得很好，因为C#允许循环依赖。然而，最后这句话只对了一半，因为循环依赖对C#语言有效，但对.Net程序集无效(你不能从B引用程序集A，如果A已经依赖于B)。模块化的原则将禁止你写这样的代码，因为在未来你不能把它分成两个程序集(你不能把Foo1放在一个程序集，而把Foo2放在另一个程序集)。因为循环依赖在. Net中无效)。
 
-因此，您知道的是F#是一种语言，防止您以这种方式搬起石头砸自己的脚，因为同一个程序集中的循环引用也是**无**效的。它是如何做到这一点的？通过强制您在类型B之前声明类型A，以防后者调用前者。因此，F#中的等效代码片段将无法编译:
-
 ```fsharp
 module Foo1 =
     let Bar() =
@@ -341,15 +344,12 @@ module Foo2 =
 
     let Baz() =
         ()
-```
-
 为什么?将抛出错误:
+```
 
 * 错误FS0039: 没有定义值、命名空间、类型或模块'Foo2'(参考Foo1.Baz实现)。
 
 除非我们停止使用循环依赖，它才可能被修复(尽管已经有了escape hatch通过`and`关键字或 `rec` 关键字应用于模块或名称空间;我不会在本指南中解释它的用法，因为它太高级了);因为F#编译器避免在同一个程序集中循环依赖的方法要求我们所依赖的所有东西都要早点声明。这意味着如果某个函数A调用函数B，那么B需要在A之前声明(如果它们在同一个文件中，那么B需要在顶部，A在底部;如果它们在不同的文件中，则`.fsproj`文件中`B.fs`需要列在`A.fs`之前)。
-
-因此，这个较小的代码片段相当于我们在本节中的第一个C#示例，也不能通过编译:
 
 ```fsharp
 module Foo =
@@ -365,8 +365,7 @@ module Foo =
 
 * 错误FS0039: 没有定义值或构造函数 'Baz' (参考Foo.Bar实现)。
 
-但正如我们刚刚学到的，这很容易解决;先声明Baz函数。为了让函数能够调用自己(在某种程度上，这也是一个循环依赖)，我们使用`rec`关键字(意思是“recursive(递归)”):
-
+但正如我们刚刚学到的，这个更容易解决;先定义`Baz`。对于一个能够调用自己的函数(在某种程度上，它也是一个循环依赖)，我们使用`rec`关键字(它的意思是“递归”):
 ```fsharp
 module Foo =
     let Baz(): bool =
