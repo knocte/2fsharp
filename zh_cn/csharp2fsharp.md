@@ -183,7 +183,7 @@ DoStuff(reader)
 
 注：最新C#版本也不再需要嵌套字块
 
-### 示例5: 避免空值以及忽略返回值
+### 示例 5: 避免空值以及忽略返回值
 ```csharp
 void Check(SomeType someParam1, SomeType someParam2)
 {
@@ -229,7 +229,7 @@ match variable  with
 | None -> ()
 ```
 
-### 示例6: 基本类型
+### 示例 6: 基本类型
 
 下面这个不可变的C#类用F#编写更容易:
 
@@ -279,7 +279,7 @@ module FooFactory =
 * 在F#中，创建新类或结构的实例时不需要使用关键字“new”，除非创建的类实现了IDisposable。
 
 
-### 示例7: 顺序很重要，循环依赖是万恶之源
+### 示例 7: 顺序很重要，循环依赖是万恶之源
 
 作为一个C#开发人员，你知道这段代码可以通过编译:
 ```csharp
@@ -377,7 +377,7 @@ module Foo =
 ```
 
 
-### 示例8: 委托、匿名方法、函数、我太难了！
+### 示例 8: 委托、匿名方法、函数、我太难了！
 
 在C#的早期版本中，传递函数(和过程，即返回`void`的函数)的方式是通过委托类型和匿名函数。请看一个有4种组合的例子:
 
@@ -562,11 +562,11 @@ module SomeFsharpModule =
 如你所见，相当于BCL的 `System.Function` 和`System.Action` 变成原生F#语法，用于表示参数并通过 `->` 返回值，例如`TArg1->TResult`。 记住， `void`在F#中是 `unit`, 只有一个可能值 `()`的虚拟实类型，这使得区分函数和操作变得毫无意义。 最后，C#中的`(...) => { ... }` 变成`fun ... -> ...`。
 
 
-### 示例9: 元组、部分应用与柯里化
+### 示例 9: 元组、部分应用与柯里化
 
-Chances are, if you've never done any functional programming, you may be scared about some concepts from it such as "partial application" and "currification", but truth is, they are not so complex concepts, and to explain them properly we need to explain tuples first, and why it's not recommended to abuse them in F# (in fact, you cannot use partial application with tuples! more on this later).
+如果你从来没有做过函数式编程，你很有可能会害怕其中的一些概念，比如“部分应用程序”和“柯里化”，但事实是，它们并不是那么复杂的概念，为了正确地解释它们，我们需要首先解释元组，以及为什么不建议在F#中滥用它们(事实上，你不能对元组使用部分应用程序!稍后再详细介绍)。
 
-Let's talk first about a C# snippet which has an `out` parameter:
+让我们首先讨论一个带有 `out`参数的C#代码片段:
 
 ```csharp
 int anInteger;
@@ -577,7 +577,7 @@ if (int.TryParse(someString, out anInteger)) {
 }
 ```
 
-If you try to translate the above into F# from which what you've learned so far, you will first wonder: how can I declare a variable without assigning a value to it? Truth to be told, there's really no way to do this in F#. But then after knowing this, you would have the temptation to simply assign any dummy value to an `anInteger` variable, because after all, it would be overwritten by the `TryParse()` call, right? This would not be very elegant, especially because for this to work, we would need to mark the variable as `mutable` (so as to be able to override it with a second value later), which is not idiomatic F#. The real best way to do this in F# is just using what is called an "Active Pattern", which will convert the function call above into a function call that virtually returns two values simultaneously:
+如果你试着根据你所学到的知识把上面的内容转换成F#，你首先会想：我怎么能声明一个变量而不给它赋值呢？说实话，在F#中真的没有办法做到这一点。但是在知道了这一点之后，你可能会倾向于简单地将任何虚拟值赋给`anInteger` 变量，毕竟最终它将被 `TryParse()` 调用覆盖，对吗？这不是很优雅，特别是因为要这样做的话，我们需要将变量标记为`mutable`(以便以后能够用第二个值重写它)，但这不是F#的惯用法。在F#中最好的方法是使用所谓的“Active模式”，它会将上面的函数调用转换为一个同时返回两个值的函数调用:
 
 ```fsharp
 match int.TryParse(someString) with
@@ -585,9 +585,9 @@ match int.TryParse(someString) with
 | (false, _) -> DoSomethingElse()
 ```
 
-This active pattern above has provided syntax sugar to the F# compiler which converted the `bool TryParse(string,out int)` signature in something like `(bool,int) TryParse(string)`, where `(bool,int)` is a tuple! So, in F#, tuples of any length of elements can be created very easily this way, in any other scenario, without the need to use the `System.Tuple<X,Y,...>` type. In a way, it reminds me of the way this was also improved in the last versions of C# (where you could use tuples in function signatures too without the use of `Tuple` either).
+上面的Active模式为F#编译器提供了语法糖，它将`bool TryParse(string,out int)` 签名转换为`(bool,int) TryParse(string)`，其中`(bool,int)` 是一个元组！因此，在F#中，任何元素长度的元组都可以很容易地以这种方式在任何其他场景中创建，而不需要使用 `System.Tuple<X,Y,...>` 类型。在某种程度上，这让我想起了在C#的最后一个版本中改进的方式(在那里你也可以在函数签名中使用元组而不使用`Tuple` )。
 
-Let's double check on what we mean. This would be with old C#:
+让我们再次检查一下我们的意图。这是旧版本的C#写法:
 
 ```csharp
 bool ReceiveTuple(Tuple<string,int> aTuple)
@@ -600,9 +600,9 @@ bool ReceiveTuple(Tuple<string,int> aTuple)
 }
 ```
 
-If we wanted to have a variable that points to this function, its type would need to be `Func<Tuple<string,int>,bool>`.
+如果我们想要有一个指向这个函数的变量，需要`Func<Tuple<string,int>,bool>`类型。
 
-Then with new C# (under the hood, it compiles to `ValueTuple<X,Y,...>` elements):
+使用新版本C# (在底层它被编译为 `ValueTuple<X,Y,...>` 元素):
 
 ```csharp
 bool ReceiveTuple((string str, int i) aTuple)
@@ -615,9 +615,9 @@ bool ReceiveTuple((string str, int i) aTuple)
 }
 ```
 
-Now to have a variable that points to this new function, its type would become `Func<ValueTuple<string,int>,bool>`.
+现在需要一个指向这个函数的变量，需要 `Func<ValueTuple<string,int>,bool>`类型。
 
-With F#:
+使用F#:
 
 ```fsharp
 let rec ReceiveTuple(str: string, i: int) =
@@ -628,9 +628,9 @@ let rec ReceiveTuple(str: string, i: int) =
     true
 ```
 
-In this case, the F# type that would let you reference this function would be `string*int->bool`; so this is a new symbol that we're learning now: unlike with other programming languages in which the asterisk character involves pointers, in this case it is just a separator of types in a tuple.
+在这个示例中，允许你引用这个函数的F#类型是`string*int->bool`;这是我们现在学习的一个新符号：不像其他编程语言中星号字符代表指针，在当前示例中，它只是元组中类型的分隔符。
 
-But have you noticed how tuples blend into what seemed to be normal parameters in F#? In fact, along all this guide up until now, all the methods we have written in F# that received more than one parameter, were actually using tuples, even if you might have not noticed. But then, you might think, can you write the above method without tuples in F# then? Yes you can, just omitting the comma, this way:
+但是你有没有注意到元组是如何像正常的参数一样融入F#中的？事实上，到目前为止，我们在F#中编写的所有接收多个形参的方法实际上都在使用元组，即使你可能没有注意到。所以，你可能会想，是否能在F#中在不使用元组的情况下编写上述方法吗?是的，你可以，只是省略逗号，像这样:
 
 ```fsharp
 let rec ReceiveNonTuple (str: string) (i: int) =
@@ -640,23 +640,23 @@ let rec ReceiveNonTuple (str: string) (i: int) =
     true
 ```
 
-What's the difference between the functions `ReceiveTuple` and `ReceiveNonTuple`? Both receive the same number of arguments, and with the same types. However, the first one has its parameters as an F# tuple, and the second one has parameters declared in an idiomatic-F# way (in "currified form"). Why is this more idiomatic in F#? Because `ReceiveTuple` cannot be used in partial application scenarios, while `ReceiveNonTuple` can be because it's using a currified style. In this case, the type of the function, instead of being `string*int->bool`, it is `(string->int)->bool`.
+函数`ReceiveTuple` 和`ReceiveNonTuple`之间有什么区别？两者都接收相同数量的参数，并且具有相同的类型。但是，第一个函数的参数是F#元组，第二个函数的参数是以惯用的F#方式声明(“柯里化形式”)。为什么这在F#中更常用？因为`ReceiveTuple`不能在部分应用场景中使用，而`ReceiveNonTuple`可以，因为它使用了柯里化风格。在这种情况下，函数的类型不是`string*int->bool`，而是`(string->int)->bool`。
 
-So why `(string->int)->bool` is better than `string*int->bool`? The latter allows for interoperability with C# (as it’s the way that parameters are passed at the CIL level), but the former allows partial application in a very straightforward and non-convoluted way (we will see, later, that partial application is also possible with C#, but in such a complex way that its benefits don’t outweigh the drawbacks of its poor readability/maintainability). So without further ado, let’s look at a very simple example of partial application: let’s suppose we want to create a Multiplication function that receives two integers and returns one integer:
+那么为什么`(string->int)->bool` 比' `string*int->bool`更好呢？后者允许与C#的互操作性(因为它是在CIL级别传递参数的方式)，但前者允许以非常直接和不复杂的方式进行部分应用程序(稍后我们将看到也可以使用C#实现部分应用程序，但是以如此复杂的方式，其好处并不超过其糟糕的可读性/可维护性的缺点)。废话不多说，让我们看一个非常简单的部分应用程序的例子：假设我们想要创建一个乘法函数，它接收两个整数并返回一个整数:
 
 ```fsharp
 let Multiply (x: int) (y: int): int =
     x * y
 ```
 
-Now, if we wanted to write a function to double the value of a number without having to repeat any implementation detail from the Multiply function, we could simply write it this way:
+现在，如果我们想写一个函数来使一个数字的值翻倍，而不需要重复Multiply函数的任何实现细节，我们可以简单地这样写:
 
 ```fsharp
 let Double (x: int): int =
     Multiply 2
 ```
 
-What happens when we only pass one argument to the function “Multiply”? Let’s look at its original signature: `(int->int)->int`. Currification laws tell us that using parenthesis in type expressions is actually not needed (or that placing them elsewhere results in an equivalent expression), which means that we can write it this way as well (`int->int->int`) or this way (`int->(int->int)`). Therefore, passing only one parameter to a function that originally received two parameters, actually results in returning another function. We can probably understand it better this way:
+当我们只向函数“Multiply”传递一个参数时会发生什么？让我们看看它的原始签名:`(int->int)->int`。柯里化定律告诉我们，在类型表达式中使用括号实际上是不需要的(或者将它们放在其他地方会得到一个等效的表达式)，这意味着我们也可以这样写(`int->int->int`)或这样写 (`int->(int->int)`)。因此，只将一个形参传递给最初接收到两个形参的函数，实际上会返回另一个函数。我们可以这样更好地理解:
 
 ```fsharp
 let Double (x: int): int =
@@ -665,7 +665,7 @@ let Double (x: int): int =
     result
 ```
 
-Or even this way (with types redundantly specified):
+或者甚至是这样(使用冗余指定的类型):
 
 ```fsharp
 let Double (x: int): int =
@@ -674,7 +674,7 @@ let Double (x: int): int =
     result
 ```
 
-This is a too simple example to maybe make you convinced of how powerful and useful partial application is. But it’s the foundations of, for example, Dependency Injection in functional programming. You will probably only grasp the flexibility it allows, with time, but at least we can already show you its simplicity in F#, at least compared to C#, because this is how you would implement partial application with the latter:
+这个例子太简单了，可能无法让您相信部分应用程序是多么强大和有用。但它是，例如函数式编程中的依赖注入的基础。随着时间的推移，你可能只会掌握它所允许的灵活性，但至少我们已经可以在F#中向你展示它简单的一面，至少与C#相比，因为下面你使用C#实现部分应用程序的方式：
 
 ```csharp
 static Func<int, Func<int, int>> Multiply()
@@ -698,36 +698,36 @@ static int Main()
 }
 ```
 
-Can you wrap your head around that? To me, a bit harder to do than reading the F# code.
+你能理解吗？对我来说，这比阅读F#代码要难一些。
 
-A final note about partial application and its usefulness: the longer you use F# the more you will realize that partial application is actually a simplified way of doing Dependency Injection / Inversion of Control (DI / IoC), more info about this in the article "Partial Application is Dependency Injection" (https://blog.ploeh.dk/2017/01/30/partial-application-is-dependency-injection/).
+关于部分应用程序及其实用性的最后一个注意事项：你使用F#的时间越长，你就越会意识到部分应用程序实际上是进行依赖注入/控制反转(DI / IoC)的一种简化方式，关于这一点的更多信息请参阅文章“[部分应用是依赖注入](https://github.com/amerina/NetCoreGrowthGuide/blob/main/TranslationArticle/部分应用是依赖注入.md)”。
 
 
-### Example 10: string interpolation
+### 示例 10: 字符串插值
 
-In the early days of C# you might write things like:
+在早期C#版本中你可能这样写：
 
 ```csharp
 var aStringToShowToTheUser = String.Format("Hello {0}, I see you are {1} years old", name, age);
 ```
 
-This has two problems: in large codebases where there are many variables and maybe many elements to include in a string, it could easily happen that we include a number for a variable not supplied (e.g. `{2}`) or that we provide an element which didn't have implicit conversion to string (or whose conversion was the standard and useless `ToString()` base method of `System.Object`, which I think simply prints the type of the object).
+这有两个问题：在大型代码库中，可能在字符串中包含许多元素，有许多变量，很容易发生的情况是，我们包含了一个没有提供的变量的数字(例如'{2} ')，或者我们提供了一个没有隐式转换为字符串的元素(或者其转换是标准且无用的`System.Object`的`ToString()` 方法，它仅仅输出对象类型)。
 
-In F# we have an alternative that is much better:
+在F#中，我们有一个更好的替代方案:
 
 ```fsharp
 let aStringToShowToTheUser = sprintf "Hello %s, I see you are %i years old" name age
 ```
 
-Why is this better? Because:
-* If you supply less arguments (or more) than the ones needed to interpolate in the string, you will get a compiler error instead of an exception at runtime (fail faster!).
-* You need to specify the type of the element inside the string, via the letter after the `%`, and if it doesn't match the type of the element supplied for the same position, then you get a compiler error (instead of a useless string representation of the element).
-* You need less parenthesis (for more info about this, see the last example in this guide about writing less characters).
+为什么这样更好呢？因为:
+* 如果您提供的参数比在字符串中插入所需的参数少(或多)，则将得到编译器错误而不是运行时异常(失败更快!)
+* 您需要通过`%`后面的字母指定字符串中元素的类型，如果它与提供给相同位置的元素类型不匹配，则会得到一个编译器错误(而不是无用的元素字符串表示)。
+* 你需要更少的括号(有关这方面的更多信息，请参阅本指南中关于写更少字符的最后一个示例)。
 
 
-### Example 11: asynchronous code
+### 示例 11: 异步代码
 
-A simple C# snippet with asynchronous code:
+一个简单的C#异步代码片段：
 
 ```csharp
     static class MainClass
@@ -769,7 +769,7 @@ A simple C# snippet with asynchronous code:
 }
 ```
 
-Becomes in F#:
+在F#中变成:
 
 ```fsharp
 type Toast() =
@@ -805,12 +805,12 @@ let main(argv) =
     0 // return an integer exit code
 ```
 
-The key differences:
-* In C#, when you call an asynchronous method, you're given a `Task<T>` object which represents the job being worked on, and it has already been started. In F#, though, the job is represented by an `Async<'T>` object which hasn't been started yet (you can later decide how to start it; e.g. in this example it's just started with the `Async.RunSynchronously` call).
-* The equivalent of `await` in C#, is simply the addition of the `!` character to the let statement in F#.
-* In C#, you can convert computation-heavy synchronous methods into asynchronous by wrapping them in a `Task.Run()` call, in F# you simply wrap them with an `async{}` block (a computation expression).
+关键区别：
+* 在C#中，当你调用一个异步方法时，你会得到一个`Task<T>`对象，它表示正在执行的作业，并且它已经启动了。但是，在F#中，作业是由尚未启动的`Async<T>`对象表示的(您可以稍后决定如何启动它;例如，在这个例子中，它通过`Async.RunSynchronously`调用)。
+* 与C#中`await`等价的是添加` !`字符到F#中的let语句中。
+* 在C#中，你可以将计算量大的同步方法转换为异步方法，方法是将它们包装在一个`Task.Run() `调用中，而在F#中，你只需用一个`async{} `块(一个计算表达式)来包装它们。
 
-If we change the C# code above slightly to introduce non-generic Task objects and parallelization (supposing we have two toasters):
+如果我们稍微改变一下上面的C#代码，引入非泛型Task对象和并行化(假设我们有两个烤面包机):
 
 ```csharp
 public class Ingredients
@@ -857,7 +857,7 @@ public static async Task Main(string[] args)
 }
 ```
 
-Then in F# it becomes:
+在F#中变成:
 
 ```fsharp
 type Ingredients () = class end
@@ -894,25 +894,25 @@ let main(argv) =
     0 // return an integer exit code
 ```
 
-As you can see, then:
-* The equivalent of dealing with non-generic Tasks in C#, in F# would mean using `unit` as the generic argument to `Async`: `Async<unit>`. To await this kind of jobs, instead of using `let! x = ...` you would just need `do! ...`.
-* The equivalent for `Task.WhenAll` is `Async.Parallel`.
+如你所见，那么:
+* 在F#中处理非泛型任务的等效方法是使用`unit`作为`Async`的泛型参数:`Async<unit>`。在等待这类工作时，不要用`let! x = ...` 你只需要`do! ...`。
+* `Task.WhenAll` 在F#中是`Async.Parallel`.
 
 
-### Example 12: write less characters! especially good for readability of F# scripts
+### 示例 12: 少写字符！尤其有利于F#脚本的可读性
 
-Now that you understood the difference between tuples and currified parameters in F#, and how the latter is always preferrable, you may understand that writing so many parenthesis was actually only needed to map things in tuples and is, in fact, a powerful inertia from C# devs that are starting to work with F#.
+现在你已经理解了F#中元组和柯里化参数之间的区别，以及后者为什么总是更可取，你可能会明白写这么多圆括号实际上只是为了映射元组中的东西，事实上，这是C#开发人员开始使用F#的一个强大的惯性。
 
-But as you start learning F# more and more, leaving the C# days behind, and writing always parameters in currified form, and writing less types (so that they can be inferred by the compiler), you realize how many less characters you need to type:
+但是当你开始越来越多地学习F#，把C#抛在脑后，总是以柯里化的形式写参数，写更少的类型(这样编译器就可以推断它们)，你会意识到你需要输入的字符少了多少:
 
-* Not so many parenthesis because you don't use tuples anymore.
-* No need to use semicolons if you just use EOL separators.
-* No need to use braces so much as you need them in C# (you only need them in F# when you deal with records).
-* No need to use colon character `:` so many times if you let the F# compiler infer types more.
-* Using the pipe operator `|>` more to avoid writing many parenthesis on the right side of a very long line.
-* No need for parenthesis in `if` expressions in F# (as opposed to C#, which always needs them).
+* 没有那么多圆括号，因为你不再使用元组了。
+* 如果只使用EOL分隔符，则不需要使用分号。
+* 不需要像C#中那样使用大括号(你只在F#中处理records时需要它们)。
+* 如果你让F#编译器推断更多类型，就不需要多次使用冒号`:`。
+* 更多地使用管道操作符 `|>` ，以避免在非常长的行右侧写入许多括号。
+* F#中的`if` 表达式不需要括号(与C#相反，C#总是需要括号)。
 
-With all these in mind, we're now going to re-write again all F# samples of this guide but without all these redundant characters:
+考虑到所有这些，我们现在要重新编写本指南的所有F#示例，但没有所有这些多余的字符:
 
 ```fsharp
 open System
@@ -1110,11 +1110,15 @@ let main argv =
 
 ------------------------------------------------------
 
-CONGRATS!! You already know enough to maybe understand 80% of F# code.
+恭喜! !你已经掌握了足够的知识，可以理解80%的F#代码。
 
-Or maybe 80% of simple F# code, which is the code that is being used, for instance, in most F# scripts: easy code.
+或者是80%的简单F#代码，也就是在大多数F#脚本中使用的代码：简单代码。
 
-I could explain you how to build the equivalent of classes (with behaviour, constructors, properties) or structs (value types and stack allocated) in F#, but... 1) it's not idiomatic F#; 2) if you're looking for an alternative safer scripting language, most scripts don't even need types, they just need functions, values and calls!
+我可以向你解释如何在F#中构建等价的类(使用行为，构造函数，属性)或结构体(值类型和堆栈分配)，但是…
 
-Anyway, I recommend as an important next step to watch this talk: https://www.youtube.com/watch?v=HQ887aOZITY , and/or have a look at this article: https://www.compositional-it.com/news-blog/5-features-that-c-has-that-f-doesnt-have/, and if after some days you're still struggling to make the switch, maybe use this tool from time to time: https://github.com/willsam100/FShaper
+1)它不是惯用的F#;
+
+2)如果你正在寻找另一种更安全的脚本语言，大多数脚本甚至不需要类型，他们只需要函数，值和调用!
+
+不管怎样，我建议大家接下来看这个演讲： https://www.youtube.com/watch?v=HQ887aOZITY , 或者看看这篇文章：[C#有F#没有的5个特性](https://github.com/amerina/NetCoreGrowthGuide/blob/main/TranslationArticle/C%23有F%23没有的5个特性.md), 如果过了几天你还在挣扎着转换，也许可以不时地使用这个工具: https://github.com/willsam100/FShaper
 
