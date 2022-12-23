@@ -132,7 +132,7 @@ let dictionary: IDictionary<string,int> = dict [ ("One", 1); ("Two", 2) ]
 (NOTE: generic types need the quote character (') as a prefix, as you might have noted above.)
 
 
-### Example 4: Basic blocks
+### 示例 4: 基本块
 
 ```csharp
 try {
@@ -147,7 +147,7 @@ try {
     MakeSureToCleanup(someParam);
 }
 ```
-becomes
+变成
 ```fsharp
 try
     try
@@ -163,11 +163,11 @@ try
 finally
     MakeSureToCleanup(someParam)
 ```
-* The `catch` keyword becomes `with`.
-* The `throw X;` clause becomes `raise X`, and an empty `throw;` becomes the function call `reraise()`.
-* However, there are no `try-with-finally` blocks! We have only `try-with` blocks and `try-finally` blocks. Therefore the equivalent in F# would need nesting (like it's done in the example above).
+* `catch` 关键字变成 `with`.
+* ` throw X;`子句变成`raise X `，空的`throw; `变成函数调用`reraise() `。
+* 但是，没有`try-with-finally `块!我们只有`try-with`块和`try-finally`块。因此F#中的等效代码需要嵌套(就像上面的例子一样)。
 
-You may think this is an F# downside but try-catch-finally blocks are extremely rare, especially given the `using` construct (for `IDisposable`) in C#:
+你可能认为这是F#的一个缺点，但`try-catch-finally`块是极其罕见的，特别是考虑到C#中的`using` 结构(用于`IDisposable`):
 
 ```csharp
 using (var reader = new StreamReader(someFile))
@@ -175,16 +175,16 @@ using (var reader = new StreamReader(someFile))
     DoStuff(reader);
 }
 ```
-which becomes
+就变成了
 ```fsharp
 use reader = new StreamReader(someFile)
 DoStuff(reader)
 ```
-* No need for nesting a sub-block when using `use`
-* Therefore, the resource will be disposed when it goes out of scope (the function ends).
+* 使用 `use`时不需要嵌套子块
+* 因此，资源将在超出作用域(函数结束)时被释放。
 
 
-### Example 5: Avoiding nulls and ignoring things
+### 示例5: 避免空值以及忽略返回值
 
 ```csharp
 void Check(SomeType someParam1, SomeType someParam2)
@@ -196,36 +196,36 @@ void Check(SomeType someParam1, SomeType someParam2)
         stringBuilder.Append(String.Empty);
 }
 ```
-becomes
+变成
 ```fsharp
 let Check(someParam1: Option<SomeType>, someParam2: Option<SomeType>): unit =
 
     match someParam1 with
-    | Some(someValue) -> // like 'as' in C#, you cast and want the value
+    | Some(someValue) -> // 就像C#中的 'as',转换并得到想要的值
         let str = someValue.ToString()
         ignore(stringBuilder.Append(str))
     | None -> ()
 
     match someParam2 with
-    | Some(_) -> // like 'is' in C#, you don't care about the value
+    | Some(_) -> // 就像C#中的 'is',你不关心它的值
         stringBuilder.Append(String.Empty) |> ignore
     | _ -> ()
 
 ```
-In C# you write null checks everywhere (no safety at compile time). In F#, you do the null check in a safer way with an `Option<T>` type (similar to `Nullable<T>` but better) and a match expression (pattern matching).
+在C#中，你到处都写空检查(在编译时不安全)。在F#中，您使用`Option<T>`类型(类似于`Nullable<T>` 但更好)和匹配表达式(模式匹配)以更安全的方式进行空检查。
 
-* When you don't want to return anything, in C# you use `void` which is metadata for specifying absence of a type, but in F# you need to return a special type called `unit`, which only has one possible value: `()`. That's why generally `()` means doing nothing (as per the above code).
-* A `match-with` block is almost like a switch block, but more succint because it includes the casting (to someValue).
-* There are three ways of ignoring things:
-  * For example, we don't care about the return value of Append(), in C# we just ignore it but in F# you need to be explicit about ignoring it, using the `ignore()` magic function.
-  * The underscore in a match expression: it's like a `default` in a C# `switch`.
-  * The underscore in `Some(_)`, when we want to make sure the value is not None, but we don't care about its contents (like an `is` operator in C#, instead of `as`).
-* The pipe operator (`|` in bash) is `|>` (and it works like in bash). Then `ignore(x)` is the same as `x |> ignore`.
+* 当你不想返回任何东西时，在C#中你使用`void` ，这是用于指定类型的缺失的元数据，但在F#中你需要返回一个名为`unit`的特殊类型，它只有一个可能的值:`()`。这就是为什么`()`通常意味着什么都不做(如上面的代码所示)。
+* `match-with` 块几乎类似于一个`switch`块，但更简洁，因为它包括强制转换(到someValue)。
+* 忽略返回值有三种方式:
+  * 例如，我们不关心Append()的返回值，在C#中我们直接忽略它，但在F#中你需要显式地忽略它，使用`ignore()` 语法糖。
+  * match表达式中的下划线:它就像C#`switch`中的 `default`。
+  * `Some(_)`中的下划线，当我们想要确保值不是NULL，但我们又不关心它的内容(就像C#中的`is` 操作符，而不是 `as`)。
+* 管道操作符是`|>`(它的工作方式与bash中的`|`类似)。`ignore(x)`与 `x |> ignore`相似。
 
 
-### Example 6: Basic types
+### 示例6: 基本类型
 
-This immutable C# class below is much easier to write in F#:
+下面这个不可变的C#类用F#编写更容易:
 
 ```csharp
 public class Foo
@@ -258,7 +258,7 @@ static class FooFactory
 }
 ```
 
-because it's just one line:
+因为它只有一行:
 
 ```fsharp
 type Foo = { Bar: int; Baz: string }
@@ -268,15 +268,15 @@ module FooFactory =
         { Bar = 42; Baz = "forty-two" }
 ```
 
-So then:
-* Classes without behaviour (like the above Foo) are called "Records", they seem similar to structs but they are still reference types and allocated on the heap. They are immutable (once you create them, you cannot change their values underneath).
-* Static classes are "modules", like the "FooFactory" type above.
-* In F#, there's no need to use the keyword "new" when creating instances of new classes or structs, except if the class being created implements IDisposable.
+那么：
+* 没有行为的类(如上面的Foo)被称为“Records”，它们看起来类似于struct，但它们仍然是引用类型，并且分配在堆上。它们是不可变的(一旦创建了它们，就不能在下面更改它们的值)。
+* 静态类是“模块”，就像上面的“FooFactory”类型。
+* 在F#中，创建新类或结构的实例时不需要使用关键字“new”，除非创建的类实现了IDisposable。
 
 
-### Example 7: Order is important, and circular dependencies are the root of all evil
+### 示例7: 顺序很重要，循环依赖是万恶之源
 
-As a C# developer, you know that this code compiles fine:
+作为C#开发人员，你知道这段代码可以正常编译:
 
 ```csharp
 static class Foo
@@ -294,8 +294,8 @@ static class Foo
 }
 ```
 
-Why wouldn't it? You may think. Sure.
-And this also compiles:
+为什么不呢？你可能会认为没什么问题。确定。
+下面这段代码也可以通过编译:
 
 ```csharp
 static class Foo1
@@ -323,9 +323,9 @@ static class Foo2
 }
 ```
 
-Maybe you understand already where I'm coming from. The last C# snippet compiles fine, because C# allows circular dependencies. However, this last statement is only half-true, because circular dependencies are valid to the C# language, but not valid in terms of .NET assemblies (you cannot reference an assembly A from B, if A already depends on B). The principles of modularity would forbid you to write code like this, just because in the future you would not be able to separate it into two assemblies (you could not place Foo1 in one assembly and Foo2 in a different assembly, because circular dependencies are not valid in .NET).
+也许你已经明白我的出发点了。最后一个C#代码片段编译得很好，因为C#允许循环依赖。然而，最后这句话只对了一半，因为循环依赖对C#语言有效，但对.Net程序集无效(你不能从B引用程序集A，如果A已经依赖于B)。模块化的原则将禁止你写这样的代码，因为在未来你不能把它分成两个程序集(你不能把Foo1放在一个程序集，而把Foo2放在另一个程序集)。因为循环依赖在. Net中无效)。
 
-Then, what you need to learn from this is that F# is a language that, once again, prevents you to shoot yourself in the foot in this way, because circular references in the same assembly are **not** valid either. How does it achieve this? By forcing you to declare type A before type B, in case the latter calls the former. Therefore, this equivalent code snippet in F# will fail to compile:
+因此，您知道的是F#是一种语言，防止您以这种方式搬起石头砸自己的脚，因为同一个程序集中的循环引用也是**无**效的。它是如何做到这一点的？通过强制您在类型B之前声明类型A，以防后者调用前者。因此，F#中的等效代码片段将无法编译:
 
 ```fsharp
 module Foo1 =
@@ -343,13 +343,13 @@ module Foo2 =
         ()
 ```
 
-Why? The error will be:
+为什么?将抛出错误:
 
-* Error FS0039: The value, namespace, type or module 'Foo2' is not defined. (Referring to Foo1.Baz implementation.)
+* 错误FS0039: 没有定义值、命名空间、类型或模块'Foo2'(参考Foo1.Baz实现)。
 
-It's not fixable unless we simply stop using circular dependencies (despite an existing escape hatch via the `and` keyword, or the `rec` keyword when applied to modules or namespaces; which I will not explain in this guide, because it's too advanced); because the way that the F# compiler has to avoid circular dependencies within the same assembly is requiring everything that we depend to, to be declared earlier. This means that if some function A calls function B, then B needs to be declared before A (if they are in the same file, then B needs to be at the top and A at the bottom; if they are in different files, then `B.fs` needs to be listed earlier than `A.fs` in the `.fsproj` file).
+除非我们停止使用循环依赖，它才可能被修复(尽管已经有了escape hatch通过`and`关键字或 `rec` 关键字应用于模块或名称空间;我不会在本指南中解释它的用法，因为它太高级了);因为F#编译器避免在同一个程序集中循环依赖的方法要求我们所依赖的所有东西都要早点声明。这意味着如果某个函数A调用函数B，那么B需要在A之前声明(如果它们在同一个文件中，那么B需要在顶部，A在底部;如果它们在不同的文件中，则`.fsproj`文件中`B.fs`需要列在`A.fs`之前)。
 
-Therefore, this smaller snippet equivalent to our very first C# sample in this section, doesn't compile either:
+因此，这个较小的代码片段相当于我们在本节中的第一个C#示例，也不能通过编译:
 
 ```fsharp
 module Foo =
@@ -361,12 +361,11 @@ module Foo =
         false
 ```
 
-It gives the error:
+它抛出错误:
 
-* Error FS0039: The value or constructor 'Baz' is not defined. (Referring to Foo.Bar implementation.)
-* Error FS0039: The value or constructor 'Bar' is not defined. (Referring to Foo.Bar implementation.)
+* 错误FS0039: 没有定义值或构造函数 'Baz' (参考Foo.Bar实现)。
 
-But as we just learned, this is easier to fix; just declare Baz first. And for a function to be able to call itself (which, in a way, it's also a cyclic dependency), we use the `rec` keyword (which means "recursive"):
+但正如我们刚刚学到的，这很容易解决;先声明Baz函数。为了让函数能够调用自己(在某种程度上，这也是一个循环依赖)，我们使用`rec`关键字(意思是“recursive(递归)”):
 
 ```fsharp
 module Foo =
@@ -379,9 +378,9 @@ module Foo =
 ```
 
 
-### Example 8: delegates, anonymous methods, functions, oh my!
+### 示例8: 委托、匿名方法、函数、我太难了！
 
-In the earlier versions of C#, the way to pass functions (and procedures, which are the functions that return `void`) was via delegate types and anonymous functions. See an example with 4 combinations:
+在C#的早期版本中，传递函数(和过程，即返回`void`的函数)的方式是通过委托类型和匿名函数。请看一个有4种组合的例子:
 
 ```csharp
 static class SomeOldCsharpClass
@@ -452,7 +451,7 @@ static class SomeOldCsharpClass
 }
 ```
 
-That was all fine and well, but then new versions of C# came along, which made it less verbose and a bit more elegant (even thanks to local functions, as you will notice):
+一切都很好，后来新版本C#的出现使得它不那么冗长、更优雅(感谢局部函数，你会注意到它的):
 
 ```csharp
 static class SomeNewCsharpClass
@@ -515,9 +514,9 @@ static class SomeNewCsharpClass
 }
 ```
 
-The most interesting change is that delegate types using the `delegate` keyword became `System.Action`, `System.Action<TArg1>`, `System.Function<TResult>`, `System.Function<TArg1,TResult>` and so on. Anonymous methods via the same `delegate` keyword became lambdas via the `=>` symbol.
+最有趣的变化是使用`delegate` 关键字的委托类型变成了 `System.Action`, `System.Action<TArg1>`, `System.Function<TResult>`, `System.Function<TArg1,TResult>` 等等. 通过 `delegate` 关键字声明的匿名方法通过 `=>` 符号变成了Lambda表达式。
 
-But good news! Functions in F# are a native citizen, so this all looks even simpler in this language (and local functions also work):
+但好消息是F#中的函数是本地公民，所以这一切在这种语言中看起来更简单(局部函数也可以工作):
 
 ```fsharp
 module SomeFsharpModule =
@@ -561,10 +560,10 @@ module SomeFsharpModule =
         )
 ```
 
-As you can see, the equivalent of BCL's `System.Function` and `System.Action` become native F# syntax for denoting arguments and return values via the `->` symbol, e.g. `TArg1->TResult`. Remember, `void` is `unit` in F#, a dummy real type with only one possible value `()` that makes it moot to distinguish between functions and actions. Last but not least, C#'s `(...) => { ... }` becomes `fun ... -> ...`.
+如你所见，相当于BCL的 `System.Function` 和`System.Action` 变成原生F#语法，用于表示参数并通过 `->` 返回值，例如`TArg1->TResult`。 记住， `void`在F#中是 `unit`, 只有一个可能值 `()`的虚拟实类型，这使得区分函数和操作变得毫无意义。 最后，C#中的`(...) => { ... }` 变成`fun ... -> ...`。
 
 
-### Example 9: tuples, partial application and currification
+### 示例9: 元组、部分应用与柯里化
 
 Chances are, if you've never done any functional programming, you may be scared about some concepts from it such as "partial application" and "currification", but truth is, they are not so complex concepts, and to explain them properly we need to explain tuples first, and why it's not recommended to abuse them in F# (in fact, you cannot use partial application with tuples! more on this later).
 
