@@ -1118,7 +1118,13 @@ Or maybe 80% of simple F# code, which is the code that is being used, for instan
 
 I could explain you how to build the equivalent of classes (with behaviour, constructors, properties) or structs (value types and stack allocated) in F#, but... 1) it's not idiomatic F#; 2) if you're looking for an alternative safer scripting language, most scripts don't even need types, they just need functions, values and calls!
 
-Anyway, I recommend as an important next step to watch this talk: https://rumble.com/v4a6w4x-an-introduction-to-f.html , and/or have a look at this article: https://www.compositional-it.com/news-blog/5-features-that-c-has-that-f-doesnt-have/, and if after some days you're still struggling to make the switch, maybe use these C#-to-F# conversion tools from time to time:
+Anyway, I recommend as an important next step to watch/read these talks/articles:
+
+* [An introduction to F# (Luca Bolognese)](https://rumble.com/v4a6w4x-an-introduction-to-f.html)
+* [5 Features C# Has That F# Doesn’t Have! (Isaac Abraham)](https://www.compositional-it.com/news-blog/5-features-that-c-has-that-f-doesnt-have/)
+* [F# for the C# Developer - F#, the .NET Runtime, and Aesthetics (Scott Arbeit - NDC Porto 2023)](https://www.youtube.com/watch?v=tR4SyQOPvKs)
+
+And if after some days you're still struggling to make the switch, maybe use these C#-to-F# conversion tools from time to time:
 * [FShaper](https://github.com/willsam100/FShaper)
 * [cs2fs](https://jindraivanek.gitlab.io/cs2fs-online) ([source](https://github.com/jindraivanek/cs2fs))
 

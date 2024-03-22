@@ -910,4 +910,8 @@ Or maybe 80% of simple F# code, which is the code that is being used, for instan
 
 I could explain you how to build the equivalent of classes (with behaviour, constructors, properties) or structs (value types and stack allocated) in F#, but... 1) it's not idiomatic F#; 2) if you're looking for an alternative safer scripting language, most scripts don't even need types, they just need functions, values and calls!
 
-Anyway, I recommend as an important next step to watch these 2 talks: https://vimeo.com/72870631 (A Pragmatic Case for Static Typing with Brian Hurt) and https://www.youtube.com/watch?v=_QnbV6CAWXc (F# as a Better Python - Phillip Carter - NDC Oslo 2020)
+Anyway, I recommend as an interesting next step to watch these talks:
+* [F# as a Better Python (Phillip Carter - NDC Oslo 2020)](https://www.youtube.com/watch?v=_QnbV6CAWXc)
+* [5 Reasons F# is a great Python alternative for scripting, side projects, and enterprise applications (Hamilton Greene - Hamy Labs)](https://www.youtube.com/watch?v=b12MFKsOVC8)
+* [Learning F# Interactive for Python Developers (Ody Mbegbu)](https://www.youtube.com/watch?v=w_tIOEVyq_4)
+* [From F# to Python with Fable (Dag Brattli - NDC Oslo 2022)](https://www.youtube.com/watch?v=deny3mBfccQ)
