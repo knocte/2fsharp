@@ -7,4 +7,7 @@ Choose the language you're currently most proficient in:
 
 If you want to contribute your language guide, fork and propose PR!
 
-(After you have finished learning F# with one of these guides above, next level is learning Rust with side-by-side F# examples thanks to [this blog post](https://jkone27-3876.medium.com/f-is-the-net-rust-62f71f8dae41) and [this other guide](https://github.com/Dhghomon/rust-fsharp).)
+And in case you are already an F# guru and you're still hungry for more knowledge, I think Rust is also a very nice langauge, so here you have links to other side-by-side sample guides for learning Rust for F# 
+developers:
+* [F# is the .NET Rust - @jkone27](https://jkone27-3876.medium.com/f-is-the-net-rust-62f71f8dae41)
+* [Rust for Fsharpers and F# for Rustaceans - Dave MacLeod aka @Dhghomon](https://github.com/Dhghomon/rust-fsharp)
