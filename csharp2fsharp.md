@@ -1121,6 +1121,7 @@ I could explain you how to build the equivalent of classes (with behaviour, cons
 Anyway, I recommend as an important next step to watch/read these talks/articles:
 
 * [An introduction to F# (Luca Bolognese)](https://rumble.com/v4a6w4x-an-introduction-to-f.html)
+* [F# for C# programmers - Scott Wlaschin](https://www.youtube.com/watch?v=KPa8Yw_Navk)
 * [5 Features C# Has That F# Doesn’t Have! (Isaac Abraham)](https://www.compositional-it.com/news-blog/5-features-that-c-has-that-f-doesnt-have/)
 * [F# for the C# Developer - F#, the .NET Runtime, and Aesthetics (Scott Arbeit - NDC Porto 2023)](https://www.youtube.com/watch?v=tR4SyQOPvKs)
 
