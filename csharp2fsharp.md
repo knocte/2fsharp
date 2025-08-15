@@ -29,7 +29,7 @@ let GiveMeTheLength(input) =
 * No need for braces, it works via 4-space (or 2) indentation like Python.
 * No need for semi-colons to denote the end of a line.
 * Specifying types is always optional, except in very special cases when the compiler cannot infer them.
-* Comments are same as in C#, except for the multi-line one, that uses parenthesis instead of slashes.
+* Comments are same as in C#, except for the multi-line one, that uses parentheses instead of slashes.
 
 If you want to specify the types in the sample above, it would become:
 
@@ -78,7 +78,7 @@ else
 Environment.Exit(exitCode)
 ```
 * The `using` keyword becomes `open`.
-* The `if (x) foo(); else if (y) bar(); else baz();` pattern becomes `if x then foo() elif y then bar() else baz()`, without the need of parenthesis in the conditions, but with new keywords `then` and `elif`.
+* The `if (x) foo(); else if (y) bar(); else baz();` pattern becomes `if x then foo() elif y then bar() else baz()`, without the need of parentheses in the conditions, but with new keywords `then` and `elif`.
 * Initial assignment (to a readonly constant) operator is `=`. If you need to re-assign a new value to the same element, then you explicitly mark it as mutable and use the `<-` operator.
 * Thanks to the above, the `=` operator can be a comparison operator too (no need for doubling it like in C#: `==`).
 * Operator `!=` becomes `<>`.
@@ -658,7 +658,7 @@ let Double (x: int): int =
     Multiply 2
 ```
 
-What happens when we only pass one argument to the function “Multiply”? Let’s look at its original signature: `(int->int)->int`. Currification laws tell us that using parenthesis in type expressions is actually not needed (or that placing them elsewhere results in an equivalent expression), which means that we can write it this way as well (`int->int->int`) or this way (`int->(int->int)`). Therefore, passing only one parameter to a function that originally received two parameters, actually results in returning another function. We can probably understand it better this way:
+What happens when we only pass one argument to the function “Multiply”? Let’s look at its original signature: `(int->int)->int`. Currification laws tell us that using parentheses in type expressions is actually not needed (or that placing them elsewhere results in an equivalent expression), which means that we can write it this way as well (`int->int->int`) or this way (`int->(int->int)`). Therefore, passing only one parameter to a function that originally received two parameters, actually results in returning another function. We can probably understand it better this way:
 
 ```fsharp
 let Double (x: int): int =
@@ -724,7 +724,7 @@ let aStringToShowToTheUser = sprintf "Hello %s, I see you are %i years old" name
 Why is this better? Because:
 * If you supply less arguments (or more) than the ones needed to interpolate in the string, you will get a compiler error instead of an exception at runtime (fail faster!).
 * You need to specify the type of the element inside the string, via the letter after the `%`, and if it doesn't match the type of the element supplied for the same position, then you get a compiler error (instead of a useless string representation of the element).
-* You need less parenthesis (for more info about this, see the last example in this guide about writing less characters).
+* You need less parentheses (for more info about this, see the last example in this guide about writing less characters).
 
 
 ### Example 11: asynchronous code
@@ -903,16 +903,16 @@ As you can see, then:
 
 ### Example 12: write less characters! especially good for readability of F# scripts
 
-Now that you understood the difference between tuples and currified parameters in F#, and how the latter is always preferrable, you may understand that writing so many parenthesis was actually only needed to map things in tuples and is, in fact, a powerful inertia from C# devs that are starting to work with F#.
+Now that you understood the difference between tuples and currified parameters in F#, and how the latter is always preferrable, you may understand that writing so many parentheses was actually only needed to map things in tuples and is, in fact, a powerful inertia from C# devs that are starting to work with F#.
 
 But as you start learning F# more and more, leaving the C# days behind, and writing always parameters in currified form, and writing less types (so that they can be inferred by the compiler), you realize how many less characters you need to type:
 
-* Not so many parenthesis because you don't use tuples anymore.
+* Not so many parentheses because you don't use tuples anymore.
 * No need to use semicolons if you just use EOL separators.
 * No need to use braces so much as you need them in C# (you only need them in F# when you deal with records).
 * No need to use colon character `:` so many times if you let the F# compiler infer types more.
-* Using the pipe operator `|>` more to avoid writing many parenthesis on the right side of a very long line.
-* No need for parenthesis in `if` expressions in F# (as opposed to C#, which always needs them).
+* Using the pipe operator `|>` more to avoid writing many parentheses on the right side of a very long line.
+* No need for parentheses in `if` expressions in F# (as opposed to C#, which always needs them).
 
 With all these in mind, we're now going to re-write again all F# samples of this guide but without all these redundant characters:
 
