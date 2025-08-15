@@ -155,7 +155,7 @@ You may think this is an F# downside but try-catch-finally blocks are extremely 
 with Reader() as reader:
     do_stuff(reader)
 ```
-which becomes
+which in F# becomes
 ```fsharp
 use reader = new StreamReader(someFile)
 DoStuff(reader)

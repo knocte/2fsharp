@@ -175,7 +175,7 @@ using (var reader = new StreamReader(someFile))
     DoStuff(reader);
 }
 ```
-which becomes
+which in F# becomes
 ```fsharp
 use reader = new StreamReader(someFile)
 DoStuff(reader)
