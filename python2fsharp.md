@@ -190,10 +190,10 @@ let Check(someParam1: Option<SomeType>, someParam2: Option<SomeType>): unit =
     | _ -> ()
 
 ```
-In python you write None checks everywhere (no safety at compile time). In F#, you do the null check in a safer way with an `Option<T>` type and a match expression (pattern matching).
+In python you write None checks everywhere (no safety at compile time). In F#, you do the null check in a safer way with an `Option<'T>` type and a match expression (pattern matching).
 
 * When you don't want to return anything, in python you just don't use the `return` statement, but in F# you need to return a special type called `unit`, which only has one possible value: `()`. That's why generally `()` means doing nothing (as per the above code).
-* A `match-with` block is almost like a switch block, but more succint because it includes the casting (to someValue).
+* A `match-with` block is almost like a switch block, but more succint because it includes the casting (to `someValue`).
 * There are three ways of ignoring things:
   * For example, let's say the `Append()` function returned some value, in python we just ignore it by not assigning it to a variable, but in F# you need to be explicit about ignoring it, using the `ignore()` magic function.
   * The underscore in a match expression: it's like an `else` clause in a python `if`.
