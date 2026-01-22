@@ -198,7 +198,7 @@ In python you write None checks everywhere (no safety at compile time). In F#, y
   * For example, let's say the `Append()` function returned some value, in python we just ignore it by not assigning it to a variable, but in F# you need to be explicit about ignoring it, using the `ignore()` magic function.
   * The underscore in a match expression: it's like an `else` clause in a python `if`.
   * The underscore in `Some(_)`, when we want to make sure the value is not None, but we don't care about its contents.
-* The pipe operator (like `|` in bash) is `|>` (and it works like in bash). Then `ignore(x)` is the same as `x |> ignore`.
+* The pipe operator (like `|` in bash) in F# is `|>` (and it works like in bash). Therefore `ignore(x)` can be also written as `x |> ignore`.
 
 
 ### Example 6: Basic types
