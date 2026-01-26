@@ -19,7 +19,7 @@ let GiveMeTheLength(input) =
 
 * You don't need the `function` keyword. Use `let` instead (which is also used to declare variables, not only to define functions/methods).
 * You don't need the `return` keyword. The last element of the function is the value to be returned.
-* Indentations works via 4-space (or 2) like TypeScript.
+* Indentations works via 4-space (or 2) like Python.
 * Specifying types is always optional, except in very special cases when the compiler cannot infer them.
 
 If you want to specify the types in the sample above, it would become:
@@ -98,8 +98,7 @@ Environment.Exit(exitCode)
 ### Example 3: Basic collections
 
 ```typescript
-const intArray: number[] = [1, 2, 3];
-const intList: number[] = [4, 5, 6];
+const intDynamicArray: number[] = [1, 2, 3, 4, 5, 6];
 const dictionary: Record<string, number> = {
     "One": 1,
     "Two": 2
@@ -107,12 +106,13 @@ const dictionary: Record<string, number> = {
 ```
 becomes the following (take in account you don't need the type annotations in F# either, we just add them for reference):
 ```fsharp
-let intArray: array<int> = [| 1; 2; 3 |]
 let intList: List<int> = [ 4 ; 5 ; 6 ]
+let intArray: array<int> = [| 1; 2; 3 |]
 let dictionary: IDictionary<string,int> = dict [ ("One", 1); ("Two", 2) ]
 ```
-* Commas become semicolons when declaring elements of an array/list/dictionary.
-* You use `dict` to initialize an `IDictionary<string,int>` collection, however in F# you would rather use a `Map<string,int>` because the latter is immutable.
+* In TypeScript there is no concept of fixed-size arrays, so its arrays are like what other languages typically call lists. In F# an array and a list are different things, but both of them have a fixed-size length, due to the fact that all idiomatic collections in F# tend to be immutable. That said, it is easier to append (via the `@` operator) or to prepend (via the `::` operator) elements to lists, but this operation will always generate a new list, instead of mutate it like in TypeScript/JavaScript.
+* With regards to syntax, commas become semicolons when declaring elements of an array/list/dictionary.
+* Even though you can use `dict` to initialize an `IDictionary<string,int>` collection, in F# you would rather use a `Map<string,int>` because the latter is immutable.
 
 NOTE: if you were to create a collection type whose elements had a type that is not defined yet (it could change at runtime), then you have to use the quote character to denote those generic types. Example: instead of `Map<string,int>`, `Map<'K,'V>`, meaning `'K` is the key's type and `'V` is the value's type.
 
@@ -121,17 +121,17 @@ NOTE: if you were to create a collection type whose elements had a type that is 
 
 ```typescript
 try {
-    try {
-        trySomething(someParam);
-    } catch (err) {
-        if (err instanceof SomeError) {
-            if (someCondition(err)) {
-                doSomethingElse(err);
-                throw new OtherError();
-            } else {
-                throw err;
-            }
+    trySomething(someParam);
+} catch (err: unknown) {
+    if (err instanceof SomeError) {
+        if (someCondition(err)) {
+            doSomethingElse(err);
+            throw new OtherError();
+        } else {
+            throw err;
         }
+    } else {
+        throw err;
     }
 } finally {
     makeSureToCleanup(someParam);
@@ -154,7 +154,8 @@ finally
     MakeSureToCleanup(someParam)
 ```
 * The `catch` keyword becomes `with`.
-* The `throw X` becomes `raise X` in F#, but re-throwing becomes the function call `reraise()`.
+* In TypeScript, if you want to only catch one type of error, you need to do a runtime type-check inside the catch block; however in F# you can specify the type to catch via the `:?` syntax.
+* The `throw X` becomes `raise X` in F#, but re-throwing becomes the function call `reraise()` (better than throwing the same exception because otherwise you lose stacktrace details related to the first throw).
 * However, there are no `try-with-finally` blocks! We have only `try-with` blocks and `try-finally` blocks. Therefore the equivalent in F# would need nesting (like it's done in the example above).
 
 You may think this is an F# downside but try-catch-finally blocks are extremely rare, especially given the `using` construct (for `Disposable` objects) in TypeScript:
@@ -578,19 +579,18 @@ In TypeScript you might write things like:
 const aStringToShowToTheUser = `Hello ${name}, I see you are ${age} years old`;
 ```
 
-This has two problems: in large codebases where there are many variables and maybe many elements to include in a string, it could easily happen that we provide an element which didn't have implicit conversion to string, or we might accidentally use the wrong variable.
+This has two problems: in large codebases we might replace the interpolated variable with one that doesn't have implicit conversion to string, or its converted value is unexpected.
 
-In F# we have an alternative that is much better:
+In F# instead:
 
 ```fsharp
 let aStringToShowToTheUser = sprintf "Hello %s, I see you are %i years old" name age
 ```
 
-Why is this better? Because:
-* If you supply less arguments (or more) than the ones needed to interpolate in the string, you will get a compiler error instead of an exception at runtime (fail faster!).
-* You need to specify the type of the element inside the string, via the letter after the `%`, and if it doesn't match the type of the element supplied for the same position, then you get a compiler error (instead of a useless string representation of the element).
-* The type safety is enforced at compile time, making it impossible to have runtime errors due to wrong number or type of arguments.
-
+Why is this slightly better? Because:
+* You need to be explicit about the type of each variable, specifying it inside the string via the letter after the `%` character
+* This means that by being explicit we can assume that the developer is aware of the string conversion (in case the type is not string).
+* If type's letter doesn't match the type of the element supplied for the same position, then you get a compiler error (instead of a possibly useless string representation of the element at runtime).
 
 ------------------------------------------------------
 
