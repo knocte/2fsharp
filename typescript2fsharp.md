@@ -592,6 +592,161 @@ Why is this slightly better? Because:
 * This means that by being explicit we can assume that the developer is aware of the string conversion (in case the type is not string).
 * If type's letter doesn't match the type of the element supplied for the same position, then you get a compiler error (instead of a possibly useless string representation of the element at runtime).
 
+
+### Example 11: asynchronous code
+
+A simple TyepScript snippet with asynchronous code:
+
+```typescript
+class Toast {
+    public IsYummy(): boolean {
+        return true;
+    }
+}
+
+async function ToastBreadAsync(): Promise<Toast> {
+    return new Toast();
+}
+
+function ApplyButter(toast: Toast) { /* TODO */ }
+
+function ApplyJam(toast: Toast) { /* TODO */ }
+
+async function MakeToastWithButterAndJamAsync(): Promise<Toast> {
+    var toast = await ToastBreadAsync();
+    ApplyButter(toast);
+    ApplyJam(toast);
+    return toast;
+}
+
+async function Main() {
+    console.log("Hello World!");
+    var toast = await MakeToastWithButterAndJamAsync();
+    console.log("Bye World!" + toast.IsYummy());
+}
+```
+
+Becomes in F#:
+
+```fsharp
+type Toast() =
+    member this.IsYummy() =
+        true
+
+let ToastBread(): Async<Toast> =
+    async {
+        return Toast()
+    }
+
+let ApplyButter(toast) =
+    () //TODO
+
+let ApplyJam(toast) =
+    () //TODO
+
+let MakeToastWithButterAndJam() =
+    async {
+        let! toast = ToastBread()
+        ApplyButter(toast)
+        ApplyJam(toast)
+        return toast
+    }
+
+
+[<EntryPoint>]
+let main(argv) =
+    Console.WriteLine("Hello World!")
+    let toast = MakeToastWithButterAndJam()
+                |> Async.RunSynchronously
+    Console.WriteLine ("Bye world!" + (toast.IsYummy().ToString()))
+    0 // return an integer exit code
+```
+
+The key differences:
+* In TypeScript, when you call an asynchronous method, you're given a `Promise<T>` object which represents the job being worked on, and it has already been started. In F#, though, the job is represented by an `Async<'T>` object which hasn't been started yet (you can later decide how to start it; e.g. in this example it's just started with the `Async.RunSynchronously` call).
+* The equivalent of `await` in TypeScript, is simply the addition of the `!` character to the let statement in F#.
+* In TypeScript, you can convert computation-heavy synchronous methods into asynchronous by using `async` keyword in function definition, in F# you simply wrap them with an `async{}` block (a computation expression).
+
+If we change the TypeScript code above slightly to introduce parallelization (supposing we have two toasters):
+
+```typescript
+class Ingredients {}
+
+class Toast {
+    public constructor(i: Ingredients)
+    {
+        this.ingredients = i;
+    }
+    ingredients: Ingredients
+}
+
+async function ToastBreadAsync(i: Ingredients): Promise<Toast> {
+    return new Toast(i);
+}
+
+async function GatherIngredients() {
+    return new Ingredients();
+}
+
+async function Make2ToastsAsync(i: Ingredients): Promise<Toast[]> {
+    var toast1 = ToastBreadAsync(i);
+    var toast2 = ToastBreadAsync(i);
+    return await Promise.all([toast1, toast2]);
+}
+
+async function MakeToastsAsync(): Promise<void> {
+    var i = await GatherIngredients();
+    await Make2ToastsAsync(i);
+}
+
+async function Main(): Promise<void> {
+    console.log("Hello World!");
+    await MakeToastsAsync();
+    console.log("Bye World!");
+}
+```
+
+Then in F# it becomes:
+
+```fsharp
+type Ingredients () = class end
+type Toast (i: Ingredients) = class end
+
+let ToastBread(i): Async<Toast> =
+    async {
+        return Toast(i)
+    }
+
+let GatherIngredients () =
+    async { return Ingredients() }
+
+let Make2Toasts(i) =
+    async {
+        let twoJobs: List<Async<Toast>> = [ToastBread(i); ToastBread(i)]
+        let! _ = Async.Parallel(twoJobs)
+        return ()
+    }
+
+let MakeToasts() =
+    async {
+        let! i = GatherIngredients()
+        do! Make2Toasts(i)
+    }
+
+
+[<EntryPoint>]
+let main(argv) =
+    Console.WriteLine("Hello World!")
+    MakeToasts()
+        |> Async.RunSynchronously
+    Console.WriteLine("Bye world!")
+    0 // return an integer exit code
+```
+
+As you can see, then:
+* The equivalent of `Promise<void>` in F# is `Async<unit>`. To await this kind of jobs, instead of using `let! x = ...` you would just need `do! ...`.
+* The equivalent for `Promise.all` is `Async.Parallel`.
+
 ------------------------------------------------------
 
 CONGRATS!! You already know enough to maybe understand 80% of F# code.
