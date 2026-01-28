@@ -747,6 +747,215 @@ As you can see, then:
 * The equivalent of `Promise<void>` in F# is `Async<unit>`. To await this kind of jobs, instead of using `let! x = ...` you would just need `do! ...`.
 * The equivalent for `Promise.all` is `Async.Parallel`.
 
+
+### Example 12: write less characters! especially good for readability of F# scripts
+
+Now that you understood the difference between tuples and currified parameters in F#, and how the latter is always preferrable, you may understand that writing so many parentheses was actually only needed to map things in tuples and is, in fact, a powerful inertia from TypeScript devs that are starting to work with F#.
+
+But as you start learning F# more and more, leaving the TS/JS days behind, and writing always parameters in currified form, and writing less types (so that they can be inferred by the compiler), you realize how many less characters you need to type:
+
+* Not so many parentheses because you don't use tuples anymore.
+* No need to use semicolons if you just use EOL separators.
+* No need to use braces so much as you need them in TS/JS (you only need them in F# when you deal with records).
+* No need to use colon character `:` so many times if you let the F# compiler infer types more.
+* Using the pipe operator `|>` more to avoid writing many parentheses on the right side of a very long line.
+* No need for parentheses in `if` expressions in F# (as opposed to TS/JS, which always needs them).
+
+With all these in mind, we're now going to re-write again all F# samples of this guide but without all these redundant characters:
+
+```fsharp
+open System
+
+let exitCode =
+    if incomingChar = Environment.NewLine then
+        1
+    elif not (incomingChar = String.Empty) then
+        2
+    elif incomingChar <> "\t" && incomingChar.Length > 1 then
+        3
+    else
+        4
+
+Environment.Exit exitCode
+```
+
+```fsharp
+let intArray = 
+        [| 1
+           2
+           3 |]
+let intList =
+        [ 4
+          5
+          6 ]
+let sequenceOfIntegers = intList
+let dic = dict [ ("One", 1)
+                 ("Two", 2) ]
+```
+
+```fsharp
+try
+    try
+        TrySomething someParam
+    with
+    | :? SomeException as ex ->
+        if SomeCondition ex then
+            DoSomethingElse ex
+            raise OtherException
+        else
+            reraise()
+
+finally
+    MakeSureToCleanup someParam
+```
+
+```fsharp
+use reader = new StreamReader someFile
+DoStuff reader
+```
+
+```fsharp
+let Check someParam1 someParam2 =
+
+    match someParam1 with
+    | Some someValue -> // like 'as' in C#, you cast and want the value
+        let str = someValue.ToString()
+        stringBuilder.Append str |> ignore
+    | None -> ()
+
+    match someParam2 with
+    | Some _ -> // like 'is' in C#, you don't care about the value
+        stringBuilder.Append String.Empty |> ignore
+    | _ -> ()
+
+```
+
+```fsharp
+type Foo = 
+    { Bar: int
+      Baz: string }
+
+module FooFactory =
+    let internal CreateFoo () =
+        { Bar = 42
+          Baz = "forty-two" }
+```
+
+```fsharp
+module Foo =
+    let Baz() =
+        false
+
+    let rec Bar() =
+        if Baz() then
+            Bar()
+```
+
+```fsharp
+module SomeFsharpModule =
+
+    let SendingAnonymousMethodAsDelegate1() =
+        let DelegateReception1 dlg =
+            dlg()
+
+        DelegateReception1(fun _ ->
+            Console.WriteLine "hello 1"
+        )
+
+    let SendingAnonymousMethodAsDelegate2() =
+        let DelegateReception2 dlg =
+            let bar = "baz"
+            dlg bar
+
+        DelegateReception2(fun bar ->
+            Console.WriteLine("hello 2 " + bar)
+        )
+
+    let SendingAnonymousMethodAsDelegate3() =
+        let DelegateReception3 dlg =
+            let result = dlg()
+            ()
+
+        DelegateReception3(fun _ ->
+            Console.WriteLine "hello 3"
+            3
+        )
+
+    let SendingAnonymousMethodAsDelegate4() =
+        let DelegateReception4 dlg =
+            let bar = 4.0
+            let result = dlg bar
+            ()
+
+        DelegateReception4(fun bar ->
+            Console.WriteLine("hello 4 " + bar.ToString())
+            int64 4
+        )
+```
+
+```fsharp
+match int.TryParse someString with
+| true, anInteger -> DoSomethingWithAnInteger anInteger
+| false, _ -> DoSomethingElse()
+```
+
+```fsharp
+let rec ReceiveNonTuple str i =
+    let counter = i + 1
+    Console.WriteLine str
+    ReceiveNonTuple str counter
+    true
+```
+
+```fsharp
+let Multiply x y =
+    x * y
+
+let Double x =
+    let doubleFunc = Multiply 2
+    let result = doubleFunc x
+    result
+```
+
+```fsharp
+let aStringToShowToTheUser = sprintf "Hello %s, I see you are %i years old" name age
+```
+
+```fsharp
+type Ingredients () = class end
+type Toast (i: Ingredients) = class end
+
+let ToastBread i: Async<Toast> =
+    async {
+        return Toast i
+    }
+
+let GatherIngredients () =
+    async { return Ingredients() }
+
+let Make2Toasts i =
+    async {
+        let twoJobs: List<Async<Toast>> = [ToastBread i; ToastBread i]
+        let! _ = Async.Parallel twoJobs
+        return ()
+    }
+
+let MakeToasts() =
+    async {
+        let! i = GatherIngredients()
+        do! Make2Toasts i
+    }
+
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine "Hello World!"
+    MakeToasts()
+        |> Async.RunSynchronously
+    Console.WriteLine "Bye world!"
+    0 // return an integer exit code
+```
+
 ------------------------------------------------------
 
 CONGRATS!! You already know enough to maybe understand 80% of F# code.
