@@ -595,7 +595,7 @@ Why is this slightly better? Because:
 
 ### Example 11: asynchronous code
 
-A simple TyepScript snippet with asynchronous code:
+A simple TypeScript snippet with asynchronous code:
 
 ```typescript
 class Toast {
@@ -666,6 +666,8 @@ The key differences:
 * In TypeScript, when you call an asynchronous method, you're given a `Promise<T>` object which represents the job being worked on, and it has already been started. In F#, though, the job is represented by an `Async<'T>` object which hasn't been started yet (you can later decide how to start it; e.g. in this example it's just started with the `Async.RunSynchronously` call).
 * The equivalent of `await` in TypeScript, is simply the addition of the `!` character to the let statement in F#.
 * In TypeScript, you can convert computation-heavy synchronous methods into asynchronous by using `async` keyword in function definition, in F# you simply wrap them with an `async{}` block (a computation expression).
+
+Moreover, there's a subtle difference: in TypeScript, a promise can either be fulfilled or rejected. However, in F#, an `Async<'T>` object will always return a value of type `'T` once it is run. To achieve something similar in F#, you can return a value of type [`Result<'T,'TFailure>`](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/results) or use [`Async.Catch`](https://learn.microsoft.com/en-us/dotnet/fsharp/tutorials/async#asynccatch) to catch exceptions that are thrown during its execution.
 
 If we change the TypeScript code above slightly to introduce parallelization (supposing we have two toasters):
 
