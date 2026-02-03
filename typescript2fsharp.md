@@ -615,7 +615,7 @@ Why is this slightly better? Because:
 
 ### Example 11: asynchronous code
 
-A simple TyepScript snippet with asynchronous code:
+A simple TypeScript snippet with asynchronous code:
 
 ```typescript
 class Toast {
