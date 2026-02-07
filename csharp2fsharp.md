@@ -14,7 +14,9 @@ public int GiveMeTheLength(string input)
     return result;
 }
 ```
+
 becomes
+
 ```fsharp
 let GiveMeTheLength(input) =
     // this is a 1-line comment
@@ -50,33 +52,42 @@ class MainClass
     void Main()
     {
         int exitCode = 0;
-        if (incomingChar == Environment.NewLine)
+        var incomingChars = Console.ReadLine();
+
+        if (incomingChars.Length == 0)
             exitCode = 1;
-        else if (!(incomingChar == String.Empty))
+        else if (incomingChars != "\t" && incomingChars.Length == 1)
             exitCode = 2;
-        else if (incomingChar != "\t" && incomingChar.Length > 1)
+        else if (!(incomingChars.Length > 2))
             exitCode = 3;
         else
             exitCode = 4;
+
         Environment.Exit(exitCode);
     }
 }
 ```
+
 becomes
+
 ```fsharp
 open System
 
 let mutable exitCode: int = 0
-if incomingChar = Environment.NewLine then
+let incomingChars = Console.ReadLine()
+
+if incomingChars.Length = 0 then
     exitCode <- 1
-elif not (incomingChar = String.Empty) then
+elif (incomingChars <> "\t" && incomingChars.Length = 1) then
     exitCode <- 2
-elif (incomingChar <> "\t" && incomingChar.Length > 1) then
+elif not (incomingChars.Length > 2) then
     exitCode <- 3
 else
     exitCode <- 4
+
 Environment.Exit(exitCode)
 ```
+
 * The `using` keyword becomes `open`.
 * The `if (x) foo(); else if (y) bar(); else baz();` pattern becomes `if x then foo() elif y then bar() else baz()`, without the need of parentheses in the conditions, but with new keywords `then` and `elif`.
 * Initial assignment (to a readonly constant) operator is `=`. If you need to re-assign a new value to the same element, then you explicitly mark it as mutable and use the `<-` operator.
@@ -91,12 +102,14 @@ In general, such a simple piece of code like the one in the example can be coded
 ```fsharp
 open System
 
+let incomingChars = Console.ReadLine()
+
 let exitCode =
-    if incomingChar = Environment.NewLine then
+    if incomingChars.Length = 0 then
         1
-    elif not (incomingChar = String.Empty) then
+    elif (incomingChars <> "\t" && incomingChars.Length = 1) then
         2
-    elif (incomingChar <> "\t" && incomingChar.Length > 1) then
+    elif not (incomingChars.Length > 2) then
         3
     else
         4
@@ -384,6 +397,8 @@ module Foo =
 In the earlier versions of C#, the way to pass functions (and procedures, which are the functions that return `void`) was via delegate types and anonymous functions. See an example with 4 combinations:
 
 ```csharp
+using System;
+
 static class SomeOldCsharpClass
 {
     delegate void ProcedureWithNoReturnValueAndNoArguments();
@@ -455,6 +470,8 @@ static class SomeOldCsharpClass
 That was all fine and well, but then new versions of C# came along, which made it less verbose and a bit more elegant (even thanks to local functions, as you will notice):
 
 ```csharp
+using System;
+
 static class SomeNewCsharpClass
 {
     static void SendingAnonymousMethodAsDelegate1()
@@ -520,6 +537,8 @@ The most interesting change is that delegate types using the `delegate` keyword 
 But good news! Functions in F# are a native citizen, so this all looks even simpler in this language (and local functions also work):
 
 ```fsharp
+open System
+
 module SomeFsharpModule =
 
     let SendingAnonymousMethodAsDelegate1() =
@@ -595,7 +614,7 @@ Let's double check on what we mean. This would be with old C#:
 bool ReceiveTuple(Tuple<string,int> aTuple)
 {
     var counter = aTuple.Item2++;
-    Console.WriteLine(aTuple.Item1);
+    System.Console.WriteLine(aTuple.Item1);
     var newTuple = new Tuple<string,int>(aTuple.Item1, counter)
     ReceiveTuple(newTuple);
     return true;
@@ -610,7 +629,7 @@ Then with new C# (under the hood, it compiles to `ValueTuple<X,Y,...>` elements)
 bool ReceiveTuple((string str, int i) aTuple)
 {
     var counter = aTuple.i++;
-    Console.WriteLine(aTuple.str);
+    System.Console.WriteLine(aTuple.str);
     var newTuple = (aTuple.str, counter);
     ReceiveTuple(newTuple);
     return true;
@@ -624,7 +643,7 @@ With F#:
 ```fsharp
 let rec ReceiveTuple(str: string, i: int) =
     let counter = i + 1
-    Console.WriteLine(str)
+    System.Console.WriteLine(str)
     let newTuple = (str, counter)
     ReceiveTuple (newTuple)
     true
@@ -637,7 +656,7 @@ But have you noticed how tuples blend into what seemed to be normal parameters i
 ```fsharp
 let rec ReceiveNonTuple (str: string) (i: int) =
     let counter = i + 1
-    Console.WriteLine(str)
+    System.Console.WriteLine(str)
     ReceiveNonTuple str counter
     true
 ```
@@ -655,6 +674,13 @@ Now, if we wanted to write a function to double the value of a number without ha
 
 ```fsharp
 let Double (x: int): int =
+    (Multiply 2) x
+```
+
+Or without even specifying the argument `x`:
+
+```fsharp
+let Double: int->int =
     Multiply 2
 ```
 
@@ -763,9 +789,9 @@ A simple C# snippet with asynchronous code:
 
         public static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            System.Console.WriteLine("Hello World!");
             var toast = await MakeToastWithButterAndJamAsync();
-            Console.WriteLine("Bye World!" + toast.IsYummy());
+            System.Console.WriteLine("Bye World!" + toast.IsYummy());
         }
     }
 }
@@ -800,10 +826,10 @@ let MakeToastWithButterAndJam() =
 
 [<EntryPoint>]
 let main(argv) =
-    Console.WriteLine("Hello World!")
+    System.Console.WriteLine("Hello World!")
     let toast = MakeToastWithButterAndJam()
                 |> Async.RunSynchronously
-    Console.WriteLine ("Bye world!" + (toast.IsYummy().ToString()))
+    System.Console.WriteLine ("Bye world!" + (toast.IsYummy().ToString()))
     0 // return an integer exit code
 ```
 
@@ -853,9 +879,9 @@ public static async Task<Ingredients> GatherIngredients()
 
 public static async Task Main(string[] args)
 {
-    Console.WriteLine("Hello World!");
+    System.Console.WriteLine("Hello World!");
     await MakeToastsAsync();
-    Console.WriteLine("Bye World!");
+    System.Console.WriteLine("Bye World!");
 }
 ```
 
@@ -889,10 +915,10 @@ let MakeToasts() =
 
 [<EntryPoint>]
 let main(argv) =
-    Console.WriteLine("Hello World!")
+    System.Console.WriteLine("Hello World!")
     MakeToasts()
         |> Async.RunSynchronously
-    Console.WriteLine("Bye world!")
+    System.Console.WriteLine("Bye world!")
     0 // return an integer exit code
 ```
 
@@ -917,14 +943,22 @@ But as you start learning F# more and more, leaving the C# days behind, and writ
 With all these in mind, we're now going to re-write again all F# samples of this guide but without all these redundant characters:
 
 ```fsharp
+let GiveMeTheLength input =
+    // this is a 1-line comment
+    let result = input.Length
+    (* this is a multi-line comment *)
+    result
+```
+
+```fsharp
 open System
 
 let exitCode =
-    if incomingChar = Environment.NewLine then
+    if incomingChars = Environment.NewLine then
         1
-    elif not (incomingChar = String.Empty) then
+    elif not (incomingChars = String.Empty) then
         2
-    elif incomingChar <> "\t" && incomingChar.Length > 1 then
+    elif incomingChars <> "\t" && incomingChars.Length > 1 then
         3
     else
         4
@@ -1005,6 +1039,8 @@ module Foo =
 ```
 
 ```fsharp
+open System
+
 module SomeFsharpModule =
 
     let SendingAnonymousMethodAsDelegate1() =
@@ -1055,7 +1091,7 @@ match int.TryParse someString with
 ```fsharp
 let rec ReceiveNonTuple str i =
     let counter = i + 1
-    Console.WriteLine str
+    System.Console.WriteLine str
     ReceiveNonTuple str counter
     true
 ```
@@ -1102,10 +1138,10 @@ let MakeToasts() =
 
 [<EntryPoint>]
 let main argv =
-    Console.WriteLine "Hello World!"
+    System.Console.WriteLine "Hello World!"
     MakeToasts()
         |> Async.RunSynchronously
-    Console.WriteLine "Bye world!"
+    System.Console.WriteLine "Bye world!"
     0 // return an integer exit code
 ```
 

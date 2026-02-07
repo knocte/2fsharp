@@ -9,7 +9,9 @@ def give_me_the_length(input):
     result = len(input)
     return result
 ```
+
 becomes
+
 ```fsharp
 let GiveMeTheLength(input) =
     let result = input.Length
@@ -38,31 +40,40 @@ Note that, like in python, all things are public by default. (To make things pri
 import sys
 
 exitCode = 0
-if (incomingChar == "\n"):
+incomingChars = input("")
+
+if (len(incomingChars) == 0):
     exitCode = 1
-elif not (incomingChar == ""):
+elif (incomingChars != "\t" and len(incomingChars) = 1):
     exitCode = 2
-elif (incomingChar != "\t" and len(incomingChar) > 1):
+elif not (len(incomingChars) == > 2):
     exitCode = 3
 else:
     exitCode = 4
+
 exit(exitCode)
 ```
+
 becomes
+
 ```fsharp
 open System
 
 let mutable exitCode: int = 0
-if incomingChar = Environment.NewLine then
+let incomingChars = Console.ReadLine()
+
+if incomingChars.Length = 0 then
     exitCode <- 1
-elif not (incomingChar = String.Empty) then
+elif (incomingChars <> "\t" && incomingChars.Length = 1) then
     exitCode <- 2
-elif (incomingChar <> "\t" && incomingChar.Length > 1) then
+elif not (incomingChars.Length > 2) then
     exitCode <- 3
 else
     exitCode <- 4
+
 Environment.Exit(exitCode)
 ```
+
 * The `import` keyword becomes `open`.
 * The `:` at the end of an `if` statement becomes `then`
 * Initial assignment operator is `=`. If you need to re-assign a new value to the same element, then you explicitly mark it as mutable and use the `<-` operator.
@@ -79,12 +90,14 @@ without a mutable variable, just by doing readonly assignments, this way:
 ```fsharp
 open System
 
+let incomingChars = Console.ReadLine()
+
 let exitCode =
-    if incomingChar = Environment.NewLine then
+    if incomingChars.Length = 0 then
         1
-    elif not (incomingChar = String.Empty) then
+    elif (incomingChars <> "\t" && incomingChars.Length = 1) then
         2
-    elif (incomingChar <> "\t" && incomingChar.Length > 1) then
+    elif not (incomingChars.Length > 2) then
         3
     else
         4
@@ -397,7 +410,7 @@ module SomeFsharpModule =
             dlg()
 
         DelegateReception1(fun _ ->
-            Console.WriteLine("hello 1")
+            System.Console.WriteLine("hello 1")
         )
 
     let SendingAnonymousMethodAsDelegate2() =
@@ -406,7 +419,7 @@ module SomeFsharpModule =
             dlg(bar)
 
         DelegateReception2(fun bar ->
-            Console.WriteLine("hello 2 " + bar)
+            System.Console.WriteLine("hello 2 " + bar)
         )
 
     let SendingAnonymousMethodAsDelegate3() =
@@ -415,7 +428,7 @@ module SomeFsharpModule =
             ()
 
         DelegateReception3(fun _ ->
-            Console.WriteLine("hello 3")
+            System.Console.WriteLine("hello 3")
             3
         )
 
@@ -426,7 +439,7 @@ module SomeFsharpModule =
             ()
 
         DelegateReception4(fun bar ->
-            Console.WriteLine("hello 4 " + bar.ToString())
+            System.Console.WriteLine("hello 4 " + bar.ToString())
             int64(4)
         )
 ```
@@ -462,7 +475,7 @@ let recursive = false
 
 let rec ReceiveTuple(str: string, i: int): string*int =
     let counter = i + 1
-    Console.WriteLine(str)
+    System.Console.WriteLine(str)
     let newTuple = (str, counter)
     if recursive then
         ReceiveTuple newTuple |> ignore
@@ -478,7 +491,7 @@ let recursive = false
 
 let rec ReceiveNonTuple (str: string) (i: int) =
     let counter = i + 1
-    Console.WriteLine(str)
+    System.Console.WriteLine(str)
     let newTuple = (str, counter)
     if recursive then
         ReceiveNonTuple str counter |> ignore
@@ -498,6 +511,13 @@ Now, if we wanted to write a function to double the value of a number without ha
 
 ```fsharp
 let Double (x: int): int =
+    (Multiply 2) x
+```
+
+Or without even specifying the argument `x`:
+
+```fsharp
+let Double: int->int =
     Multiply 2
 ```
 
@@ -607,10 +627,10 @@ let MakeToastWithButterAndJam() =
 
 [<EntryPoint>]
 let main argv =
-    Console.WriteLine("Hello World!")
+    System.Console.WriteLine("Hello World!")
     let toast = MakeToastWithButterAndJam()
                 |> Async.RunSynchronously
-    Console.WriteLine("Bye world!" + (toast.IsYummy().ToString()))
+    System.Console.WriteLine("Bye world!" + (toast.IsYummy().ToString()))
     0 // return an integer exit code
 ```
 
@@ -683,10 +703,10 @@ let MakeToasts() =
 
 [<EntryPoint>]
 let main argv =
-    Console.WriteLine("Hello World!")
+    System.Console.WriteLine("Hello World!")
     MakeToasts()
         |> Async.RunSynchronously
-    Console.WriteLine("Bye world!")
+    System.Console.WriteLine("Bye world!")
     0 // return an integer exit code
 ```
 
@@ -710,14 +730,24 @@ But as you start learning F# more and more, leaving the python days behind, and 
 With all these in mind, we're now going to re-write again all F# samples of this guide but without all these redundant characters:
 
 ```fsharp
+let GiveMeTheLength input =
+    // this is a 1-line comment
+    let result = input.Length
+    (* this is a multi-line comment *)
+    result
+```
+
+```fsharp
 open System
 
+let incomingChars = Console.ReadLine()
+
 let exitCode =
-    if incomingChar = Environment.NewLine then
+    if incomingChars.Length = 0 then
         1
-    elif not (incomingChar = String.Empty) then
+    elif incomingChars <> "\t" && incomingChars.Length = 1 then
         2
-    elif incomingChar <> "\t" && incomingChar.Length > 1 then
+    elif not (incomingChars.Length > 2) then
         3
     else
         4
@@ -805,7 +835,7 @@ module SomeFsharpModule =
             dlg()
 
         DelegateReception1(fun _ ->
-            Console.WriteLine "hello 1"
+            System.Console.WriteLine "hello 1"
         )
 
     let SendingAnonymousMethodAsDelegate2() =
@@ -814,7 +844,7 @@ module SomeFsharpModule =
             dlg bar
 
         DelegateReception2(fun bar ->
-            Console.WriteLine("hello 2 " + bar)
+            System.Console.WriteLine("hello 2 " + bar)
         )
 
     let SendingAnonymousMethodAsDelegate3() =
@@ -823,7 +853,7 @@ module SomeFsharpModule =
             ()
 
         DelegateReception3(fun _ ->
-            Console.WriteLine "hello 3"
+            System.Console.WriteLine "hello 3"
             3
         )
 
@@ -834,7 +864,7 @@ module SomeFsharpModule =
             ()
 
         DelegateReception4(fun bar ->
-            Console.WriteLine("hello 4 " + bar.ToString())
+            System.Console.WriteLine("hello 4 " + bar.ToString())
             int64 4
         )
 ```
@@ -848,7 +878,7 @@ match int.TryParse someString with
 ```fsharp
 let rec ReceiveNonTuple str i =
     let counter = i + 1
-    Console.WriteLine str
+    System.Console.WriteLine str
     ReceiveNonTuple str counter
     true
 ```
@@ -895,10 +925,10 @@ let MakeToasts() =
 
 [<EntryPoint>]
 let main argv =
-    Console.WriteLine "Hello World!"
+    System.Console.WriteLine "Hello World!"
     MakeToasts()
         |> Async.RunSynchronously
-    Console.WriteLine "Bye world!"
+    System.Console.WriteLine "Bye world!"
     0 // return an integer exit code
 ```
 
