@@ -1,4 +1,4 @@
-# Guides for devs to learn F# real FAST
+# Guides for devs to learn F# real FAST ![GitHub Repo stars](https://img.shields.io/github/stars/knocte/2fsharp?style=social)
 
 Choose the language you're currently most proficient in:
 
